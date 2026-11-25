@@ -1,6 +1,9 @@
 # vov-365sd
 
-Репозиторий: [gitverse.ru/kazimir_bizik/vov-365sd](https://gitverse.ru/kazimir_bizik/vov-365sd)
+Зеркала (обе публичные, содержимое одинаковое):
+[github.com/AndrewBiz/vov-365sd](https://github.com/AndrewBiz/vov-365sd) · [gitverse.ru/kazimir_bizik/vov-365sd](https://gitverse.ru/kazimir_bizik/vov-365sd)
+
+Пуш в оба: `git push github master && git push gitverse master` (remote'ы названы по хостам, `origin` нет).
 
 Хобби-проект: анимация фронта 1941–42 под Ржевом с фокусом на боевой путь **365-й стрелковой дивизии** (место службы и гибели деда).
 
