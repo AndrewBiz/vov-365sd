@@ -199,6 +199,114 @@
         "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/"
       },
       "note": "Реквизиты публикационные: это запись в издании, а не архивное дело."
+    },
+    {
+      "id": "doc-zhbd-kalinin-front-1942-01-31",
+      "type": "combat-journal",
+      "title": {
+        "value": "Журнал боевых действий войск Калининского фронта, запись за 31 января 1942 г.",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/",
+            "quote": "Журнал боевых действий войск Калининского фронта. 29 армия. Продолжает активно обороняться на ранее занимаемом рубеже…"
+          }
+        },
+        "status": "черновик"
+      },
+      "date": {
+        "value": {
+          "from": "1942-01-31",
+          "to": "1942-01-31",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/",
+            "quote": "31 января 1942 г."
+          }
+        },
+        "status": "черновик"
+      },
+      "requisites": null,
+      "carrier": {
+        "source_id": "src-365sd-org",
+        "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/"
+      },
+      "note": "Фонд, опись и дело в публикации не приведены — архивные реквизиты не установлены."
+    },
+    {
+      "id": "doc-opersvodka-62-1942-01-31",
+      "type": "operational-summary",
+      "title": {
+        "value": "Оперативная сводка штаба Калининского фронта № 62",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/",
+            "quote": "Оперативная сводка штаба Калининского фронта № 62 к 20.00 31.1.42."
+          }
+        },
+        "status": "черновик"
+      },
+      "date": {
+        "value": {
+          "from": "1942-01-31",
+          "to": "1942-01-31",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/",
+            "quote": "к 20.00 31.1.42"
+          }
+        },
+        "status": "черновик"
+      },
+      "requisites": null,
+      "carrier": {
+        "source_id": "src-365sd-org",
+        "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/"
+      },
+      "note": "В публикации указаны только номер сводки и время; фонд, опись и дело не приведены — реквизиты не установлены."
+    },
+    {
+      "id": "doc-front-info-1942-01-31",
+      "type": "operational-summary",
+      "title": {
+        "value": "Информация о положении войск Калининского фронта на 16.00 31 января 1942 г.",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/",
+            "quote": "Информация о положении войск Калининского фронта на 16.00 31.01. 1942 г."
+          }
+        },
+        "status": "черновик"
+      },
+      "date": {
+        "value": {
+          "from": "1942-01-31",
+          "to": "1942-01-31",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/",
+            "quote": "на 16.00 31.01. 1942 г."
+          }
+        },
+        "status": "черновик"
+      },
+      "requisites": null,
+      "carrier": {
+        "source_id": "src-365sd-org",
+        "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/"
+      },
+      "note": "Вид документа — оперативная информация штаба фронта; архивные реквизиты в публикации не приведены."
     }
   ]
 }

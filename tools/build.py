@@ -170,8 +170,10 @@ def render_chronology(ds: vov.Dataset, events: list[dict], digest: str, places: 
         "## Хронология",
         "",
     ]
+    type_labels = ds.registry_types.get("event_types", {})
     for ev in events:
-        lines.append(f"### {_period_label(ev['period'])} — {ev['type']}")
+        type_label = type_labels.get(ev["type"], ev["type"])
+        lines.append(f"### {_period_label(ev['period'])} — {type_label}")
         lines.append("")
         lines.append(f"**{_value_label(ev['title'])}**")
         lines.append("")
@@ -188,8 +190,8 @@ def render_chronology(ds: vov.Dataset, events: list[dict], digest: str, places: 
             lines.append(f"- Период: {loc}")
         for loc in _locators(ev["title"]):
             lines.append(f"- Название: {loc}")
-        for key, fact in (ev.get("facts") or {}).items():
-            lines.append(f"- {key}: {_value_label(fact)} — статус {_fact_status(fact)}")
+        for fact in (ev.get("facts") or {}).values():
+            lines.append(f"- {_value_label(fact)} — статус {_fact_status(fact)}")
             for loc in _locators(fact):
                 lines.append(f"  - источник: {loc}")
         for doc_id in ev.get("documents") or []:
