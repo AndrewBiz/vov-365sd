@@ -14,10 +14,12 @@
   input[type=text] { width: 108px; }
   #viewport { position: relative; overflow: hidden; flex: 1 1 auto; min-height: 200px; background: #000; cursor: crosshair; }
   #viewport.dragging { cursor: grabbing; }
+  #viewport.drawing { cursor: crosshair; }
   canvas { display: block; }
   header span { color: #ccc; }
   #calList { font-size: 12px; color: #fb0; padding: 2px 10px 0; max-height: 40px; overflow: auto; flex: 0 0 auto; }
   #status { padding: 2px 10px 6px; color: #9ad; font-size: 12px; }
+  #counters { color: #8f8; }
   kbd { background: #333; border-radius: 3px; padding: 0 4px; }
 </style>
 </head>
@@ -30,17 +32,21 @@
   <input type="number" id="calLat" step="0.001" placeholder="широта">
   <button id="calAdd">добавить точку</button>
   <button id="calClear">сбросить калибровку</button>
-  <button id="undo">убрать точку линии</button>
+  <button id="undo">убрать штрих</button>
+  <button id="clearLine">стереть линию</button>
   <button id="export">выгрузить JSON</button>
+  <label style="color:#ccc">загрузить JSON<input type="file" id="load" accept="application/json" style="width:0;height:0;opacity:0;position:absolute"></label>
   <span>масштаб:</span>
   <button id="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn">+</button>
   <button id="fit">вписать</button>
 </header>
 <div id="calList">калибровочных точек нет</div>
+<div id="flash" style="color:#6cf;font-size:12px;padding:0 10px;min-height:16px"></div>
 <div id="viewport"><canvas id="cv"></canvas></div>
 <div id="status">
-  колесо — масштаб к курсору · левая кнопка ставит точку, протяжка — панорама ·
-  правая кнопка или <kbd>пробел</kbd>+протяжка — панорама · <kbd>0</kbd> — вписать, <kbd>+</kbd>/<kbd>-</kbd> — масштаб
+  <b>рисование</b>: зажми левую кнопку и веди по линии фронта (одна протяжка = один штрих) ·
+  <b>панорама</b>: правая кнопка или <kbd>пробел</kbd>+протяжка · <b>масштаб</b>: колесо к курсору ·
+  <kbd>0</kbd> вписать · <span id="counters"></span>
 </div>
 
 <script>
@@ -49,17 +55,17 @@ const ctx = cv.getContext('2d');
 const viewport = document.getElementById('viewport');
 
 let img = null;
-let zoom = 1;               // экранных пикселей на пиксель изображения
-let viewX = 0, viewY = 0;   // левый верхний угол вида в пикселях изображения
-const pts = [];             // точки линии в пикселях изображения
+let zoom = 1;
+let viewX = 0, viewY = 0;
+const strokes = [];         // штрихи: массив массивов точек в пикселях изображения
 const calib = [];           // {x, y, lon, lat, label}
-let pending = null;         // ожидает клика: {lon, lat, label}
+let pending = null;
 let drag = null;
 let spaceDown = false;
 
-/* --- преобразования; нарочно чистые, чтобы проверять в консоли --- */
 function imageToScreen(p) { return [(p.x - viewX) * zoom, (p.y - viewY) * zoom]; }
 function screenToImage(sx, sy) { return { x: sx / zoom + viewX, y: sy / zoom + viewY }; }
+function allPoints() { return strokes.reduce((acc, s) => acc.concat(s), []); }
 
 function clampView() {
   if (!img) return;
@@ -94,7 +100,6 @@ function resize() {
 window.addEventListener('resize', resize);
 if (window.ResizeObserver) new ResizeObserver(() => resize()).observe(viewport);
 
-/* --- отрисовка --- */
 function draw() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.fillStyle = '#000';
@@ -112,14 +117,20 @@ function draw() {
 
   ctx.lineWidth = 2;
   ctx.strokeStyle = '#ff2d2d';
-  ctx.beginPath();
-  pts.forEach((p, i) => {
-    const [x, y] = imageToScreen(p);
-    i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+  strokes.forEach(stroke => {
+    if (stroke.length === 1) {
+      const [x, y] = imageToScreen(stroke[0]);
+      ctx.fillStyle = '#ff2d2d';
+      ctx.fillRect(x - 2, y - 2, 4, 4);
+      return;
+    }
+    ctx.beginPath();
+    stroke.forEach((p, i) => {
+      const [x, y] = imageToScreen(p);
+      i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    });
+    ctx.stroke();
   });
-  ctx.stroke();
-  ctx.fillStyle = '#ff2d2d';
-  pts.forEach(p => { const [x, y] = imageToScreen(p); ctx.fillRect(x - 2, y - 2, 4, 4); });
 
   ctx.strokeStyle = '#ffaa00';
   ctx.fillStyle = '#ffaa00';
@@ -134,29 +145,25 @@ function draw() {
   updateLabels();
 }
 
+function flash(msg) { document.getElementById('flash').textContent = msg; }
+
 function updateLabels() {
   document.getElementById('zoomLabel').textContent = Math.round(zoom * 100) + '%';
   document.getElementById('calList').textContent = calib.length
     ? 'точки: ' + calib.map((c, i) => `${i + 1}.${c.label || '?'} (${c.lon}, ${c.lat})`).join(' · ')
     : 'калибровочных точек нет';
+  document.getElementById('counters').textContent =
+    `точки линии: ${allPoints().length} в ${strokes.length} штрих(ах) · калибровка: ${calib.length}`;
 }
 
-/* --- загрузка листа --- */
 document.getElementById('file').onchange = ev => {
   const f = ev.target.files[0];
   if (!f) return;
   const im = new Image();
-  im.onload = () => {
-    img = im;
-    pts.length = 0;
-    calib.length = 0;
-    resize();
-    fit();
-  };
+  im.onload = () => { img = im; resize(); fit(); };
   im.src = URL.createObjectURL(f);
 };
 
-/* --- масштаб --- */
 viewport.addEventListener('wheel', ev => {
   if (!img) return;
   ev.preventDefault();
@@ -165,47 +172,56 @@ viewport.addEventListener('wheel', ev => {
   draw();
 }, { passive: false });
 
-/* --- панорама и точки --- */
 viewport.addEventListener('mousedown', ev => {
   if (!img) return;
   const rect = cv.getBoundingClientRect();
   const sx = ev.clientX - rect.left, sy = ev.clientY - rect.top;
   const pan = ev.button === 1 || ev.button === 2 || spaceDown;
-  drag = { sx, sy, viewX, viewY, moved: 0, mode: pan ? 'pan' : 'click' };
-  if (pan) { viewport.classList.add('dragging'); ev.preventDefault(); }
+  if (pan) {
+    drag = { sx, sy, viewX, viewY, moved: 0, mode: 'pan' };
+    viewport.classList.add('dragging');
+    ev.preventDefault();
+    return;
+  }
+  if (ev.button !== 0) return;
+  const p = screenToImage(sx, sy);
+  if (pending) {
+    calib.push({ x: p.x, y: p.y, lon: pending.lon, lat: pending.lat, label: pending.label });
+    pending = null;
+    draw();
+    return;
+  }
+  drag = { sx, sy, moved: 0, mode: 'draw', stroke: [p], last: [sx, sy] };
+  strokes.push(drag.stroke);
+  viewport.classList.add('drawing');
+  draw();
 });
 
 viewport.addEventListener('mousemove', ev => {
   if (!drag) return;
   const rect = cv.getBoundingClientRect();
-  const dx = (ev.clientX - rect.left) - drag.sx;
-  const dy = (ev.clientY - rect.top) - drag.sy;
-  drag.moved = Math.max(drag.moved, Math.hypot(dx, dy));
-  if (drag.mode === 'pan' || drag.moved > 4) {
-    drag.mode = 'pan';
+  const sx = ev.clientX - rect.left, sy = ev.clientY - rect.top;
+  if (drag.mode === 'pan') {
+    const dx = sx - drag.sx, dy = sy - drag.sy;
     viewX = drag.viewX - dx / zoom;
     viewY = drag.viewY - dy / zoom;
     clampView();
     draw();
+    return;
   }
+  // рисование: точка добавляется не чаще, чем через 3 экранных пикселя
+  if (Math.hypot(sx - drag.last[0], sy - drag.last[1]) < 3) return;
+  drag.last = [sx, sy];
+  drag.stroke.push(screenToImage(sx, sy));
+  draw();
 });
 
-viewport.addEventListener('mouseup', ev => {
-  if (!drag) return;
-  const rect = cv.getBoundingClientRect();
-  const sx = ev.clientX - rect.left, sy = ev.clientY - rect.top;
-  if (drag.mode === 'click' && drag.moved <= 4) {
-    const p = screenToImage(sx, sy);
-    if (pending) {
-      calib.push({ x: p.x, y: p.y, lon: pending.lon, lat: pending.lat, label: pending.label });
-      pending = null;
-    } else {
-      pts.push(p);
-    }
-    draw();
+viewport.addEventListener('mouseup', () => {
+  if (drag && drag.mode === 'draw' && drag.stroke.length < 2) {
+    // одиночный клик — точка-«кирпичик», оставляем как есть
   }
   drag = null;
-  viewport.classList.remove('dragging');
+  viewport.classList.remove('dragging', 'drawing');
 });
 
 viewport.addEventListener('contextmenu', ev => ev.preventDefault());
@@ -216,10 +232,10 @@ window.addEventListener('keydown', ev => {
   if (ev.key === '0') fit();
   if (ev.key === '+' || ev.key === '=') { zoomAt(cv.width / 2, cv.height / 2, 1.25); draw(); }
   if (ev.key === '-') { zoomAt(cv.width / 2, cv.height / 2, 1 / 1.25); draw(); }
+  if ((ev.ctrlKey || ev.metaKey) && ev.key === 'z') { strokes.pop(); draw(); }
 });
 window.addEventListener('keyup', ev => { if (ev.code === 'Space') spaceDown = false; });
 
-/* --- кнопки --- */
 document.getElementById('zoomIn').onclick = () => { zoomAt(cv.width / 2, cv.height / 2, 1.25); draw(); };
 document.getElementById('zoomOut').onclick = () => { zoomAt(cv.width / 2, cv.height / 2, 1 / 1.25); draw(); };
 document.getElementById('fit').onclick = fit;
@@ -227,16 +243,19 @@ document.getElementById('fit').onclick = fit;
 document.getElementById('calAdd').onclick = () => {
   const lon = parseFloat(document.getElementById('calLon').value);
   const lat = parseFloat(document.getElementById('calLat').value);
-  if (!isFinite(lon) || !isFinite(lat)) { alert('введи долготу и широту'); return; }
+  if (!isFinite(lon) || !isFinite(lat)) { flash('введи долготу и широту'); return; }
   pending = { lon, lat, label: document.getElementById('calName').value.trim() };
-  alert('теперь кликни по этому городу на карте: масштаб — колесом, панорама — протяжкой');
+  flash(`кликни по точке «${pending.label || 'без названия'}» на карте (масштаб — колесом, панорама — правой кнопкой)`);
 };
 document.getElementById('calClear').onclick = () => { calib.length = 0; draw(); };
-document.getElementById('undo').onclick = () => { pts.pop(); draw(); };
+document.getElementById('undo').onclick = () => { strokes.pop(); draw(); };
+document.getElementById('clearLine').onclick = () => { strokes.length = 0; draw(); };
+
 document.getElementById('export').onclick = () => {
   const data = {
-    pixels: pts,
+    pixels: allPoints(),
     calibration_points: calib,
+    strokes: strokes.length,
     image_size: img ? [img.width, img.height] : null,
     zoom_at_export: zoom,
     note: calib.length >= 3
@@ -248,6 +267,25 @@ document.getElementById('export').onclick = () => {
   a.href = URL.createObjectURL(blob);
   a.download = 'front-line-pixels.json';
   a.click();
+};
+
+document.getElementById('load').onchange = ev => {
+  const f = ev.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const data = JSON.parse(reader.result);
+    calib.length = 0;
+    (data.calibration_points || []).forEach(c => calib.push(c));
+    if (!calib.length && data.calibration) {
+      ['A', 'B'].forEach(k => { if (data.calibration[k]) calib.push(data.calibration[k]); });
+    }
+    strokes.length = 0;
+    if (Array.isArray(data.pixels) && data.pixels.length) strokes.push(data.pixels.slice());
+    draw();
+    flash(`загружено: калибровочных точек ${calib.length}, точек линии ${allPoints().length}`);
+  };
+  reader.readAsText(f);
 };
 
 resize();
