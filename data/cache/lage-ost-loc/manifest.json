@@ -1,0 +1,42 @@
+{
+  "item": "https://www.loc.gov/item/map51000141/",
+  "title": "Der Feldzug gegen Sowjet-Russland. Band I. Operationen Sommer-Herbst 1941 vom 21. Juni - 6. Dezember 1941",
+  "iiif_service": "https://tile.loc.gov/image-services/iiif/service:gmd:gmd7m:g7001m:g7001sm:gct00491",
+  "license": "Library of Congress, Geography and Map Division — free to use and reuse (no rights advisory)",
+  "fetched_at": "2026-11-25",
+  "vault_dir": "Хобби/365сд/Исходники/Lage Ost — атлас Генштаба (LOC)",
+  "sheets": [
+    {
+      "date": "1941-11-23",
+      "page": "ca000121",
+      "file": "Lage Ost 1941-11-23 (LOC gct00491 ca000121).jpg",
+      "sha256": "62d23dca819b66e7bae2d74715421762f33fdb17520c2af21ebbb85fe12d0f1a",
+      "bytes": 4054198,
+      "resolution": "IIIF full/pct:50 (~3733 px по ширине)"
+    },
+    {
+      "date": "1941-11-25",
+      "page": "ca000122",
+      "file": "Lage Ost 1941-11-25 (LOC gct00491 ca000122).jpg",
+      "sha256": "a0d620bd1e2aa3d02f8ec72f555ffea3746f1c4a34c7f2d69bbd1916a6b83bfb",
+      "bytes": 4121342,
+      "resolution": "IIIF full/pct:50 (~3733 px по ширине)"
+    },
+    {
+      "date": "1941-11-28",
+      "page": "ca000123",
+      "file": "Lage Ost 1941-11-28 (LOC gct00491 ca000123).jpg",
+      "sha256": "c6054ae90c02cc5e6855c8fdf0bc402420ba0f6e8e8f2673f485a28c43f0f3b5",
+      "bytes": 3831207,
+      "resolution": "IIIF full/pct:50 (~3733 px по ширине)"
+    },
+    {
+      "date": "1941-12-06",
+      "page": "ca000124",
+      "file": "Lage Ost 1941-12-06 (LOC gct00491 ca000124).jpg",
+      "sha256": "348ff775d0692ae26361aad02817ab1a8882c2112356981df58895b7ce75cac7",
+      "bytes": 4293250,
+      "resolution": "IIIF full/pct:50 (~3733 px по ширине)"
+    }
+  ]
+}

@@ -75,6 +75,14 @@
       "received": "2026-11-25",
       "note": "Первоисточник текста презентации (абзацы совпадают дословно). Снимок 149 страниц: text-выгрузка + карта URL.",
       "snapshot_at": "2026-11-25"
+    },
+    {
+      "id": "src-loc-lage-ost",
+      "kind": "historical-map",
+      "title": "Атлас Генштаба «Der Feldzug gegen Sowjet-Russland», Band I (Lage Ost, 21.06–06.12.1941), Library of Congress",
+      "derivative_path": "docs/sources/недат_Снимок LOC — атлас Lage Ost (1941).md",
+      "cache_path": "data/cache/lage-ost-loc",
+      "received": "2026-11-25"
     }
   ]
 }
