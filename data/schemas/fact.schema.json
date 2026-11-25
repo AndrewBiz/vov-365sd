@@ -9,100 +9,211 @@
       "type": "object",
       "description": "Локатор внутри производной в docs/sources. Обязательно хотя бы одно поле.",
       "properties": {
-        "page": { "type": "integer", "minimum": 1 },
-        "slide": { "type": "integer", "minimum": 1 },
-        "paragraph": { "type": "string", "minLength": 1 },
-        "quote": { "type": "string", "minLength": 1 }
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "slide": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "paragraph": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "minLength": 12
+        }
       },
       "minProperties": 1,
       "additionalProperties": false
     },
     "provenanceEntry": {
       "type": "object",
-      "required": ["source_id", "locator"],
+      "required": [
+        "source_id",
+        "locator"
+      ],
       "properties": {
-        "source_id": { "type": "string", "pattern": "^src-[a-z0-9][a-z0-9-]*$" },
-        "locator": { "$ref": "#/$defs/locator" },
-        "note": { "type": "string" }
+        "source_id": {
+          "type": "string",
+          "pattern": "^src-[a-z0-9][a-z0-9-]*$"
+        },
+        "locator": {
+          "$ref": "#/$defs/locator"
+        },
+        "note": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
     "provenance": {
       "description": "Один источник или несколько независимых (второе требуется для статуса «выверено»).",
       "oneOf": [
-        { "$ref": "#/$defs/provenanceEntry" },
-        { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/provenanceEntry" } }
+        {
+          "$ref": "#/$defs/provenanceEntry"
+        },
+        {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/provenanceEntry"
+          }
+        }
       ]
     },
-    "status": { "enum": ["черновик", "выверено"] },
+    "status": {
+      "enum": [
+        "черновик",
+        "выверено"
+      ]
+    },
     "single": {
       "type": "object",
-      "required": ["value", "provenance", "status"],
+      "required": [
+        "value",
+        "provenance",
+        "status"
+      ],
       "properties": {
         "value": {},
-        "provenance": { "$ref": "#/$defs/provenance" },
-        "status": { "$ref": "#/$defs/status" },
-        "note": { "type": "string" }
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "note": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
     "conflict": {
       "type": "object",
       "description": "Конкурирующие значения одного поля. Статус выверки у конфликта не ставится.",
-      "required": ["conflict", "variants"],
+      "required": [
+        "conflict",
+        "variants"
+      ],
       "properties": {
-        "conflict": { "const": true },
+        "conflict": {
+          "const": true
+        },
         "variants": {
           "type": "array",
           "minItems": 2,
-          "items": { "$ref": "#/$defs/single" }
+          "items": {
+            "$ref": "#/$defs/single"
+          }
         },
-        "note": { "type": "string" }
+        "note": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
     "fact": {
       "oneOf": [
-        { "$ref": "#/$defs/single" },
-        { "$ref": "#/$defs/conflict" }
+        {
+          "$ref": "#/$defs/single"
+        },
+        {
+          "$ref": "#/$defs/conflict"
+        }
       ]
     },
-    "datePrecision": { "enum": ["day", "month", "year", "range"] },
+    "datePrecision": {
+      "enum": [
+        "day",
+        "month",
+        "year",
+        "range"
+      ]
+    },
     "periodValue": {
       "type": "object",
-      "required": ["from", "to", "precision"],
+      "required": [
+        "from",
+        "to",
+        "precision"
+      ],
       "properties": {
-        "from": { "type": ["string", "null"], "format": "date" },
-        "to": { "type": ["string", "null"], "format": "date" },
-        "precision": { "$ref": "#/$defs/datePrecision" }
+        "from": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "to": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "precision": {
+          "$ref": "#/$defs/datePrecision"
+        }
       },
       "additionalProperties": false
     },
     "periodSingle": {
       "type": "object",
-      "required": ["value", "provenance", "status"],
+      "required": [
+        "value",
+        "provenance",
+        "status"
+      ],
       "properties": {
-        "value": { "$ref": "#/$defs/periodValue" },
-        "provenance": { "$ref": "#/$defs/provenance" },
-        "status": { "$ref": "#/$defs/status" },
-        "note": { "type": "string" }
+        "value": {
+          "$ref": "#/$defs/periodValue"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "note": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
     "periodFact": {
       "oneOf": [
-        { "$ref": "#/$defs/periodSingle" },
+        {
+          "$ref": "#/$defs/periodSingle"
+        },
         {
           "type": "object",
-          "required": ["conflict", "variants"],
+          "required": [
+            "conflict",
+            "variants"
+          ],
           "properties": {
-            "conflict": { "const": true },
+            "conflict": {
+              "const": true
+            },
             "variants": {
               "type": "array",
               "minItems": 2,
-              "items": { "$ref": "#/$defs/periodSingle" }
+              "items": {
+                "$ref": "#/$defs/periodSingle"
+              }
             },
-            "note": { "type": "string" }
+            "note": {
+              "type": "string"
+            }
           },
           "additionalProperties": false
         }

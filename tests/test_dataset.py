@@ -88,6 +88,27 @@ class DatasetCase(unittest.TestCase):
                         "received": "2026-11-25",
                     },
                     {
+                        "id": "src-web-test",
+                        "kind": "website",
+                        "title": "Тестовый сайт",
+                        "vault_path": "тема/Исходники/скан.pdf",
+                        "derivative_path": "docs/sources/недат_Веб — тест.md",
+                        "cache_path": "data/cache/test-site",
+                        "snapshot_at": "2026-11-25",
+                        "sha256": hashlib.sha256(b"test scan").hexdigest(),
+                        "received": "2026-11-25",
+                    },
+                    {
+                        "id": "src-web-copy",
+                        "kind": "other",
+                        "title": "Перепечатка тестового сайта",
+                        "vault_path": "тема/Исходники/скан.pdf",
+                        "derivative_path": "docs/sources/недат_Тест.md",
+                        "derived_from": ["src-web-test"],
+                        "sha256": hashlib.sha256(b"test scan").hexdigest(),
+                        "received": "2026-11-25",
+                    },
+                    {
                         "id": "src-osm-test",
                         "kind": "gazetteer",
                         "title": "Тестовый газеттир",
@@ -140,6 +161,15 @@ class DatasetCase(unittest.TestCase):
                 ]
             },
         )
+
+        # веб-источник со снимком
+        site_dir = os.path.join(self.root, "data/cache/test-site/2026-11-25")
+        os.makedirs(os.path.join(site_dir, "pages"), exist_ok=True)
+        with open(os.path.join(site_dir, "pages/statya.txt"), "w", encoding="utf-8") as fh:
+            fh.write("https://site.test/statya/\nтекст страницы\n")
+        _write(os.path.join(site_dir, "pages.json"), {"count": 1, "pages": {"https://site.test/statya/": "pages/statya.txt"}})
+        with open(os.path.join(self.root, "docs/sources/недат_Веб — тест.md"), "w", encoding="utf-8") as fh:
+            fh.write("---\nисточник: тест\n---\n")
 
         _write(
             os.path.join(self.root, "data/units.json"),
@@ -442,6 +472,93 @@ class TestDerivedGeometry(DatasetCase):
         self.assertEqual(geo["features"], [])
         with open(os.path.join(self.root, builder.CHRONO_PATH), encoding="utf-8") as fh:
             self.assertIn("место не локализовано", fh.read())
+
+
+class TestWebsiteSources(DatasetCase):
+    def _event_with_web_fact(self, provenance, status="черновик"):
+        payload = self.load("data/events/1941.json")
+        payload["events"][0]["facts"] = {
+            "web": {"value": "цитата с сайта", "provenance": provenance, "status": status}
+        }
+        self.save("data/events/1941.json", payload)
+
+    def _web_prov(self, **locator):
+        loc = {"url": "https://site.test/statya/"}
+        loc.update(locator)
+        return {"source_id": "src-web-test", "locator": loc}
+
+    def test_web_fact_with_url_is_valid(self) -> None:
+        self._event_with_web_fact(self._web_prov(quote="текст"))
+        self.assertEqual(self.errors(), [])
+
+    def test_web_fact_without_url(self) -> None:
+        self._event_with_web_fact({"source_id": "src-web-test", "locator": {"quote": "цитата"}})
+        self.assert_error("нет поля url")
+
+    def test_url_missing_from_snapshot(self) -> None:
+        self._event_with_web_fact(self._web_prov(url="https://site.test/drugoe/"))
+        self.assert_error("не найден в снимке")
+
+    def test_site_root_instead_of_page(self) -> None:
+        self._event_with_web_fact(self._web_prov(url="https://site.test/"))
+        self.assert_error("корень сайта")
+
+    def test_snapshot_dir_missing(self) -> None:
+        shutil.rmtree(os.path.join(self.root, "data/cache/test-site"))
+        self.assert_error("снимок сайта не найден")
+
+    def test_derived_from_unknown_source(self) -> None:
+        payload = self.load("data/sources.json")
+        payload["sources"][2]["derived_from"] = ["src-ghost"]
+        self.save("data/sources.json", payload)
+        self.assert_error("derived_from ссылается на неизвестный")
+
+    def test_verified_blocked_by_derived_pair(self) -> None:
+        self._event_with_web_fact([
+            self._web_prov(),
+            {"source_id": "src-web-copy", "locator": {"page": 1}},
+        ], status="выверено")
+        self.assert_error("подтверждение одно")
+
+    def test_verified_with_independent_sources(self) -> None:
+        self._event_with_web_fact([
+            self._web_prov(),
+            {"source_id": "src-test", "locator": {"slide": 1}},
+        ], status="выверено")
+        self.assertEqual(self.errors(), [])
+
+
+class TestSnapshotTool(DatasetCase):
+    def test_write_snapshot_is_deterministic_and_sorted(self) -> None:
+        import importlib
+        snap = importlib.import_module("snapshot_site")
+        pages = {"https://site.test/b/": "Б", "https://site.test/a/": "А"}
+        cache = os.path.join(self.root, "data/cache/det")
+        snap.write_snapshot(cache, "2026-11-25", pages)
+        with open(os.path.join(cache, "2026-11-25/pages.json"), encoding="utf-8") as fh:
+            first = fh.read()
+        snap.write_snapshot(cache, "2026-11-25", pages)
+        with open(os.path.join(cache, "2026-11-25/pages.json"), encoding="utf-8") as fh:
+            second = fh.read()
+        self.assertEqual(first, second)
+        urls = list(json.loads(first)["pages"])
+        self.assertEqual(urls, sorted(urls))
+
+    def test_classify_removed_splits_unreached_and_gone(self) -> None:
+        import importlib
+        snap = importlib.import_module("snapshot_site")
+
+        def fake_fetch(url: str) -> str:
+            if url.endswith("/gone/"):
+                raise RuntimeError("404")
+            return "ok"
+
+        unreached, gone = snap.classify_removed(
+            ["https://site.test/alive/", "https://site.test/gone/"], fetcher=fake_fetch
+        )
+        self.assertEqual(unreached, ["https://site.test/alive/"])
+        self.assertEqual(gone, ["https://site.test/gone/"])
+
 
 
 class TestBuild(DatasetCase):

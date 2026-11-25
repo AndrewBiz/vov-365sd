@@ -558,7 +558,8 @@
         "provenance": {
           "source_id": "src-polk-forum-2617",
           "locator": {
-            "paragraph": "пост #9"
+            "paragraph": "пост #9",
+            "url": "http://www.polk.ru/forum/index.php?showtopic=2617"
           }
         },
         "status": "черновик"
@@ -575,7 +576,8 @@
         "provenance": {
           "source_id": "src-polk-forum-2617",
           "locator": {
-            "paragraph": "пост #9"
+            "paragraph": "пост #9",
+            "url": "http://www.polk.ru/forum/index.php?showtopic=2617"
           }
         },
         "status": "черновик",
@@ -588,7 +590,8 @@
           "provenance": {
             "source_id": "src-polk-forum-2617",
             "locator": {
-              "paragraph": "пост #9"
+              "paragraph": "пост #9",
+              "url": "http://www.polk.ru/forum/index.php?showtopic=2617"
             }
           },
           "status": "черновик"
@@ -604,7 +607,8 @@
         "provenance": {
           "source_id": "src-polk-forum-2617",
           "locator": {
-            "paragraph": "пост #18"
+            "paragraph": "пост #18",
+            "url": "http://www.polk.ru/forum/index.php?showtopic=2617"
           }
         },
         "status": "черновик"
@@ -621,7 +625,8 @@
         "provenance": {
           "source_id": "src-polk-forum-2617",
           "locator": {
-            "paragraph": "пост #18"
+            "paragraph": "пост #18",
+            "url": "http://www.polk.ru/forum/index.php?showtopic=2617"
           }
         },
         "status": "черновик"
@@ -633,7 +638,8 @@
           "provenance": {
             "source_id": "src-polk-forum-2617",
             "locator": {
-              "paragraph": "пост #18"
+              "paragraph": "пост #18",
+              "url": "http://www.polk.ru/forum/index.php?showtopic=2617"
             }
           },
           "status": "черновик"

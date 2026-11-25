@@ -17,6 +17,7 @@ import json
 import os
 import re
 import sys
+import urllib.parse
 from datetime import date
 
 import jsonschema
@@ -64,6 +65,42 @@ class Dataset:
 
     def place_ids(self) -> set[str]:
         return {p["id"] for p in self.places["places"]}
+
+    def snapshot_pages(self, source_id: str) -> set[str]:
+        """URL страниц снимка веб-источника (из pages.json)."""
+        if not hasattr(self, "_snapshot_cache"):
+            self._snapshot_cache = {}
+        if source_id not in self._snapshot_cache:
+            src = self.source_ids().get(source_id, {})
+            pages: set[str] = set()
+            if src.get("kind") == "website" and src.get("cache_path") and src.get("snapshot_at"):
+                path = os.path.join(self.root, src["cache_path"], src["snapshot_at"], "pages.json")
+                if os.path.exists(path):
+                    pages = set(_load(path).get("pages", {}))
+            self._snapshot_cache[source_id] = pages
+        return self._snapshot_cache[source_id]
+
+    def derived_graph(self) -> dict[str, set[str]]:
+        graph: dict[str, set[str]] = {}
+        for src in self.sources["sources"]:
+            graph.setdefault(src["id"], set())
+            for parent in src.get("derived_from") or []:
+                graph[src["id"]].add(parent)
+                graph.setdefault(parent, set()).add(src["id"])
+        return graph
+
+    def connected(self, a: str, b: str) -> bool:
+        graph = self.derived_graph()
+        seen, queue = {a}, [a]
+        while queue:
+            node = queue.pop()
+            for nxt in graph.get(node, ()):
+                if nxt == b:
+                    return True
+                if nxt not in seen:
+                    seen.add(nxt)
+                    queue.append(nxt)
+        return False
 
     def event_list(self) -> list[tuple[str, dict]]:
         out: list[tuple[str, dict]] = []
@@ -155,16 +192,49 @@ def _check_period(where: str, fact: dict, ds: Dataset, errors: list[str]) -> Non
 def _check_single(
     where: str, fact: dict, ds: Dataset, known_sources: dict, errors: list[str]
 ) -> None:
-    ids = _source_ids_of(fact)
+    prov = fact.get("provenance")
+    entries = prov if isinstance(prov, list) else ([prov] if prov else [])
+    ids = [e.get("source_id", "") for e in entries]
     if not ids:
         errors.append(f"{where}: факт без провенанса")
-    for sid in ids:
+
+    for entry in entries:
+        sid = entry.get("source_id", "")
         if sid and sid not in known_sources:
             errors.append(f"{where}: неизвестный источник '{sid}'")
-    if fact.get("status") == "выверено" and len(set(ids)) < 2:
-        errors.append(
-            f"{where}: статус «выверено» требует двух независимых источников, указано {len(set(ids))}"
-        )
+            continue
+        source = known_sources.get(sid, {})
+        if source.get("kind") != "website":
+            continue
+        locator = entry.get("locator") or {}
+        url = locator.get("url")
+        if not url:
+            errors.append(f"{where}: неполный провенанс веб-источника — нет поля url")
+            continue
+        parsed = urllib.parse.urlparse(url)
+        if parsed.path in ("", "/") and not parsed.query:
+            errors.append(f"{where}: url указывает на корень сайта, нужна конкретная страница")
+            continue
+        pages = ds.snapshot_pages(sid)
+        if not pages:
+            errors.append(f"{where}: снимок источника '{sid}' не найден (pages.json)")
+        elif url not in pages:
+            errors.append(f"{where}: url '{url}' не найден в снимке источника '{sid}' — обновите снимок")
+
+    unique = set(ids)
+    if fact.get("status") == "выверено":
+        if len(unique) < 2:
+            errors.append(
+                f"{where}: статус «выверено» требует двух независимых источников, указано {len(unique)}"
+            )
+        else:
+            ordered = sorted(unique)
+            for i, a in enumerate(ordered):
+                for b in ordered[i + 1:]:
+                    if ds.connected(a, b):
+                        errors.append(
+                            f"{where}: подтверждение одно — источник '{a}' связан связью derived_from с '{b}' (производная)"
+                        )
 
 
 def _check_fact(
@@ -211,6 +281,20 @@ def check_sources(ds: Dataset, errors: list[str]) -> None:
         derivative = os.path.join(ds.root, src["derivative_path"])
         if not os.path.exists(derivative):
             errors.append(f"{sid}: производная {src['derivative_path']} не найдена в репозитории")
+
+        for parent in src.get("derived_from") or []:
+            if parent not in ds.source_ids():
+                errors.append(f"{sid}: derived_from ссылается на неизвестный источник '{parent}'")
+
+        if src.get("kind") == "website":
+            cache_dir = os.path.join(ds.root, src.get("cache_path", ""))
+            if not os.path.isdir(cache_dir):
+                errors.append(f"{sid}: каталог снимков {src.get('cache_path', '')} не найден")
+            snapshot = os.path.join(cache_dir, src.get("snapshot_at", ""), "pages.json")
+            if not os.path.exists(snapshot):
+                errors.append(
+                    f"{sid}: снимок сайта не найден (ожидался {os.path.relpath(snapshot, ds.root)})"
+                )
 
         if src.get("kind") in {"gazetteer", "historical-map"}:
             cache_dir = os.path.join(ds.root, src["cache_path"])
