@@ -1,0 +1,120 @@
+{
+  "documents": [
+    {
+      "id": "doc-order-3-1941-12-09",
+      "type": "combat-order",
+      "title": {
+        "value": "Боевой приказ № 3, штадив 365, Мал. Бирево",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/boevoy-prikaz-N-3-shtadiv-365-mal-birevo-9-12-41/",
+            "quote": "БОЕВОЙ ПРИКАЗ № 3, ШТАДИВ 365, МАЛ. БИРЕВО, 9.12.41 г. 12.00"
+          }
+        },
+        "status": "черновик"
+      },
+      "date": {
+        "value": {
+          "from": "1941-12-09",
+          "to": "1941-12-09",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/boevoy-prikaz-N-3-shtadiv-365-mal-birevo-9-12-41/",
+            "quote": "9.12.41 г."
+          }
+        },
+        "status": "черновик"
+      },
+      "requisites": {
+        "fund": "3067",
+        "inventory": "1",
+        "file": "6",
+        "sheets": "48—48 об."
+      },
+      "carrier": {
+        "source_id": "src-365sd-org",
+        "url": "https://365sd.org/boevoy-prikaz-N-3-shtadiv-365-mal-birevo-9-12-41/"
+      }
+    },
+    {
+      "id": "doc-opersvodka-61-1942-01-31",
+      "type": "operational-summary",
+      "title": {
+        "value": "Оперативная сводка штаба Калининского фронта № 61",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/",
+            "quote": "Оперативная сводка штаба Калининского фронта № 61 к 8.00 31.1.42."
+          }
+        },
+        "status": "черновик"
+      },
+      "date": {
+        "value": {
+          "from": "1942-01-31",
+          "to": "1942-01-31",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/",
+            "quote": "к 8.00 31.1.42"
+          }
+        },
+        "status": "черновик"
+      },
+      "requisites": null,
+      "carrier": {
+        "source_id": "src-365sd-org",
+        "url": "https://365sd.org/okruzhenie-i-gibel-divizii-v-sostave-g/"
+      },
+      "note": "Реквизиты (фонд, опись, дело) в публикации не приведены — не установлены."
+    },
+    {
+      "id": "doc-name-list-1213-1941-08-27",
+      "type": "name-list",
+      "title": {
+        "value": "Именной список на команду 1213 сп, отправляемую Серовским РВК, разъезд Еланский, Камышловские лагеря",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "Именной список на команду 1213 сп отравляемую Серовским РВК в распоряжение майора Данюк разъезд Еланский Камышлвские лагеря 27.08.1941 г."
+          }
+        },
+        "status": "черновик"
+      },
+      "date": {
+        "value": {
+          "from": "1941-08-27",
+          "to": "1941-08-27",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "27.08.1941 г."
+          }
+        },
+        "status": "черновик"
+      },
+      "requisites": {
+        "fund": "Р-73",
+        "inventory": "2",
+        "file": "6",
+        "sheets": "213 — 215 об."
+      },
+      "carrier": {
+        "source_id": "src-365sd-org",
+        "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/"
+      }
+    }
+  ]
+}

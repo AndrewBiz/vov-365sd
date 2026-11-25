@@ -105,6 +105,15 @@
           ],
           "pattern": "^pl-[a-z0-9][a-z0-9-]*$",
           "description": "Ссылка на место в data/places.json; геометрия выводится при сборке."
+        },
+        "documents": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^doc-[a-z0-9][a-z0-9-]*$"
+          },
+          "description": "Документы, подтверждающие событие."
         }
       },
       "additionalProperties": false

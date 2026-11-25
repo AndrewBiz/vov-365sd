@@ -428,7 +428,10 @@
           "status": "черновик"
         }
       },
-      "place": "pl-vyukhovo"
+      "place": "pl-vyukhovo",
+      "documents": [
+        "doc-order-3-1941-12-09"
+      ]
     },
     {
       "id": "ev-1941-12-21-365sd-position",

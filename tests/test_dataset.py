@@ -129,6 +129,10 @@ class DatasetCase(unittest.TestCase):
         with open(journal, "w", encoding="utf-8") as fh:
             fh.write("# Журнал\n\n## geo-test-place — Тестовое место\n\n- запрос: `Тестовое место`\n")
 
+        _write(os.path.join(self.root, "data/documents.json"), {"documents": []})
+        _write(os.path.join(self.root, "data/people.json"), {"people": []})
+        _write(os.path.join(self.root, "data/rosters.json"), {"entries": []})
+
         _write(
             os.path.join(self.root, "data/places.json"),
             {
@@ -532,7 +536,10 @@ class TestSnapshotTool(DatasetCase):
     def test_write_snapshot_is_deterministic_and_sorted(self) -> None:
         import importlib
         snap = importlib.import_module("snapshot_site")
-        pages = {"https://site.test/b/": "Б", "https://site.test/a/": "А"}
+        pages = {
+            "https://site.test/b/": {"text": "Б", "html": None},
+            "https://site.test/a/": {"text": "А", "html": "<table><tr><td>1</td></tr></table>"},
+        }
         cache = os.path.join(self.root, "data/cache/det")
         snap.write_snapshot(cache, "2026-11-25", pages)
         with open(os.path.join(cache, "2026-11-25/pages.json"), encoding="utf-8") as fh:
@@ -541,8 +548,10 @@ class TestSnapshotTool(DatasetCase):
         with open(os.path.join(cache, "2026-11-25/pages.json"), encoding="utf-8") as fh:
             second = fh.read()
         self.assertEqual(first, second)
-        urls = list(json.loads(first)["pages"])
-        self.assertEqual(urls, sorted(urls))
+        mapping = json.loads(first)["pages"]
+        self.assertEqual(list(mapping), sorted(mapping))
+        self.assertTrue(mapping["https://site.test/a/"]["html"].endswith(".html"))
+        self.assertIsNone(mapping["https://site.test/b/"]["html"])
 
     def test_classify_removed_splits_unreached_and_gone(self) -> None:
         import importlib
@@ -559,6 +568,160 @@ class TestSnapshotTool(DatasetCase):
         self.assertEqual(unreached, ["https://site.test/alive/"])
         self.assertEqual(gone, ["https://site.test/gone/"])
 
+
+
+class TestDocuments(DatasetCase):
+    def _doc(self, **overrides) -> dict:
+        doc = {
+            "id": "doc-test",
+            "type": "combat-order",
+            "title": _fact("Тестовый приказ"),
+            "date": {
+                "value": {"from": "1941-12-09", "to": "1941-12-09", "precision": "day"},
+                "provenance": {"source_id": "src-web-test", "locator": {"url": "https://site.test/statya/"}},
+                "status": "черновик",
+            },
+            "requisites": {"fund": "3067", "inventory": "1", "file": "6", "sheets": "48"},
+            "carrier": {"source_id": "src-web-test", "url": "https://site.test/statya/"},
+        }
+        doc.update(overrides)
+        return doc
+
+    def test_valid_document(self) -> None:
+        self.save("data/documents.json", {"documents": [self._doc()]})
+        self.assertEqual(self.errors(), [])
+
+    def test_partial_requisites_rejected(self) -> None:
+        self.save("data/documents.json", {"documents": [self._doc(requisites={"fund": "3067"})]})
+        self.assert_error("схема document")
+
+    def test_requisites_none_needs_note(self) -> None:
+        self.save("data/documents.json", {"documents": [self._doc(requisites=None)]})
+        self.assert_error("нет примечания")
+
+    def test_requisites_none_with_note_ok(self) -> None:
+        doc = self._doc(requisites=None, note="реквизиты не установлены")
+        self.save("data/documents.json", {"documents": [doc]})
+        self.assertEqual(self.errors(), [])
+
+    def test_unknown_document_type(self) -> None:
+        self.save("data/documents.json", {"documents": [self._doc(type="telegram")]})
+        self.assert_error("неизвестный тип документа")
+
+    def test_carrier_url_not_in_snapshot(self) -> None:
+        doc = self._doc(carrier={"source_id": "src-web-test", "url": "https://site.test/other/"})
+        self.save("data/documents.json", {"documents": [doc]})
+        self.assert_error("не найден в снимке")
+
+    def test_event_referencing_missing_document(self) -> None:
+        payload = self.load("data/events/1941.json")
+        payload["events"][0]["documents"] = ["doc-ghost"]
+        self.save("data/events/1941.json", payload)
+        self.assert_error("несуществующий документ")
+
+
+class TestPersonnel(DatasetCase):
+    def _person(self, pid="p-ivanov-ivan", name="Иванов Иван Иванович", year="неизвестен") -> dict:
+        return {"id": pid, "name": name, "birth_year": year}
+
+    def test_duplicate_person(self) -> None:
+        self.save("data/people.json", {"people": [
+            self._person(),
+            self._person(pid="p-ivanov-ivan-2", name="иванов иван иванович"),
+        ]})
+        self.assert_error("возможный дубль")
+
+    def test_same_name_different_years_allowed(self) -> None:
+        self.save("data/people.json", {"people": [
+            self._person(year=1901), self._person(pid="p-ivanov-ivan-2", year=1902),
+        ]})
+        self.assertEqual(self.errors(), [])
+
+    def _entry(self, eid="rec-1", **overrides) -> dict:
+        entry = {
+            "id": eid,
+            "document": "doc-test",
+            "person": "p-ivanov-ivan",
+            "unit": "test-div",
+            "fate": _fact("погиб"),
+        }
+        entry.update(overrides)
+        return entry
+
+    def _base_dataset(self) -> None:
+        self.save("data/documents.json", {"documents": [TestDocuments._doc(self)]})
+        self.save("data/people.json", {"people": [self._person()]})
+
+    def test_valid_entry(self) -> None:
+        self._base_dataset()
+        self.save("data/rosters.json", {"entries": [self._entry()]})
+        self.assertEqual(self.errors(), [])
+
+    def test_entry_unknown_person(self) -> None:
+        self._base_dataset()
+        self.save("data/rosters.json", {"entries": [self._entry(person="p-ghost")]})
+        self.assert_error("неизвестная персона")
+
+    def test_unknown_fate_value(self) -> None:
+        self._base_dataset()
+        self.save("data/rosters.json", {"entries": [self._entry(fate=_fact("исчез"))]})
+        self.assert_error("неизвестная формулировка судьбы")
+
+    def test_divergence_requires_conflict_flag(self) -> None:
+        self._base_dataset()
+        entry2 = self._entry(eid="rec-2", fate=_fact("пропал без вести"))
+        self.save("data/rosters.json", {"entries": [self._entry(), entry2]})
+        self.assert_error("не помечена conflict")
+
+    def test_divergence_with_flag_ok(self) -> None:
+        person = {"id": "p-ivanov-ivan", "name": "Иванов Иван Иванович", "birth_year": "неизвестен", "conflict": True}
+        self.save("data/documents.json", {"documents": [TestDocuments._doc(self)]})
+        self.save("data/people.json", {"people": [person]})
+        entry2 = self._entry(eid="rec-2", fate=_fact("пропал без вести"))
+        self.save("data/rosters.json", {"entries": [self._entry(), entry2]})
+        self.assertEqual(self.errors(), [])
+
+    def test_stale_conflict_flag(self) -> None:
+        person = {"id": "p-ivanov-ivan", "name": "Иванов Иван Иванович", "birth_year": "неизвестен", "conflict": True}
+        self.save("data/documents.json", {"documents": [TestDocuments._doc(self)]})
+        self.save("data/people.json", {"people": [person]})
+        self.save("data/rosters.json", {"entries": [self._entry()]})
+        self.assert_error("флаг conflict без расхождений")
+
+
+class TestRosterParsing(DatasetCase):
+    HTML = """<table>
+      <tr><th>№ пп</th><th>Фамилия, имя, отчество</th><th>Партийность</th><th>Состав</th></tr>
+      <tr><td>1</td><td>Костин Петр Афонасьевич</td><td>б/п</td><td>МКС</td></tr>
+      <tr><td>2</td><td></td><td></td><td></td></tr>
+      <tr><td>3</td><td>Попов Иван Павлович</td><td>ВКПб</td><td></td></tr>
+    </table>"""
+
+    def test_parse_rows_and_report(self) -> None:
+        import importlib, tempfile
+        pr = importlib.import_module("parse_roster")
+        with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as fh:
+            fh.write(self.HTML)
+            path = fh.name
+        draft = pr.build_draft(path, "https://site.test/list/", "doc-test", "test-div")
+        self.assertEqual(draft["report"]["rows_total"], 3)
+        self.assertEqual(draft["report"]["rows_kept"], 2)
+        self.assertEqual(draft["report"]["rows_without_name"], 1)
+        self.assertEqual(draft["rows"][1]["name"], "Попов Иван Павлович")
+        os.unlink(path)
+
+    def test_apply_is_deduplicating(self) -> None:
+        import importlib, tempfile
+        pr = importlib.import_module("parse_roster")
+        with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as fh:
+            fh.write(self.HTML)
+            path = fh.name
+        draft = pr.build_draft(path, "https://site.test/list/", "doc-test", "test-div")
+        os.unlink(path)
+        persons, entries = pr.apply_draft(self.root, draft, "https://site.test/list/", "src-web-test", "test")
+        self.assertEqual((persons, entries), (2, 2))
+        persons2, entries2 = pr.apply_draft(self.root, draft, "https://site.test/list/", "src-web-test", "test")
+        self.assertEqual((persons2, entries2), (0, 0))
 
 
 class TestBuild(DatasetCase):

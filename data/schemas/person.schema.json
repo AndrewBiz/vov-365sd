@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vov-365sd.local/schemas/person.schema.json",
+  "title": "Реестр персон",
+  "type": "object",
+  "required": [
+    "people"
+  ],
+  "properties": {
+    "people": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/person"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "person": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "birth_year"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^p-[a-z0-9][a-z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 5,
+          "description": "ФИО в написании источника."
+        },
+        "birth_year": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1880,
+              "maximum": 1930
+            },
+            {
+              "const": "неизвестен"
+            }
+          ]
+        },
+        "note": {
+          "type": "string"
+        },
+        "conflict": {
+          "type": "boolean",
+          "description": "Истина, если записи разных списков расходятся по судьбе или дате."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

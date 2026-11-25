@@ -168,7 +168,10 @@
           },
           "status": "черновик"
         }
-      }
+      },
+      "documents": [
+        "doc-opersvodka-61-1942-01-31"
+      ]
     },
     {
       "id": "ev-1942-02-10-shchukin-execution",

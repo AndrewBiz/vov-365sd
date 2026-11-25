@@ -1,0 +1,3912 @@
+{
+  "entries": [
+    {
+      "id": "rec-name-list-1213-1941-08-27-1",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kostin-petr-afonasevich",
+      "unit": "1213sp",
+      "row": 1,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Костин Петр Афонасьевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-2",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-popov-ivan-pavlovich",
+      "unit": "1213sp",
+      "row": 2,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Попов Иван Павлович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-3",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-chebykin-mihail-vasilevich",
+      "unit": "1213sp",
+      "row": 3,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Чебыкин Михаил Васильевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-4",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kotanov-semen-semenovich",
+      "unit": "1213sp",
+      "row": 4,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Котанов Семен Семенович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-5",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kornev-petr-semenovich",
+      "unit": "1213sp",
+      "row": 5,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Корнев Петр Семенович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-6",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-barmleev-mihail-ivanovich",
+      "unit": "1213sp",
+      "row": 6,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Бармлеев Михаил Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-7",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-troshev-ivan-fedorovich",
+      "unit": "1213sp",
+      "row": 7,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Трошев Иван Федорович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-8",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-sharapov-ivan-semenovich",
+      "unit": "1213sp",
+      "row": 8,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Шарапов Иван Семенович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-9",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-tumanov-dmitriy-stepanov",
+      "unit": "1213sp",
+      "row": 9,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Туманов Дмитрий Степанов"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-10",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-plesovskih-yakov-ivanovich",
+      "unit": "1213sp",
+      "row": 10,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Плесовских Яков Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-11",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kozlov-ivan-petrovich",
+      "unit": "1213sp",
+      "row": 11,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Козлов Иван Петрович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/1рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/1рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-12",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-belyaev-aleksey-ivanovich",
+      "unit": "1213sp",
+      "row": 12,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Беляев Алексей Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-13",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-ponikarovskih-al-ndr-ilich",
+      "unit": "1213sp",
+      "row": 13,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Поникаровских Ал-ндр Ильич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/1рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/1рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-14",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-zyryanov-aleksey-nikolaevich",
+      "unit": "1213sp",
+      "row": 14,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Зырянов Алексей Николаевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/128",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/128"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-15",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-tutunn-vasiliy-yakovlevich",
+      "unit": "1213sp",
+      "row": 15,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Тутунн Василий Яковлевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/1рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/1рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-16",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-tamtasov-gavril-ivanovich",
+      "unit": "1213sp",
+      "row": 16,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Тамтасов Гаврил Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/1рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/1рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-17",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-voroshilov-grigoriy-ivanovich",
+      "unit": "1213sp",
+      "row": 17,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Ворошилов Григорий Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-18",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kiselev-al-ndr-nikolaevich",
+      "unit": "1213sp",
+      "row": 18,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Киселев Ал-ндр Николаевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/1рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/1рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-19",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-dudarev-al-ndr-andreevich",
+      "unit": "1213sp",
+      "row": 19,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Дударев Ал-ндр Андреевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/1рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/1рс"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-20",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-schekoturov-vasiliy-fedorovich",
+      "unit": "1213sp",
+      "row": 20,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Щекотуров Василий Федорович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-21",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-zorin-danil-lukyanovich",
+      "unit": "1213sp",
+      "row": 21,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Зорин Данил Лукьянович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВЛКСМ",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВЛКСМ"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/1рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/1рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-22",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-panchev-stepan-nikolaevich",
+      "unit": "1213sp",
+      "row": 22,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Панчев Степан Николаевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВЛКСМ",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВЛКСМ"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "1/1рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 1/1рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-31",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-glazunov-naum-aleksandrovich",
+      "unit": "1213sp",
+      "row": 31,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Глазунов Наум Александрович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-32",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-fomin-semen-aleksandrovich",
+      "unit": "1213sp",
+      "row": 32,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Фомин Семен Александрович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-33",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-konov-grigoriy-ivanovich",
+      "unit": "1213sp",
+      "row": 33,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Конов Григорий Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-34",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kuklev-danil-matveevich",
+      "unit": "1213sp",
+      "row": 34,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Куклев Данил Матвеевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-35",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-zverev-ivan-evstafevich",
+      "unit": "1213sp",
+      "row": 35,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Зверев Иван Евстафьевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-36",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-druzhnin-ivan-ivanovich",
+      "unit": "1213sp",
+      "row": 36,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Дружнин Иван Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-37",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-martynenko-stepan-sergeevich",
+      "unit": "1213sp",
+      "row": 37,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Мартыненко Степан Сергеевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-38",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-myznikov-yakov-pavlovich",
+      "unit": "1213sp",
+      "row": 38,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Мызников Яков Павлович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2/2рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2/2рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-39",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-nikitin-timofey-sidorov",
+      "unit": "1213sp",
+      "row": 39,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Никитин Тимофей Сидоров"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-40",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-shulakov-vasiliy-semenovich",
+      "unit": "1213sp",
+      "row": 40,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Шулаков Василий Семенович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-41",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kiselev-mihail-al-dorovich",
+      "unit": "1213sp",
+      "row": 41,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Киселев Михаил Ал-дорович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2/2.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2/2."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-42",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-bashkov-nikolay-nikolaevich",
+      "unit": "1213sp",
+      "row": 42,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Башков Николай Николаевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-54",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-sherstnev-ivan-ivanovich",
+      "unit": "1213sp",
+      "row": 54,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Шерстнев Иван Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "2/2.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 2/2."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-55",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-radikevich-georgiy-stepanovich",
+      "unit": "1213sp",
+      "row": 55,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Радикевич Георгий Степанович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "3",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 3"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-56",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-chudinov-evgeniy-maksimovich",
+      "unit": "1213sp",
+      "row": 56,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Чудинов Евгений Максимович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "3",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 3"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-57",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-karpov-ivan-alekseevich",
+      "unit": "1213sp",
+      "row": 57,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Карпов Иван Алексеевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "5",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 5"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-58",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-borodin-dmitriy-polikarp",
+      "unit": "1213sp",
+      "row": 58,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Бородин Дмитрий Поликарп"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "5",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 5"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-59",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-borovskih-al-dr-al-drovich",
+      "unit": "1213sp",
+      "row": 59,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Боровских Ал-др Ал-дрович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "5/1.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 5/1."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-71",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-golikov-vladimir-sergevich",
+      "unit": "1213sp",
+      "row": 71,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Голиков Владимир Сергевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "6/7.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 6/7."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-72",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-zagaynov-mihail-mihaylovich",
+      "unit": "1213sp",
+      "row": 72,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Загайнов Михаил Михайлович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "6/7.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 6/7."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-73",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-metelev-al-ndr-mihaylov",
+      "unit": "1213sp",
+      "row": 73,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Метелев Ал-ндр Михайлов"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "6",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 6"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-74",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-prudnikov-fedor-vasilevich",
+      "unit": "1213sp",
+      "row": 74,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Прудников Федор Васильевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "6",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 6"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-75",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-rotkanov-ivan-andreevich",
+      "unit": "1213sp",
+      "row": 75,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Ротканов Иван Андреевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВЛКСМ",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВЛКСМ"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "6",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 6"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-76",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-shabalin-al-ndr-vasilevich",
+      "unit": "1213sp",
+      "row": 76,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Шабалин Ал-ндр Васильевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "6",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 6"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-77",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-nevolin-petr-georgievich",
+      "unit": "1213sp",
+      "row": 77,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Неволин Петр Георгиевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "14/113",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 14/113"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-78",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-pecherin-aleksey-ivanovich",
+      "unit": "1213sp",
+      "row": 78,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Печерин Алексей Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "14",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 14"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-79",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-verovskiy-aleksey-gavrilovich",
+      "unit": "1213sp",
+      "row": 79,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Веровский Алексей Гаврилович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "21/23",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 21/23"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-80",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-popenov-nikolay-ekimovich",
+      "unit": "1213sp",
+      "row": 80,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Попенов Николай Екимович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "21/21",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 21/21"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-81",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-plastinin-ian-alekseevich",
+      "unit": "1213sp",
+      "row": 81,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Пластинин Иан Алексеевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "21/21",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 21/21"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-82",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-dorofeev-viktor-fedorovich",
+      "unit": "1213sp",
+      "row": 82,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Дорофеев Виктор Федорович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "21/20",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 21/20"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-83",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-seleznev-fedor-ivanovich",
+      "unit": "1213sp",
+      "row": 83,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Селезнев Федор Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "21/23",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 21/23"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-84",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-schepkin-nikolay-petrovich",
+      "unit": "1213sp",
+      "row": 84,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Щепкин Николай Петрович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "21",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 21"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-85",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-tolstobokov-filipp-filipovich",
+      "unit": "1213sp",
+      "row": 85,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Толстобоков Филипп Филипович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "44/48",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 44/48"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-86",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-ciganov-kirill-vasilevich",
+      "unit": "1213sp",
+      "row": 86,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Циганов Кирилл Васильевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "44/44рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 44/44рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-87",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-korotaev-al-ndr-vasilevich",
+      "unit": "1213sp",
+      "row": 87,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Коротаев Ал-ндр Васильевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВЛКСМ",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВЛКСМ"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "75",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 75"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1937 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1937 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-88",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-ivashev-ivan-mihaylovich",
+      "unit": "1213sp",
+      "row": 88,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Ивашев Иван Михайлович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/48",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/48"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-89",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-palehov-vasiliy-mihaylovich",
+      "unit": "1213sp",
+      "row": 89,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Палехов Василий Михайлович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "К/ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: К/ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-90",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-molodyh-efim-petrovich",
+      "unit": "1213sp",
+      "row": 90,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Молодых Ефим Петрович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-91",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-romaschenko-vasiliy-andreevich",
+      "unit": "1213sp",
+      "row": 91,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Ромащенко Василий Андреевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-92",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-shirinkin-leonid-semenovich",
+      "unit": "1213sp",
+      "row": 92,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Ширинкин Леонид Семенович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-93",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-dolzhenko-anufriy-platoov",
+      "unit": "1213sp",
+      "row": 93,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Долженко Ануфрий Платоов"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-94",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-nikulin-maksim-ivanovich",
+      "unit": "1213sp",
+      "row": 94,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Никулин Максим Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-95",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-turkin-al-ndr-vasilevich",
+      "unit": "1213sp",
+      "row": 95,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Туркин Ал-ндр Васильевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-96",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-abramov-nikolay-gavrilov",
+      "unit": "1213sp",
+      "row": 96,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Абрамов Николай Гаврилов"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "К/ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: К/ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "63/48",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 63/48"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-101",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-schuplecev-ivan-aleksandrovich",
+      "unit": "1213sp",
+      "row": 101,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Щуплецев Иван Александрович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "67",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 67"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-106",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-rusakov-danil-sergeevich",
+      "unit": "1213sp",
+      "row": 106,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Русаков Данил Сергеевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "88/88рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 88/88рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-107",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-danov-ivan-sergeevich",
+      "unit": "1213sp",
+      "row": 107,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Данов Иван Сергеевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "88",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 88"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-109",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-pleshenkov-ivan-pavlovich",
+      "unit": "1213sp",
+      "row": 109,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Плешенков Иван Павлович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "109",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 109"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-110",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-zhuykov-andrey-grigorevich",
+      "unit": "1213sp",
+      "row": 110,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Жуйков Андрей Григорьевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "124/124 рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 124/124 рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-111",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-morokov-aleksandr-ambrosimovich",
+      "unit": "1213sp",
+      "row": 111,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Мороков Александр Амбросимович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "К/ВКПб",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: К/ВКПб"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "124/124",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 124/124"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-112",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-zavalin-nikolay-mihaylovich",
+      "unit": "1213sp",
+      "row": 112,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Завалин Николай Михайлович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "ВЛКСМ",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: ВЛКСМ"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "124/124 рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 124/124 рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-113",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-yanin-nikolay-yakovlevich",
+      "unit": "1213sp",
+      "row": 113,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Янин Николай Яковлевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "124/124 рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 124/124 рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-114",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-gogin-grigoriy-stepanovich",
+      "unit": "1213sp",
+      "row": 114,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Гогин Григорий Степанович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "124/124 рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 124/124 рс"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-115",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-bubnov-aleksandr-alekseevich",
+      "unit": "1213sp",
+      "row": 115,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Бубнов Александр Алексеевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "124/124 рс",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 124/124 рс"
+            }
+          },
+          "status": "черновик"
+        },
+        "note": {
+          "value": "присягу принял в 1940 г.",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "примечание: присягу принял в 1940 г."
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-116",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-ponomarev-ilya-ivanovich",
+      "unit": "1213sp",
+      "row": 116,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Пономарев Илья Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "126 (8)",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 126 (8)"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-117",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kochnev-gavril-ivanovich",
+      "unit": "1213sp",
+      "row": 117,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Кочнев Гаврил Иванович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "rank": {
+          "value": "МКС",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "состав: МКС"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "128/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 128/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-118",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-novokshanov-ivan-vlasovich",
+      "unit": "1213sp",
+      "row": 118,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Новокшанов Иван Власович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "128/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 128/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-119",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-suhanov-fedor-dmitrievich",
+      "unit": "1213sp",
+      "row": 119,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Суханов Федор Дмитриевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "128(6)",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 128(6)"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-120",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-kantikov-ivan-evgenevich",
+      "unit": "1213sp",
+      "row": 120,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Кантиков Иван Евгеньевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "128",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 128"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-121",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-fedoseev-serafim-panteleevich",
+      "unit": "1213sp",
+      "row": 121,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Федосеев Серафим Пантелеевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "128/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 128/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-122",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-gurevich-yuzef-mihaylovich",
+      "unit": "1213sp",
+      "row": 122,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Гуревич Юзеф Михайлович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "128",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 128"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-123",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-matvienko-vladimir-vasilevich",
+      "unit": "1213sp",
+      "row": 123,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Матвиенко Владимир Васильевич"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "128/123",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 128/123"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    },
+    {
+      "id": "rec-name-list-1213-1941-08-27-124",
+      "document": "doc-name-list-1213-1941-08-27",
+      "person": "p-tretyakov-nikolay-stepanovich",
+      "unit": "1213sp",
+      "row": 124,
+      "fate": {
+        "value": "неизвестно",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+            "quote": "строка списка: Третьяков Николай Степанович"
+          }
+        },
+        "status": "черновик"
+      },
+      "fate_date": null,
+      "facts": {
+        "party": {
+          "value": "б/п",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "партийность: б/п"
+            }
+          },
+          "status": "черновик"
+        },
+        "vus": {
+          "value": "128",
+          "provenance": {
+            "source_id": "src-365sd-org",
+            "locator": {
+              "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/",
+              "quote": "ВУС: 128"
+            }
+          },
+          "status": "черновик"
+        }
+      }
+    }
+  ]
+}

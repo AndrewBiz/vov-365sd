@@ -83,7 +83,10 @@ def _source_ids(fact: dict) -> set[str]:
 
 def dataset_hash(root: str) -> str:
     digest = hashlib.sha256()
-    paths = ["data/registry.json", "data/sources.json", "data/units.json"]
+    paths = [
+        "data/registry.json", "data/sources.json", "data/units.json",
+        "data/places.json", "data/documents.json", "data/people.json", "data/rosters.json",
+    ]
     paths += sorted(
         os.path.relpath(p, root)
         for p in __import__("glob").glob(os.path.join(root, "data/events/*.json"))
@@ -127,7 +130,27 @@ def _locators(fact: dict) -> list[str]:
     return [_locator_label(e) for e in entries]
 
 
-def render_chronology(ds: vov.Dataset, events: list[dict], digest: str, places: dict[str, dict]) -> str:
+def _requisites_label(doc: dict) -> str:
+    req = doc.get("requisites")
+    if not req:
+        return "реквизиты не установлены"
+    label = f"ф. {req['fund']}, оп. {req['inventory']}, д. {req['file']}"
+    if req.get("sheets"):
+        label += f", л. {req['sheets']}"
+    return label
+
+
+def _document_label(doc: dict | None) -> str:
+    if not doc:
+        return "неизвестный документ"
+    date_label = _period_label(doc["date"])
+    type_label = doc.get("_type_label") or doc["type"]
+    return f"{type_label} от {date_label} ({_requisites_label(doc)}) — {_value_label(doc['title'])}"
+
+
+
+def render_chronology(ds: vov.Dataset, events: list[dict], digest: str, places: dict[str, dict],
+                      documents: dict[str, dict] | None = None) -> str:
     lines = [
         "<!-- СГЕНЕРИРОВАНО tools/build.py. Не редактировать вручную: изменения будут перезаписаны. -->",
         "",
@@ -164,8 +187,33 @@ def render_chronology(ds: vov.Dataset, events: list[dict], digest: str, places: 
             lines.append(f"- {key}: {_value_label(fact)} — статус {_fact_status(fact)}")
             for loc in _locators(fact):
                 lines.append(f"  - источник: {loc}")
+        for doc_id in ev.get("documents") or []:
+            lines.append(f"- Документ: {_document_label(documents.get(doc_id))}")
         if ev.get("note"):
             lines.append(f"- Примечание: {ev['note']}")
+        lines.append("")
+
+    documents = documents or {}
+    if documents:
+        lines += ["## Документы", ""]
+        for doc_id in sorted(documents):
+            doc = documents[doc_id]
+            linked = sum(1 for ev in events if doc_id in (ev.get("documents") or []))
+            suffix = "" if linked else " — не привязан ни к одному событию"
+            lines.append(f"- `{doc_id}` — {_document_label(doc)}; носитель: {doc['carrier']['source_id']}{suffix}")
+            if doc.get("note"):
+                lines.append(f"  - примечание: {doc['note']}")
+        lines.append("")
+
+    if ds.people["people"]:
+        lines += ["## Люди и списки", ""]
+        lines.append(
+            f"Персон: {len(ds.people['people'])}. Записей списков: {len(ds.rosters['entries'])}."
+        )
+        conflicted = [p for p in ds.people["people"] if p.get("conflict")]
+        if conflicted:
+            lines.append("")
+            lines.append("Персоны с расходящимися записями: " + ", ".join(f"`{p['id']}`" for p in conflicted))
         lines.append("")
 
     conflicts: list[str] = []
@@ -262,8 +310,13 @@ def build(root: str, vault: str | None, check: bool = False) -> tuple[int, list[
     digest = dataset_hash(root)
 
     places = {place["id"]: place for place in ds.places["places"]}
+    type_labels = ds.registry_types.get("document_types", {})
+    documents = {
+        doc["id"]: {**doc, "_type_label": type_labels.get(doc["type"], doc["type"])}
+        for doc in ds.documents["documents"]
+    }
     artifacts = {
-        os.path.join(root, CHRONO_PATH): render_chronology(ds, events, digest, places),
+        os.path.join(root, CHRONO_PATH): render_chronology(ds, events, digest, places, documents),
         os.path.join(root, GEOJSON_PATH): render_geojson(events, places),
     }
 

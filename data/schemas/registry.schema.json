@@ -3,52 +3,118 @@
   "$id": "https://vov-365sd.local/schemas/registry.schema.json",
   "title": "Реестр типов и уровней",
   "type": "object",
-  "required": ["event_types", "localization", "date_precision", "fact_status", "place_types", "place_states"],
+  "required": [
+    "event_types",
+    "localization",
+    "date_precision",
+    "fact_status",
+    "place_types",
+    "place_states",
+    "document_types",
+    "fate_outcomes"
+  ],
   "properties": {
     "event_types": {
       "type": "object",
       "minProperties": 1,
-      "additionalProperties": { "type": "string", "minLength": 3 }
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
     },
     "place_types": {
       "type": "object",
       "minProperties": 1,
-      "additionalProperties": { "type": "string", "minLength": 3 }
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
     },
     "place_states": {
       "type": "object",
       "minProperties": 3,
-      "additionalProperties": { "type": "string", "minLength": 3 }
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
     },
     "localization": {
       "type": "array",
       "minItems": 4,
       "uniqueItems": true,
-      "items": { "enum": ["exact", "settlement", "district", "approximate"] }
+      "items": {
+        "enum": [
+          "exact",
+          "settlement",
+          "district",
+          "approximate"
+        ]
+      }
     },
     "date_precision": {
       "type": "array",
       "minItems": 4,
       "uniqueItems": true,
-      "items": { "enum": ["day", "month", "year", "range"] }
+      "items": {
+        "enum": [
+          "day",
+          "month",
+          "year",
+          "range"
+        ]
+      }
     },
     "fact_status": {
       "type": "array",
       "minItems": 2,
       "uniqueItems": true,
-      "items": { "enum": ["черновик", "выверено"] }
+      "items": {
+        "enum": [
+          "черновик",
+          "выверено"
+        ]
+      }
     },
     "bbox": {
       "type": "object",
       "description": "Ожидаемый район координат: выход за границы считается ошибкой (ловит перепутанные широту и долготу).",
-      "required": ["west", "south", "east", "north"],
+      "required": [
+        "west",
+        "south",
+        "east",
+        "north"
+      ],
       "properties": {
-        "west": { "type": "number" },
-        "south": { "type": "number" },
-        "east": { "type": "number" },
-        "north": { "type": "number" }
+        "west": {
+          "type": "number"
+        },
+        "south": {
+          "type": "number"
+        },
+        "east": {
+          "type": "number"
+        },
+        "north": {
+          "type": "number"
+        }
       },
       "additionalProperties": false
+    },
+    "document_types": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "fate_outcomes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
     }
   },
   "additionalProperties": false

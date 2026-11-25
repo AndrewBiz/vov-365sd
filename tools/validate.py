@@ -30,6 +30,9 @@ SCHEMA_FILES = {
     "source": "data/schemas/source.schema.json",
     "registry": "data/schemas/registry.schema.json",
     "place": "data/schemas/place.schema.json",
+    "document": "data/schemas/document.schema.json",
+    "person": "data/schemas/person.schema.json",
+    "roster": "data/schemas/roster.schema.json",
 }
 
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -45,6 +48,9 @@ class Dataset:
         self.sources = _load(os.path.join(self.root, "data/sources.json"))
         self.units = _load(os.path.join(self.root, "data/units.json"))
         self.places = _load(os.path.join(self.root, "data/places.json"))
+        self.documents = _load(os.path.join(self.root, "data/documents.json"))
+        self.people = _load(os.path.join(self.root, "data/people.json"))
+        self.rosters = _load(os.path.join(self.root, "data/rosters.json"))
         self.events = [
             (path, _load(os.path.join(self.root, path)))
             for path in sorted(
@@ -261,6 +267,9 @@ def check_schemas(ds: Dataset, errors: list[str]) -> None:
         ("data/sources.json", ds.sources, "source"),
         ("data/units.json", ds.units, "unit"),
         ("data/places.json", ds.places, "place"),
+        ("data/documents.json", ds.documents, "document"),
+        ("data/people.json", ds.people, "person"),
+        ("data/rosters.json", ds.rosters, "roster"),
     ]
     checks += [(path, payload, "event") for path, payload in ds.events]
     for path, payload, schema_name in checks:
@@ -343,6 +352,133 @@ def _journal_path(ds: Dataset) -> str | None:
         if src.get("kind") in {"gazetteer", "historical-map"}:
             return os.path.join(ds.root, src["derivative_path"])
     return None
+
+
+def _norm_name(text: str) -> str:
+    return re.sub(r"\s+", " ", text.lower().replace("ё", "е")).strip()
+
+
+def check_documents(ds: Dataset, errors: list[str]) -> None:
+    known_sources = ds.source_ids()
+    seen: set[str] = set()
+    for idx, doc in enumerate(ds.documents["documents"]):
+        did = doc["id"]
+        where = f"data/documents.json:documents[{idx}] ({did})"
+        if did in seen:
+            errors.append(f"{where}: повторяющийся id документа")
+        seen.add(did)
+
+        if doc["type"] not in ds.registry_types.get("document_types", {}):
+            errors.append(f"{where}: неизвестный тип документа '{doc['type']}'")
+
+        _check_fact(f"{where}.title", doc["title"], ds, known_sources, errors)
+        _check_fact(f"{where}.date", doc["date"], ds, known_sources, errors)
+        _check_period(f"{where}.date", doc["date"], ds, errors)
+
+        requisites = doc.get("requisites")
+        if requisites is None:
+            if not doc.get("note"):
+                errors.append(
+                    f"{where}: реквизиты не установлены, но нет примечания, объясняющего это"
+                )
+        else:
+            missing = [f for f in ("fund", "inventory", "file") if not str(requisites.get(f, "")).strip()]
+            if missing:
+                errors.append(f"{where}: неполные реквизиты — отсутствуют {', '.join(missing)}")
+
+        carrier = doc["carrier"]
+        sid = carrier["source_id"]
+        if sid not in known_sources:
+            errors.append(f"{where}: носитель ссылается на неизвестный источник '{sid}'")
+            continue
+        source = known_sources[sid]
+        if source.get("kind") == "website":
+            url = carrier.get("url")
+            if not url:
+                errors.append(f"{where}: у веб-носителя нет url страницы")
+            elif url not in ds.snapshot_pages(sid):
+                errors.append(f"{where}: url носителя '{url}' не найден в снимке источника '{sid}'")
+        else:
+            path = carrier.get("derivative_path")
+            if not path:
+                errors.append(f"{where}: у носителя нет ни url, ни пути к производной")
+            elif not os.path.exists(os.path.join(ds.root, path)):
+                errors.append(f"{where}: производная носителя {path} не найдена")
+
+
+def check_people(ds: Dataset, errors: list[str]) -> None:
+    seen_ids: set[str] = set()
+    by_key: dict[tuple[str, object], str] = {}
+    for idx, person in enumerate(ds.people["people"]):
+        pid = person["id"]
+        where = f"data/people.json:people[{idx}] ({pid})"
+        if pid in seen_ids:
+            errors.append(f"{where}: повторяющийся id персоны")
+        seen_ids.add(pid)
+        key = (_norm_name(person["name"]), person["birth_year"])
+        if key in by_key:
+            errors.append(
+                f"{where}: возможный дубль персоны — совпадают ФИО и год рождения с '{by_key[key]}'"
+            )
+        else:
+            by_key[key] = pid
+
+
+def check_rosters(ds: Dataset, errors: list[str]) -> None:
+    known_sources = ds.source_ids()
+    doc_ids = {d["id"] for d in ds.documents["documents"]}
+    person_ids = {p["id"] for p in ds.people["people"]}
+    unit_ids = ds.unit_ids()
+    fates = ds.registry_types.get("fate_outcomes", {})
+    seen: set[str] = set()
+    by_person: dict[str, list[dict]] = {}
+
+    for idx, entry in enumerate(ds.rosters["entries"]):
+        rid = entry["id"]
+        where = f"data/rosters.json:entries[{idx}] ({rid})"
+        if rid in seen:
+            errors.append(f"{where}: повторяющийся id записи")
+        seen.add(rid)
+
+        if entry["document"] not in doc_ids:
+            errors.append(f"{where}: неизвестный документ '{entry['document']}'")
+        if entry["person"] not in person_ids:
+            errors.append(f"{where}: неизвестная персона '{entry['person']}'")
+        if entry["unit"] not in unit_ids:
+            errors.append(f"{where}: неизвестное формирование '{entry['unit']}'")
+
+        _check_fact(f"{where}.fate", entry["fate"], ds, known_sources, errors)
+        value = (entry["fate"].get("value") or "") if isinstance(entry["fate"], dict) else ""
+        if isinstance(value, str) and value not in fates:
+            errors.append(f"{where}: неизвестная формулировка судьбы '{value}'")
+
+        fate_date = entry.get("fate_date")
+        if fate_date:
+            _check_fact(f"{where}.fate_date", fate_date, ds, known_sources, errors)
+            _check_period(f"{where}.fate_date", fate_date, ds, errors)
+
+        for name, fact in (entry.get("facts") or {}).items():
+            _check_fact(f"{where}.facts.{name}", fact, ds, known_sources, errors)
+
+        by_person.setdefault(entry["person"], []).append(entry)
+
+    for person in ds.people["people"]:
+        pid = person["id"]
+        entries = by_person.get(pid, [])
+        values = {str(e["fate"].get("value")) for e in entries}
+        dates = {
+            json.dumps(e.get("fate_date", {}).get("value"), sort_keys=True, ensure_ascii=False)
+            for e in entries
+            if e.get("fate_date")
+        }
+        diverges = len(entries) > 1 and (len(values) > 1 or len(dates) > 1)
+        flag = person.get("conflict", False)
+        if diverges and not flag:
+            errors.append(
+                f"data/people.json ({pid}): записи разных списков расходятся, но персона не помечена conflict"
+            )
+        if flag and not diverges:
+            errors.append(f"data/people.json ({pid}): флаг conflict без расхождений в записях")
 
 
 def check_places(ds: Dataset, errors: list[str]) -> None:
@@ -454,6 +590,11 @@ def check_events(ds: Dataset, errors: list[str]) -> None:
         if place_id is not None and place_id not in ds.place_ids():
             errors.append(f"{where}: ссылка на несуществующее место '{place_id}'")
 
+        doc_ids = {d["id"] for d in ds.documents["documents"]}
+        for doc_id in event.get("documents") or []:
+            if doc_id not in doc_ids:
+                errors.append(f"{where}: ссылка на несуществующий документ '{doc_id}'")
+
         for key, fact in _iter_facts(event):
             _check_fact(f"{where}.{key}", fact, ds, known_sources, errors)
         _check_period(f"{where}.period", event["period"], ds, errors)
@@ -470,6 +611,9 @@ def run(root: str, vault: str | None = None) -> list[str]:
     check_sources(ds, errors)
     check_units(ds, errors)
     check_places(ds, errors)
+    check_documents(ds, errors)
+    check_people(ds, errors)
+    check_rosters(ds, errors)
     check_events(ds, errors)
     return errors
 

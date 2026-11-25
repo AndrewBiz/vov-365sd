@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vov-365sd.local/schemas/roster.schema.json",
+  "title": "Записи именных списков",
+  "type": "object",
+  "required": ["entries"],
+  "properties": {
+    "entries": { "type": "array", "items": { "$ref": "#/$defs/entry" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "document", "person", "unit", "fate"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^rec-[a-z0-9][a-z0-9-]*$" },
+        "document": { "type": "string", "pattern": "^doc-[a-z0-9][a-z0-9-]*$" },
+        "person": { "type": "string", "pattern": "^p-[a-z0-9][a-z0-9-]*$" },
+        "unit": { "type": "string" },
+        "row": { "type": "integer", "minimum": 1 },
+        "fate": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/fact" },
+        "fate_date": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/periodFact" }
+          ]
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/fact" }
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -120,8 +120,8 @@ def is_listing(url: str, base: str) -> bool:
     return path in ("", "/") or any(marker in path for marker in LISTING_MARKERS)
 
 
-def crawl(starts: list[str], limit: int, delay: float, verbose: bool = True, allow_query: bool = False) -> dict[str, str]:
-    """Возвращает карту URL → текст страницы (только не-листинги)."""
+def crawl(starts: list[str], limit: int, delay: float, verbose: bool = True, allow_query: bool = False) -> dict[str, dict]:
+    """Возвращает карту URL → {"text": текст, "html": разметка или None} (только не-листинги)."""
     base = starts[0]
     seen: set[str] = set()
     queue: list[str] = list(starts)
@@ -148,7 +148,7 @@ def crawl(starts: list[str], limit: int, delay: float, verbose: bool = True, all
                 if re.search(r"/page/\d+/?$", link) and link not in seen and link not in queue:
                     queue.append(link)
             continue
-        pages[url] = extract_text(page)
+        pages[url] = {"text": extract_text(page), "html": page if "<table" in page else None}
     return pages
 
 
@@ -166,22 +166,31 @@ def classify_removed(urls: list[str], fetcher=None) -> tuple[list[str], list[str
     return unreached, gone
 
 
-def write_snapshot(cache_dir: str, date_str: str, pages: dict[str, str]) -> str:
+def write_snapshot(cache_dir: str, date_str: str, pages: dict[str, dict]) -> str:
     """Пишет снимок; повторный проход в тот же день дополняет существующий снимок."""
     out_dir = os.path.join(cache_dir, date_str)
     pages_dir = os.path.join(out_dir, "pages")
     os.makedirs(pages_dir, exist_ok=True)
     map_path = os.path.join(out_dir, "pages.json")
-    mapping: dict[str, str] = {}
+    mapping: dict[str, dict] = {}
     if os.path.exists(map_path):
         with open(map_path, encoding="utf-8") as fh:
-            mapping = json.load(fh).get("pages", {})
-    used = {os.path.basename(rel)[:-4]: url for url, rel in mapping.items()}
+            raw_map = json.load(fh).get("pages", {})
+        for url, value in raw_map.items():
+            mapping[url] = {"text": value, "html": None} if isinstance(value, str) else value
+    used = {os.path.basename(entry["text"])[:-4]: url for url, entry in mapping.items()}
+    os.makedirs(os.path.join(out_dir, "raw"), exist_ok=True)
     for url in sorted(pages):
-        rel = mapping.get(url) or f"pages/{slug_of(url, used)}.txt"
-        mapping[url] = rel
-        with open(os.path.join(out_dir, rel), "w", encoding="utf-8") as fh:
-            fh.write(url + "\n" + pages[url] + "\n")
+        entry = mapping.get(url) or {"text": f"pages/{slug_of(url, used)}.txt", "html": None}
+        mapping[url] = entry
+        payload = pages[url]
+        with open(os.path.join(out_dir, entry["text"]), "w", encoding="utf-8") as fh:
+            fh.write(url + "\n" + payload["text"] + "\n")
+        if payload.get("html"):
+            if not entry.get("html"):
+                entry["html"] = entry["text"].replace("pages/", "raw/").replace(".txt", ".html")
+            with open(os.path.join(out_dir, entry["html"]), "w", encoding="utf-8") as fh:
+                fh.write(payload["html"])
     payload = {"count": len(mapping), "pages": dict(sorted(mapping.items()))}
     with open(map_path, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False, indent=1)

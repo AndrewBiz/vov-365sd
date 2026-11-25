@@ -1,0 +1,429 @@
+{
+  "people": [
+    {
+      "id": "p-kostin-petr-afonasevich",
+      "name": "Костин Петр Афонасьевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-popov-ivan-pavlovich",
+      "name": "Попов Иван Павлович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-chebykin-mihail-vasilevich",
+      "name": "Чебыкин Михаил Васильевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-kotanov-semen-semenovich",
+      "name": "Котанов Семен Семенович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-kornev-petr-semenovich",
+      "name": "Корнев Петр Семенович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-barmleev-mihail-ivanovich",
+      "name": "Бармлеев Михаил Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-troshev-ivan-fedorovich",
+      "name": "Трошев Иван Федорович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-sharapov-ivan-semenovich",
+      "name": "Шарапов Иван Семенович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-tumanov-dmitriy-stepanov",
+      "name": "Туманов Дмитрий Степанов",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-plesovskih-yakov-ivanovich",
+      "name": "Плесовских Яков Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-kozlov-ivan-petrovich",
+      "name": "Козлов Иван Петрович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-belyaev-aleksey-ivanovich",
+      "name": "Беляев Алексей Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-ponikarovskih-al-ndr-ilich",
+      "name": "Поникаровских Ал-ндр Ильич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-zyryanov-aleksey-nikolaevich",
+      "name": "Зырянов Алексей Николаевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-tutunn-vasiliy-yakovlevich",
+      "name": "Тутунн Василий Яковлевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-tamtasov-gavril-ivanovich",
+      "name": "Тамтасов Гаврил Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-voroshilov-grigoriy-ivanovich",
+      "name": "Ворошилов Григорий Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-kiselev-al-ndr-nikolaevich",
+      "name": "Киселев Ал-ндр Николаевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-dudarev-al-ndr-andreevich",
+      "name": "Дударев Ал-ндр Андреевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-schekoturov-vasiliy-fedorovich",
+      "name": "Щекотуров Василий Федорович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-zorin-danil-lukyanovich",
+      "name": "Зорин Данил Лукьянович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-panchev-stepan-nikolaevich",
+      "name": "Панчев Степан Николаевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-glazunov-naum-aleksandrovich",
+      "name": "Глазунов Наум Александрович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-fomin-semen-aleksandrovich",
+      "name": "Фомин Семен Александрович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-konov-grigoriy-ivanovich",
+      "name": "Конов Григорий Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-kuklev-danil-matveevich",
+      "name": "Куклев Данил Матвеевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-zverev-ivan-evstafevich",
+      "name": "Зверев Иван Евстафьевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-druzhnin-ivan-ivanovich",
+      "name": "Дружнин Иван Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-martynenko-stepan-sergeevich",
+      "name": "Мартыненко Степан Сергеевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-myznikov-yakov-pavlovich",
+      "name": "Мызников Яков Павлович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-nikitin-timofey-sidorov",
+      "name": "Никитин Тимофей Сидоров",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-shulakov-vasiliy-semenovich",
+      "name": "Шулаков Василий Семенович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-kiselev-mihail-al-dorovich",
+      "name": "Киселев Михаил Ал-дорович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-bashkov-nikolay-nikolaevich",
+      "name": "Башков Николай Николаевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-sherstnev-ivan-ivanovich",
+      "name": "Шерстнев Иван Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-radikevich-georgiy-stepanovich",
+      "name": "Радикевич Георгий Степанович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-chudinov-evgeniy-maksimovich",
+      "name": "Чудинов Евгений Максимович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-karpov-ivan-alekseevich",
+      "name": "Карпов Иван Алексеевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-borodin-dmitriy-polikarp",
+      "name": "Бородин Дмитрий Поликарп",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-borovskih-al-dr-al-drovich",
+      "name": "Боровских Ал-др Ал-дрович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-golikov-vladimir-sergevich",
+      "name": "Голиков Владимир Сергевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-zagaynov-mihail-mihaylovich",
+      "name": "Загайнов Михаил Михайлович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-metelev-al-ndr-mihaylov",
+      "name": "Метелев Ал-ндр Михайлов",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-prudnikov-fedor-vasilevich",
+      "name": "Прудников Федор Васильевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-rotkanov-ivan-andreevich",
+      "name": "Ротканов Иван Андреевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-shabalin-al-ndr-vasilevich",
+      "name": "Шабалин Ал-ндр Васильевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-nevolin-petr-georgievich",
+      "name": "Неволин Петр Георгиевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-pecherin-aleksey-ivanovich",
+      "name": "Печерин Алексей Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-verovskiy-aleksey-gavrilovich",
+      "name": "Веровский Алексей Гаврилович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-popenov-nikolay-ekimovich",
+      "name": "Попенов Николай Екимович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-plastinin-ian-alekseevich",
+      "name": "Пластинин Иан Алексеевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-dorofeev-viktor-fedorovich",
+      "name": "Дорофеев Виктор Федорович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-seleznev-fedor-ivanovich",
+      "name": "Селезнев Федор Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-schepkin-nikolay-petrovich",
+      "name": "Щепкин Николай Петрович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-tolstobokov-filipp-filipovich",
+      "name": "Толстобоков Филипп Филипович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-ciganov-kirill-vasilevich",
+      "name": "Циганов Кирилл Васильевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-korotaev-al-ndr-vasilevich",
+      "name": "Коротаев Ал-ндр Васильевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-ivashev-ivan-mihaylovich",
+      "name": "Ивашев Иван Михайлович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-palehov-vasiliy-mihaylovich",
+      "name": "Палехов Василий Михайлович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-molodyh-efim-petrovich",
+      "name": "Молодых Ефим Петрович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-romaschenko-vasiliy-andreevich",
+      "name": "Ромащенко Василий Андреевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-shirinkin-leonid-semenovich",
+      "name": "Ширинкин Леонид Семенович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-dolzhenko-anufriy-platoov",
+      "name": "Долженко Ануфрий Платоов",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-nikulin-maksim-ivanovich",
+      "name": "Никулин Максим Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-turkin-al-ndr-vasilevich",
+      "name": "Туркин Ал-ндр Васильевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-abramov-nikolay-gavrilov",
+      "name": "Абрамов Николай Гаврилов",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-schuplecev-ivan-aleksandrovich",
+      "name": "Щуплецев Иван Александрович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-rusakov-danil-sergeevich",
+      "name": "Русаков Данил Сергеевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-danov-ivan-sergeevich",
+      "name": "Данов Иван Сергеевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-pleshenkov-ivan-pavlovich",
+      "name": "Плешенков Иван Павлович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-zhuykov-andrey-grigorevich",
+      "name": "Жуйков Андрей Григорьевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-morokov-aleksandr-ambrosimovich",
+      "name": "Мороков Александр Амбросимович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-zavalin-nikolay-mihaylovich",
+      "name": "Завалин Николай Михайлович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-yanin-nikolay-yakovlevich",
+      "name": "Янин Николай Яковлевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-gogin-grigoriy-stepanovich",
+      "name": "Гогин Григорий Степанович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-bubnov-aleksandr-alekseevich",
+      "name": "Бубнов Александр Алексеевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-ponomarev-ilya-ivanovich",
+      "name": "Пономарев Илья Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-kochnev-gavril-ivanovich",
+      "name": "Кочнев Гаврил Иванович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-novokshanov-ivan-vlasovich",
+      "name": "Новокшанов Иван Власович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-suhanov-fedor-dmitrievich",
+      "name": "Суханов Федор Дмитриевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-kantikov-ivan-evgenevich",
+      "name": "Кантиков Иван Евгеньевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-fedoseev-serafim-panteleevich",
+      "name": "Федосеев Серафим Пантелеевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-gurevich-yuzef-mihaylovich",
+      "name": "Гуревич Юзеф Михайлович",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-matvienko-vladimir-vasilevich",
+      "name": "Матвиенко Владимир Васильевич",
+      "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-tretyakov-nikolay-stepanovich",
+      "name": "Третьяков Николай Степанович",
+      "birth_year": "неизвестен"
+    }
+  ]
+}
