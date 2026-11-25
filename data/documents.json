@@ -115,6 +115,48 @@
         "source_id": "src-365sd-org",
         "url": "https://365sd.org/imennoy-spisok-na-komandu-1213-sp-otravlya/"
       }
+    },
+    {
+      "id": "doc-name-list-1213-1941-l216",
+      "type": "name-list",
+      "title": {
+        "value": "Именной список на команду для 1213 сп, отправляемую Серовским РВК в распоряжение майора Данюк, разъезд Еланский, Камышловские лагеря (л. 216—225 об.)",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-dlya-1213-sp-otra/",
+            "quote": "Именной список на команду для 1213 сп отравляемую Серовским РВК в распоряжение майора Данюк разъезд Еланский Камышлвские лагеря."
+          }
+        },
+        "status": "черновик"
+      },
+      "date": {
+        "value": {
+          "from": "1941-01-01",
+          "to": "1941-12-31",
+          "precision": "year"
+        },
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/imennoy-spisok-na-komandu-dlya-1213-sp-otra/",
+            "quote": "ГААОСО, Ф. Р-73, оп. 2, д. 6 , л. 216 — 225 об."
+          }
+        },
+        "status": "черновик",
+        "note": "День на листах не указан; список продолжает л. 213—215 об. от 27.08.1941 (тот же конвой, тот же адресат), поэтому год известен, день — нет."
+      },
+      "requisites": {
+        "fund": "Р-73",
+        "inventory": "2",
+        "file": "6",
+        "sheets": "216 — 225 об."
+      },
+      "carrier": {
+        "source_id": "src-365sd-org",
+        "url": "https://365sd.org/imennoy-spisok-na-komandu-dlya-1213-sp-otra/"
+      },
+      "note": "Продолжение списка л. 213—215 об.; по документу видно, что команда формировалась Серовским РВК и шла в Камышловские (Еланские) лагеря."
     }
   ]
 }
