@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vov-365sd.local/schemas/unit.schema.json",
+  "title": "Формирования и части",
+  "type": "object",
+  "required": ["units"],
+  "properties": {
+    "units": { "type": "array", "items": { "$ref": "#/$defs/unit" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "unit": {
+      "type": "object",
+      "required": ["id", "kind", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "kind": {
+          "enum": ["division", "regiment", "battalion", "artillery-regiment", "army", "front", "other"]
+        },
+        "name": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/fact" },
+        "parent": { "type": ["string", "null"] },
+        "subordination": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["unit_id", "period"],
+            "properties": {
+              "unit_id": { "type": "string" },
+              "period": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/periodFact" },
+              "note": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

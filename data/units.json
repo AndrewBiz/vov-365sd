@@ -1,0 +1,261 @@
+{
+  "units": [
+    {
+      "id": "365sd",
+      "kind": "division",
+      "name": {
+        "value": "365-я стрелковая дивизия (1-го формирования), «Уральская»",
+        "provenance": {
+          "source_id": "src-pptx-365",
+          "locator": {
+            "slide": 1,
+            "quote": "365 Уральская стрелковая дивизия"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": null,
+      "subordination": [
+        {
+          "unit_id": "28ra",
+          "period": {
+            "value": {
+              "from": "1941-11-02",
+              "to": "1941-11-30",
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 6,
+                "quote": "С 2.11.1941 г. по 30.11.1041 г. 365 сд находилась в составе 28 Резервной Армии"
+              }
+            },
+            "status": "черновик"
+          },
+          "note": "Опечатка «30.11.1041» в источнике сохранена в цитате."
+        },
+        {
+          "unit_id": "30a",
+          "period": {
+            "value": {
+              "from": "1941-11-30",
+              "to": "1942-01-11",
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 6,
+                "quote": "С 30.11.1941 г. 365 сд вошла в состав 30 армии (находилась в её составе по 24.01.1942 г.)"
+              }
+            },
+            "status": "черновик"
+          },
+          "note": "В источнике конец подчинения 30 А указан как 24.01.1942 на слайде 6 и как 11.01.1942 на слайде 10 — здесь взята дата вывода в резерв, расхождение зафиксировано в событиях."
+        },
+        {
+          "unit_id": "kalffront",
+          "period": {
+            "value": {
+              "from": "1942-01-11",
+              "to": "1942-01-22",
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 10,
+                "quote": "11 января 1942 года дивизию вывели из состава 30-й армии в резерв командующего Калининским фронтом"
+              }
+            },
+            "status": "черновик"
+          },
+          "note": "Резерв фронта, а не подчинение объединению в обычном смысле."
+        },
+        {
+          "unit_id": "29a",
+          "period": {
+            "value": {
+              "from": "1942-01-22",
+              "to": null,
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 11,
+                "quote": "22 января, дивизию передали в состав 29-й армии"
+              }
+            },
+            "status": "черновик"
+          },
+          "note": "До прекращения существования дивизии; точная дата расформирования в источниках не зафиксирована."
+        }
+      ]
+    },
+    {
+      "id": "1211sp",
+      "kind": "regiment",
+      "name": {
+        "value": "1211-й стрелковый полк",
+        "provenance": {
+          "source_id": "src-pptx-365",
+          "locator": {
+            "slide": 2,
+            "quote": "1211, 1213, 1215 стрелковые полки"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "1213sp",
+      "kind": "regiment",
+      "name": {
+        "value": "1213-й стрелковый полк",
+        "provenance": [
+          {
+            "source_id": "src-pptx-365",
+            "locator": {
+              "slide": 2,
+              "quote": "1211, 1213, 1215 стрелковые полки"
+            }
+          },
+          {
+            "source_id": "src-book-p96",
+            "locator": {
+              "page": 96,
+              "quote": "Находился на службе в составе 1213-го стрелкового полка 365-й стрелковой дивизии"
+            }
+          }
+        ],
+        "status": "выверено"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "1215sp",
+      "kind": "regiment",
+      "name": {
+        "value": "1215-й стрелковый полк",
+        "provenance": {
+          "source_id": "src-pptx-365",
+          "locator": {
+            "slide": 2,
+            "quote": "1211, 1213, 1215 стрелковые полки"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "927ap",
+      "kind": "artillery-regiment",
+      "name": {
+        "value": "927-й артиллерийский полк",
+        "provenance": [
+          {
+            "source_id": "src-pptx-365",
+            "locator": {
+              "slide": 2,
+              "quote": "927 артиллерийский полк"
+            }
+          },
+          {
+            "source_id": "src-book-p96",
+            "locator": {
+              "page": 96,
+              "quote": "бойца 927-го артиллерийского полка 365-й стрелковой дивизии"
+            }
+          }
+        ],
+        "status": "выверено"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "379sd",
+      "kind": "division",
+      "name": {
+        "value": "379-я стрелковая дивизия",
+        "provenance": {
+          "source_id": "src-book-p96",
+          "locator": {
+            "page": 96,
+            "quote": "30 декабря 1941 года части 379-й стрелковой дивизии ведут тяжелые ожесточенные бои за деревню Дьяково"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": null,
+      "note": "Соседнее соединение, упоминается в источниках о тех же боях."
+    },
+    {
+      "id": "28ra",
+      "kind": "army",
+      "name": {
+        "value": "28-я резервная армия",
+        "provenance": {
+          "source_id": "src-pptx-365",
+          "locator": {
+            "slide": 6,
+            "quote": "в составе 28 Резервной Армии"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": null
+    },
+    {
+      "id": "30a",
+      "kind": "army",
+      "name": {
+        "value": "30-я армия",
+        "provenance": {
+          "source_id": "src-pptx-365",
+          "locator": {
+            "slide": 6,
+            "quote": "365 сд вошла в состав 30 армии"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": null
+    },
+    {
+      "id": "29a",
+      "kind": "army",
+      "name": {
+        "value": "29-я армия",
+        "provenance": {
+          "source_id": "src-pptx-365",
+          "locator": {
+            "slide": 11,
+            "quote": "дивизию передали в состав 29-й армии"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": null
+    },
+    {
+      "id": "kalffront",
+      "kind": "front",
+      "name": {
+        "value": "Калининский фронт",
+        "provenance": {
+          "source_id": "src-pptx-365",
+          "locator": {
+            "slide": 10,
+            "quote": "в резерв командующего Калининским фронтом"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": null
+    }
+  ]
+}

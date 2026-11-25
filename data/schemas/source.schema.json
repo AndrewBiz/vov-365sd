@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vov-365sd.local/schemas/source.schema.json",
+  "title": "Реестр исходных документов",
+  "type": "object",
+  "required": ["sources"],
+  "properties": {
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "title", "vault_path", "derivative_path", "sha256", "received"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^src-[a-z0-9][a-z0-9-]*$" },
+          "kind": {
+            "enum": ["archive-reply", "book-page", "presentation", "museum-photo", "map", "other"]
+          },
+          "title": { "type": "string", "minLength": 3 },
+          "vault_path": {
+            "type": "string",
+            "description": "Путь относительно корня Obsidian vault.",
+            "minLength": 3
+          },
+          "derivative_path": {
+            "type": "string",
+            "description": "Путь относительно корня репозитория.",
+            "pattern": "^docs/sources/.+\\.md$"
+          },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "received": { "type": "string", "format": "date" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

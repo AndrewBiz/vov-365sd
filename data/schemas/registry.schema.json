@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vov-365sd.local/schemas/registry.schema.json",
+  "title": "Реестр типов и уровней",
+  "type": "object",
+  "required": ["event_types", "localization", "date_precision", "fact_status"],
+  "properties": {
+    "event_types": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 3 }
+    },
+    "localization": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": { "enum": ["exact", "settlement", "district", "approximate"] }
+    },
+    "date_precision": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": { "enum": ["day", "month", "year", "range"] }
+    },
+    "fact_status": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": { "enum": ["черновик", "выверено"] }
+    }
+  },
+  "additionalProperties": false
+}

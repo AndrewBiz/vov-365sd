@@ -11,3 +11,7 @@
 .DS_Store
 .venv/
 node_modules/
+__pycache__/
+
+# артефакты сборки (генерируются tools/build.py)
+data/dist/

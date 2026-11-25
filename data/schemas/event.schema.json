@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vov-365sd.local/schemas/event.schema.json",
+  "title": "События боевого пути за год",
+  "type": "object",
+  "required": ["year", "events"],
+  "properties": {
+    "year": { "type": "integer", "minimum": 1939, "maximum": 1950 },
+    "events": { "type": "array", "items": { "$ref": "#/$defs/event" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "event": {
+      "type": "object",
+      "required": ["id", "type", "title", "units", "period", "localization"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ev-[0-9]{4}-[a-z0-9-]+$" },
+        "type": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "title": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/fact" },
+        "units": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        },
+        "period": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/periodFact" },
+        "geometry": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["type", "coordinates"],
+              "properties": {
+                "type": { "enum": ["Point", "LineString", "Polygon", "MultiLineString"] },
+                "coordinates": {}
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "localization": { "enum": ["exact", "settlement", "district", "approximate"] },
+        "facts": {
+          "type": "object",
+          "additionalProperties": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/fact" }
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
