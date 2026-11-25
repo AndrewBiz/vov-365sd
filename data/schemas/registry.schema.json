@@ -14,7 +14,9 @@
     "fate_outcomes",
     "person_fact_keys",
     "evidence_basis",
-    "portal_types"
+    "portal_types",
+    "front_accuracy",
+    "front_bbox"
   ],
   "properties": {
     "event_types": {
@@ -142,6 +144,39 @@
         "type": "string",
         "minLength": 3
       }
+    },
+    "front_accuracy": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "front_bbox": {
+      "type": "object",
+      "description": "Границы театра для линий фронта: точка за ними — ошибка.",
+      "required": [
+        "west",
+        "south",
+        "east",
+        "north"
+      ],
+      "properties": {
+        "west": {
+          "type": "number"
+        },
+        "south": {
+          "type": "number"
+        },
+        "east": {
+          "type": "number"
+        },
+        "north": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

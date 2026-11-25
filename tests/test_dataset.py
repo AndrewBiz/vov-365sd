@@ -132,6 +132,7 @@ class DatasetCase(unittest.TestCase):
         _write(os.path.join(self.root, "data/documents.json"), {"documents": []})
         _write(os.path.join(self.root, "data/people.json"), {"people": []})
         _write(os.path.join(self.root, "data/rosters.json"), {"entries": []})
+        _write(os.path.join(self.root, "data/front_lines/1941.json"), {"front_lines": []})
 
         _write(
             os.path.join(self.root, "data/places.json"),
@@ -925,6 +926,92 @@ class TestPortalIntake(DatasetCase):
         bad = dict(entry); bad["type"] = "Неизвестный тип"
         with self.assertRaises(SystemExit):
             pi.build_document(bad, "src-portal-test", "prefix/", reg["portal_types"])
+
+
+class TestFrontLines(DatasetCase):
+    def _line(self, **overrides) -> dict:
+        line = {
+            "id": "fl-1941-12-06",
+            "date": {
+                "value": {"from": "1941-12-06", "to": "1941-12-06", "precision": "day"},
+                "provenance": {"source_id": "src-test", "locator": {"slide": 1, "quote": "6.12.41"}},
+                "status": "черновик",
+            },
+            "geometry": {"type": "LineString",
+                         "coordinates": [[36.7, 56.3], [36.9, 56.4], [37.1, 56.2]]},
+            "accuracy_km": 10,
+            "accuracy_level": "sheet-1m",
+            "provenance": {"source_id": "src-web-test",
+                           "locator": {"sheet_date": "1941-12-06", "sheet": "ca000124"}},
+            "note": "тест",
+        }
+        line.update(overrides)
+        return line
+
+    def test_valid_line(self) -> None:
+        self.save("data/front_lines/1941.json", {"front_lines": [self._line()]})
+        self.assertEqual(self.errors(), [])
+
+    def test_date_mismatch_with_sheet(self) -> None:
+        line = self._line()
+        line["provenance"]["locator"]["sheet_date"] = "1941-12-05"
+        self.save("data/front_lines/1941.json", {"front_lines": [line]})
+        self.assert_error("не совпадает с датой листа")
+
+    def test_sheet_1m_cannot_be_precise(self) -> None:
+        self.save("data/front_lines/1941.json", {"front_lines": [self._line(accuracy_km=2)]})
+        self.assert_error("точности лучше ±5 км")
+
+    def test_unknown_accuracy_level(self) -> None:
+        self.save("data/front_lines/1941.json", {"front_lines": [self._line(accuracy_level="на глаз")]})
+        self.assert_error("неизвестный уровень точности")
+
+    def test_point_outside_theatre(self) -> None:
+        line = self._line()
+        line["geometry"]["coordinates"] = [[36.7, 56.3], [10.0, 45.0]]
+        self.save("data/front_lines/1941.json", {"front_lines": [line]})
+        self.assert_error("за границами театра")
+
+    def test_duplicate_points(self) -> None:
+        line = self._line()
+        line["geometry"]["coordinates"] = [[36.7, 56.3], [36.7, 56.3], [37.0, 56.2]]
+        self.save("data/front_lines/1941.json", {"front_lines": [line]})
+        self.assert_error("дублируются")
+
+    def test_self_intersection(self) -> None:
+        line = self._line()
+        line["geometry"]["coordinates"] = [[36.6, 56.2], [37.0, 56.4], [37.0, 56.2], [36.6, 56.4]]
+        self.save("data/front_lines/1941.json", {"front_lines": [line]})
+        self.assert_error("самопересекается")
+
+    def test_warning_when_event_far_from_line(self) -> None:
+        payload = self.load("data/events/1941.json")
+        payload["events"][0]["period"]["value"] = {"from": "1941-12-06", "to": "1941-12-06", "precision": "day"}
+        payload["events"][0]["place"] = "pl-far"
+        self.save("data/events/1941.json", payload)
+        places = self.load("data/places.json")
+        places["places"].append({
+            "id": "pl-far", "type": "village", "names": {"modern": "Далёкое"},
+            "state": "found", "accuracy": "settlement", "region": "Тверская область",
+            "coords": {"value": {"lon": 40.5, "lat": 58.5},
+                       "provenance": {"source_id": "src-test", "locator": {"slide": 1}},
+                       "status": "черновик"},
+        })
+        self.save("data/places.json", places)
+        self.save("data/front_lines/1941.json", {"front_lines": [self._line()]})
+        self.assertEqual(self.errors(), [])
+        self.assertTrue(any("от линии" in w for w in vov.WARNINGS), vov.WARNINGS)
+
+    def test_trace_tool_maps_calibration_points(self) -> None:
+        import importlib
+        ft = importlib.import_module("front_line_trace")
+        a = {"x": 100, "y": 100, "lon": 36.0, "lat": 56.0}
+        b = {"x": 600, "y": 100, "lon": 37.0, "lat": 56.0}
+        coords, residual = ft.similarity([{"x": 100, "y": 100}, {"x": 350, "y": 100}, {"x": 600, "y": 100}], a, b)
+        self.assertLess(residual, 1.0)
+        self.assertAlmostEqual(coords[0][0], 36.0, places=2)
+        self.assertAlmostEqual(coords[2][0], 37.0, places=2)
+        self.assertAlmostEqual(coords[1][0], 36.5, places=1)
 
 
 class TestBuild(DatasetCase):

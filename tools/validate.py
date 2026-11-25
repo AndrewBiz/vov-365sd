@@ -33,6 +33,7 @@ SCHEMA_FILES = {
     "document": "data/schemas/document.schema.json",
     "person": "data/schemas/person.schema.json",
     "roster": "data/schemas/roster.schema.json",
+    "frontline": "data/schemas/frontline.schema.json",
 }
 
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -52,6 +53,7 @@ class Dataset:
         self.documents = _load(os.path.join(self.root, "data/documents.json"))
         self.people = _load(os.path.join(self.root, "data/people.json"))
         self.rosters = _load(os.path.join(self.root, "data/rosters.json"))
+        self.front_lines = _load(os.path.join(self.root, "data/front_lines/1941.json"))
         self.events = [
             (path, _load(os.path.join(self.root, path)))
             for path in sorted(
@@ -271,6 +273,7 @@ def check_schemas(ds: Dataset, errors: list[str]) -> None:
         ("data/documents.json", ds.documents, "document"),
         ("data/people.json", ds.people, "person"),
         ("data/rosters.json", ds.rosters, "roster"),
+        ("data/front_lines/1941.json", ds.front_lines, "frontline"),
     ]
     checks += [(path, payload, "event") for path, payload in ds.events]
     for path, payload, schema_name in checks:
@@ -399,6 +402,125 @@ def _sha256_file(path: str) -> str:
 
 def _norm_name(text: str) -> str:
     return re.sub(r"\s+", " ", text.lower().replace("ё", "е")).strip()
+
+
+WARNINGS: list[str] = []
+
+
+def _haversine_km(lon1, lat1, lon2, lat2):
+    import math
+    r = 6371.0
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp = p2 - p1
+    dl = math.radians(lon2 - lon1)
+    a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return 2 * r * math.asin(math.sqrt(a))
+
+
+def _point_to_segment_km(pt, a, b):
+    """Расстояние от точки до отрезка в километрах (плоская аппроксимация на малой площади)."""
+    import math
+    lon0, lat0 = pt
+    k = math.cos(math.radians(lat0)) * 111.32
+    ax, ay = (a[0] - lon0) * k, (a[1] - lat0) * 110.57
+    bx, by = (b[0] - lon0) * k, (b[1] - lat0) * 110.57
+    dx, dy = bx - ax, by - ay
+    if dx == 0 and dy == 0:
+        return math.hypot(ax, ay)
+    t = max(0.0, min(1.0, -(ax * dx + ay * dy) / (dx * dx + dy * dy)))
+    return math.hypot(ax + t * dx, ay + t * dy)
+
+
+def _segments_cross(p1, p2, p3, p4):
+    def orient(a, b, c):
+        return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+    o1, o2 = orient(p1, p2, p3), orient(p1, p2, p4)
+    o3, o4 = orient(p3, p4, p1), orient(p3, p4, p2)
+    return (o1 * o2 < 0) and (o3 * o4 < 0)
+
+
+def check_front_lines(ds: Dataset, errors: list[str]) -> None:
+    known_sources = ds.source_ids()
+    box = ds.registry_types.get("front_bbox") or {}
+    levels = ds.registry_types.get("front_accuracy", {})
+    seen: set[str] = set()
+    for idx, line in enumerate(ds.front_lines.get("front_lines", [])):
+        lid = line["id"]
+        where = f"data/front_lines/1941.json:{idx} ({lid})"
+        if lid in seen:
+            errors.append(f"{where}: повторяющийся идентификатор линии")
+        seen.add(lid)
+
+        _check_fact(f"{where}.date", line["date"], ds, known_sources, errors)
+        _check_period(f"{where}.date", line["date"], ds, errors)
+
+        prov = line["provenance"]
+        sid = prov["source_id"]
+        source = known_sources.get(sid)
+        if source is None:
+            errors.append(f"{where}: основание — неизвестный источник '{sid}'")
+        elif source.get("kind") not in {"historical-map", "map", "website", "archive-portal"}:
+            errors.append(f"{where}: основание не картографическое — вид источника '{source.get('kind')}'")
+
+        sheet_date = prov["locator"].get("sheet_date")
+        line_date = (line["date"].get("value") or {}).get("from")
+        if sheet_date != line_date:
+            errors.append(
+                f"{where}: дата линии {line_date} не совпадает с датой листа-основания {sheet_date}"
+            )
+
+        level = line["accuracy_level"]
+        if level not in levels:
+            errors.append(f"{where}: неизвестный уровень точности '{level}'")
+        if level == "sheet-1m" and line["accuracy_km"] < 5:
+            errors.append(
+                f"{where}: лист 1:1 000 000 не даёт точности лучше ±5 км, указано {line['accuracy_km']}"
+            )
+
+        coords = line["geometry"]["coordinates"]
+        if len(coords) < 2:
+            errors.append(f"{where}: точек в линии {len(coords)} — это не линия")
+        for i, pair in enumerate(coords):
+            lon, lat = pair[0], pair[1]
+            if not (-180 <= lon <= 180) or not (-90 <= lat <= 90):
+                errors.append(f"{where}: точка {i} вне допустимых координат ({lon}, {lat})")
+            elif box and not (box["west"] <= lon <= box["east"] and box["south"] <= lat <= box["north"]):
+                errors.append(f"{where}: точка {i} ({lat}, {lon}) за границами театра")
+            if i and coords[i - 1] == coords[i]:
+                errors.append(f"{where}: точки {i - 1} и {i} дублируются")
+        for i in range(len(coords) - 1):
+            for j in range(i + 2, len(coords) - 1):
+                if _segments_cross(coords[i], coords[i + 1], coords[j], coords[j + 1]):
+                    errors.append(f"{where}: линия самопересекается (отрезки {i} и {j})")
+
+
+def check_front_line_against_events(ds: Dataset) -> None:
+    """Предупреждения: событие на дату линии далеко от неё — повод разобраться."""
+    place_by_id = {p["id"]: p for p in ds.places["places"]}
+    for line in ds.front_lines.get("front_lines", []):
+        line_date = (line["date"].get("value") or {}).get("from")
+        if not line_date:
+            continue
+        coords = line["geometry"]["coordinates"]
+        if len(coords) < 2:
+            continue
+        for _path, payload in ds.events:
+            for ev in payload["events"]:
+                v = ev["period"].get("value") or {}
+                start, end = v.get("from"), v.get("to") or v.get("from")
+                if not start or start > line_date or (end and end < line_date):
+                    continue
+                place = place_by_id.get(ev.get("place") or "")
+                coords_value = (place or {}).get("coords") or {}
+                if not coords_value.get("value"):
+                    continue
+                pt = (coords_value["value"]["lon"], coords_value["value"]["lat"])
+                dist = min(_point_to_segment_km(pt, coords[i], coords[i + 1]) for i in range(len(coords) - 1))
+                if dist > 25:
+                    WARNINGS.append(
+                        f"{line['id']}: событие {ev['id']} на ту же дату в {dist:.0f} км от линии "
+                        f"(место {place['id']}) — проверить оцифровку или дату события"
+                    )
 
 
 def check_documents(ds: Dataset, errors: list[str]) -> None:
@@ -769,6 +891,7 @@ def run(root: str, vault: str | None = None, deep: bool = False) -> list[str]:
         ds = Dataset(root, vault, deep=deep)
     except FileNotFoundError as exc:
         return [f"не найден обязательный файл: {exc.filename}"]
+    WARNINGS.clear()
     check_schemas(ds, errors)
     check_sources(ds, errors)
     check_units(ds, errors)
@@ -779,6 +902,8 @@ def run(root: str, vault: str | None = None, deep: bool = False) -> list[str]:
     check_person_conflicts(ds, errors)
     check_rosters(ds, errors)
     check_events(ds, errors)
+    check_front_lines(ds, errors)
+    check_front_line_against_events(ds)
     return errors
 
 
@@ -798,6 +923,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Проверка не пройдена: {len(errors)} нарушений")
         return 1
     if not args.quiet:
+        for warning in WARNINGS:
+            print(f"ПРЕДУПРЕЖДЕНИЕ  {warning}")
         print("Проверка пройдена: нарушений нет")
     return 0
 

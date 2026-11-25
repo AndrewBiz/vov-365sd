@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vov-365sd.local/schemas/frontline.schema.json",
+  "title": "Линии фронта по датам",
+  "type": "object",
+  "required": ["front_lines"],
+  "properties": {
+    "front_lines": { "type": "array", "items": { "$ref": "#/$defs/frontLine" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "frontLine": {
+      "type": "object",
+      "required": ["id", "date", "geometry", "accuracy_km", "accuracy_level", "provenance"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^fl-\\d{4}-\\d{2}-\\d{2}$" },
+        "date": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/periodFact" },
+        "geometry": {
+          "type": "object",
+          "required": ["type", "coordinates"],
+          "properties": {
+            "type": { "const": "LineString" },
+            "coordinates": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": { "type": "number" }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "accuracy_km": { "type": "number", "minimum": 0 },
+        "accuracy_level": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "provenance": {
+          "type": "object",
+          "required": ["source_id", "locator"],
+          "properties": {
+            "source_id": { "type": "string", "pattern": "^src-[a-z0-9][a-z0-9-]*$" },
+            "locator": {
+              "type": "object",
+              "required": ["sheet_date"],
+              "properties": {
+                "sheet": { "type": "string" },
+                "sheet_date": { "type": "string", "format": "date" },
+                "url": { "type": "string", "format": "uri" },
+                "quote": { "type": "string" }
+              },
+              "additionalProperties": false
+            },
+            "traced_by": {
+              "type": "string",
+              "description": "Кто и когда оцифровал: ручная работа не скрывается."
+            }
+          },
+          "additionalProperties": false
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

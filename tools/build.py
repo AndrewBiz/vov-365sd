@@ -86,6 +86,7 @@ def dataset_hash(root: str) -> str:
     paths = [
         "data/registry.json", "data/sources.json", "data/units.json",
         "data/places.json", "data/documents.json", "data/people.json", "data/rosters.json",
+        "data/front_lines/1941.json",
     ]
     paths += sorted(
         os.path.relpath(p, root)
@@ -436,6 +437,58 @@ def render_people(ds: vov.Dataset, digest: str) -> str:
     return "\n".join(lines)
 
 
+FRONT_GEOJSON_PATH = "data/dist/front_lines.geojson"
+FRAMES_PATH = "data/dist/frames.json"
+
+
+def render_front_lines(ds: vov.Dataset) -> str:
+    features = []
+    for line in sorted(ds.front_lines.get("front_lines", []), key=lambda x: x["id"]):
+        value = line["date"].get("value") or {}
+        features.append({
+            "type": "Feature",
+            "id": line["id"],
+            "geometry": {"type": "LineString", "coordinates": line["geometry"]["coordinates"]},
+            "properties": {
+                "id": line["id"],
+                "date_from": value.get("from"),
+                "date_to": value.get("to"),
+                "precision": value.get("precision"),
+                "accuracy_km": line["accuracy_km"],
+                "accuracy_level": line["accuracy_level"],
+                "source_id": line["provenance"]["source_id"],
+                "sheet": line["provenance"]["locator"].get("sheet"),
+                "note": line.get("note"),
+            },
+        })
+    payload = {"type": "FeatureCollection", "features": features}
+    return json.dumps(payload, ensure_ascii=False, indent=1) + "\n"
+
+
+def render_frames(ds: vov.Dataset, events: list[dict]) -> str:
+    frames: dict[str, dict] = {}
+    for line in ds.front_lines.get("front_lines", []):
+        value = line["date"].get("value") or {}
+        date = value.get("from")
+        if not date:
+            continue
+        related = []
+        for ev in events:
+            v = ev["period"].get("value") or {}
+            start, end = v.get("from"), v.get("to") or v.get("from")
+            if start and start <= date and (end is None or end >= date):
+                related.append(ev["id"])
+        frames[date] = {
+            "date": date,
+            "feature_id": line["id"],
+            "accuracy_km": line["accuracy_km"],
+            "accuracy_level": line["accuracy_level"],
+            "events": sorted(set(related)),
+        }
+    ordered = [frames[d] for d in sorted(frames)]
+    return json.dumps({"frames": ordered}, ensure_ascii=False, indent=1) + "\n"
+
+
 def render_geojson(events: list[dict], places: dict[str, dict]) -> str:
     features = []
     for ev in events:
@@ -482,6 +535,8 @@ def build(root: str, vault: str | None, check: bool = False) -> tuple[int, list[
         os.path.join(root, CHRONO_PATH): render_chronology(ds, events, digest, places, documents),
         os.path.join(root, GEOJSON_PATH): render_geojson(events, places),
         os.path.join(root, PEOPLE_PATH): render_people(ds, digest),
+        os.path.join(root, FRONT_GEOJSON_PATH): render_front_lines(ds),
+        os.path.join(root, FRAMES_PATH): render_frames(ds, events),
     }
 
     messages: list[str] = []

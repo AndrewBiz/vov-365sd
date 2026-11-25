@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Обводка линии фронта по листу Lage Ost</title>
+<style>
+  body { font: 14px/1.4 system-ui, sans-serif; margin: 0; background: #111; color: #eee; }
+  header { padding: 8px 12px; background: #1c1c1c; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  button, input { font: inherit; padding: 4px 8px; }
+  input[type=number] { width: 90px; }
+  #wrap { position: relative; overflow: auto; height: calc(100vh - 90px); }
+  canvas { display: block; cursor: crosshair; }
+  #hint { color: #9ad; }
+  .cal { color: #f90; }
+</style>
+</head>
+<body>
+<header>
+  <input type="file" id="file" accept="image/*">
+  <span>Калибровка:</span>
+  <button id="calA">точка A</button>
+  <input type="number" id="lonA" step="0.001" placeholder="долгота A">
+  <input type="number" id="latA" step="0.001" placeholder="широта A">
+  <button id="calB">точка B</button>
+  <input type="number" id="lonB" step="0.001" placeholder="долгота B">
+  <input type="number" id="latB" step="0.001" placeholder="широта B">
+  <button id="undo">убрать точку</button>
+  <button id="export">выгрузить JSON</button>
+  <span id="hint">загрузи лист, поставь две калибровочные точки на известные города, потом кликай по линии фронта</span>
+</header>
+<div id="wrap"><canvas id="cv" width="10" height="10"></canvas></div>
+<pre id="out" style="padding:8px;background:#181818;margin:0;max-height:160px;overflow:auto"></pre>
+
+<script>
+let img = null, scale = 1;
+const pts = [];           // точки линии (в пикселях изображения)
+let cal = { A: null, B: null };  // {x, y, lon, lat}
+let mode = 'line';
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+
+document.getElementById('file').onchange = ev => {
+  const f = ev.target.files[0];
+  if (!f) return;
+  const im = new Image();
+  im.onload = () => {
+    img = im;
+    const maxW = 1600;
+    scale = Math.min(1, maxW / im.width);
+    cv.width = Math.round(im.width * scale);
+    cv.height = Math.round(im.height * scale);
+    draw();
+  };
+  im.src = URL.createObjectURL(f);
+};
+
+function draw() {
+  if (!img) return;
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.drawImage(img, 0, 0, cv.width, cv.height);
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#ff2d2d';
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    const x = p.x * scale, y = p.y * scale;
+    i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+  });
+  ctx.stroke();
+  ctx.fillStyle = '#ff2d2d';
+  pts.forEach(p => ctx.fillRect(p.x * scale - 2, p.y * scale - 2, 4, 4));
+  for (const key of ['A', 'B']) {
+    const c = cal[key];
+    if (!c) continue;
+    ctx.strokeStyle = '#ffaa00';
+    ctx.beginPath();
+    ctx.arc(c.x * scale, c.y * scale, 7, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = '#ffaa00';
+    ctx.fillText(key, c.x * scale + 9, c.y * scale - 9);
+  }
+  document.getElementById('out').textContent =
+    'точек линии: ' + pts.length +
+    ' | A: ' + (cal.A ? 'есть' : '—') + ' | B: ' + (cal.B ? 'есть' : '—');
+}
+
+cv.onclick = ev => {
+  if (!img) return;
+  const r = cv.getBoundingClientRect();
+  const x = (ev.clientX - r.left) / scale;
+  const y = (ev.clientY - r.top) / scale;
+  if (mode === 'A' || mode === 'B') {
+    const lon = parseFloat(document.getElementById('lon' + mode).value);
+    const lat = parseFloat(document.getElementById('lat' + mode).value);
+    if (!isFinite(lon) || !isFinite(lat)) { alert('сначала введи координаты точки ' + mode); return; }
+    cal[mode] = { x, y, lon, lat };
+    mode = 'line';
+  } else {
+    pts.push({ x, y });
+  }
+  draw();
+};
+
+document.getElementById('calA').onclick = () => { mode = 'A'; alert('кликни по точке A на карте'); };
+document.getElementById('calB').onclick = () => { mode = 'B'; alert('кликни по точке B на карте'); };
+document.getElementById('undo').onclick = () => { pts.pop(); draw(); };
+document.getElementById('export').onclick = () => {
+  const data = { pixels: pts, calibration: cal, image_size: img ? [img.width, img.height] : null };
+  const blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'front-line-pixels.json';
+  a.click();
+};
+</script>
+</body>
+</html>
