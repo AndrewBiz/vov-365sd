@@ -1,0 +1,53 @@
+{
+  "place_id": "pl-is",
+  "queries": [
+    "Ис, Свердловская область, Россия",
+    "Ис, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Ис, Свердловская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%98%D1%81%2C+%D0%A1%D0%B2%D0%B5%D1%80%D0%B4%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:56+00:00",
+      "results": [
+        {
+          "display_name": "Ис, Нижнетуринский муниципальный округ, Свердловская область, Уральский федеральный округ, 624358, Россия",
+          "type": "village",
+          "lon": "59.7158700",
+          "place_id": 199824174,
+          "osm_type": "way",
+          "lat": "58.7936860",
+          "category": "place",
+          "osm_id": 371306094,
+          "importance": 0.3343910964012564,
+          "boundingbox": [
+            "58.7565206",
+            "58.8302159",
+            "59.6641069",
+            "59.7724295"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Ис, Нижнетуринский муниципальный округ, Свердловская область, Уральский федеральный округ, Россия",
+          "type": "river",
+          "lon": "59.5451423",
+          "place_id": 199867256,
+          "osm_type": "way",
+          "lat": "58.8411637",
+          "category": "waterway",
+          "osm_id": 653549956,
+          "importance": 0.31353539144981896,
+          "boundingbox": [
+            "58.7828230",
+            "58.8621299",
+            "59.3197079",
+            "59.7489073"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": 0
+}

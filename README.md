@@ -84,6 +84,34 @@ python3 -m unittest discover -s tests -v # тесты валидатора и с
 
 Артефакты: `docs/research/Боевой путь — хронология (сгенерировано).md` (не редактировать вручную) и `data/dist/features.geojson` (в git не попадает). Ручной анализ — `docs/research/Бизяев ЕМ — сводка и расхождения.md`.
 
+## Места и геоданные
+
+`data/places.json` — реестр мест: `id`, названия, тип, `state` (`found` | `tract` | `unfound`), `accuracy` (`exact` | `settlement` | `district` | `approximate`), `region` для запросов, `coords` как факт (`{value: {lon, lat}, provenance, status}`) или `null`.
+
+Правила:
+
+1. Координата без провенанса не принимается; провенанс геоданных обязан вести на запись журнала `geo-<slug>` в `docs/sources/недат_Геокодирование Nominatim — журнал запросов.md` и на файл кэша `data/cache/geocode/<slug>.json`.
+2. `found` и `tract` требуют координат, `unfound` — наоборот, их не имеет и не должен иметь. Событие может ссылаться на `unfound`-место: тогда оно остаётся в хронологии с пометкой «место не локализовано» и не попадает в GeoJSON.
+3. Координаты — WGS84 в порядке «долгота, широта»; выход за `bbox` из `data/registry.json` (район проекта) считается ошибкой — так ловятся перепутанные широта и долгота и одноимённые селения в других регионах.
+4. Кандидат геокодера принимается только при совпадении названия **и** района/области. «Малая Борщевка» — не «Борщёвка»; такие двойники попадают в реестр вручную через `names.alternate`, а не автоматически.
+5. Событие, у которого есть и своя геометрия, и место, использует свою геометрию; иначе берётся точка места, а уровень локализации — из `accuracy` места.
+
+Как добавить место:
+
+1. Дописать запись в `data/places.json` (`state: unfound`, `coords: null`, `region` с районом и областью).
+2. `python3 tools/geocode.py --all` — заполняет кэш из Nominatim (не чаще 1 запроса в секунду).
+3. `python3 tools/geocode.py --all --apply` — переносит принятые кандидаты в реестр и перегенерирует журнал.
+4. `python3 tools/validate.py` — проверить цепь провенанса.
+
+Атрибуция и ограничения: координаты — OpenStreetMap / Nominatim, данные © OpenStreetMap contributors, ODbL 1.0. Запросы ограничены одним в секунду и имеют собственный User-Agent. Ответы кэшируются в `data/cache/geocode/` и коммитятся: проверки и сборка работают офлайн, `tools/validate.py` и `tools/build.py` в сеть не ходят вовсе.
+
+```bash
+python3 tools/geocode.py --all              # дозаполнить кэш (сеть)
+python3 tools/geocode.py --all --offline    # только кэш
+python3 tools/geocode.py --all --apply      # применить к data/places.json
+python3 tools/geocode.py --journal-only     # перегенерировать журнал
+```
+
 ## OpenSpec
 
 ```bash

@@ -39,6 +39,15 @@
       "sha256": "d74ab3d447b34e664df164ea4e9b137b8c7c956b977d3668714168bf06dc896a",
       "received": "2026-11-25",
       "note": "Подпись под экспонатом прочитана из текстового слоя PDF; заголовок карты — визуально, требует пересъёмки."
+    },
+    {
+      "id": "src-osm-nominatim",
+      "kind": "gazetteer",
+      "title": "OpenStreetMap / Nominatim — геокодирование мест проекта (журнал запросов)",
+      "derivative_path": "docs/sources/недат_Геокодирование Nominatim — журнал запросов.md",
+      "cache_path": "data/cache/geocode",
+      "received": "2026-11-25",
+      "note": "Данные © OpenStreetMap contributors, ODbL 1.0. Запросы не чаще 1/сек, ответы кэшированы в data/cache/geocode/."
     }
   ]
 }

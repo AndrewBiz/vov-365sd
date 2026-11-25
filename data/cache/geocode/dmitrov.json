@@ -1,0 +1,35 @@
+{
+  "place_id": "pl-dmitrov",
+  "queries": [
+    "Дмитров, Московская область, Россия",
+    "Дмитров, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Дмитров, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%BE%D0%B2%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:23:58+00:00",
+      "results": [
+        {
+          "display_name": "Дмитров, Дмитровский муниципальный округ, Московская область, Центральный федеральный округ, 141800, Россия",
+          "type": "town",
+          "lon": "37.5200723",
+          "place_id": 197631817,
+          "osm_type": "relation",
+          "lat": "56.3450695",
+          "category": "place",
+          "osm_id": 15101408,
+          "importance": 0.5534919819574153,
+          "boundingbox": [
+            "56.3047573",
+            "56.4032405",
+            "37.4860175",
+            "37.5779496"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": 0
+}

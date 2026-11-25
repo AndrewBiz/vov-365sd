@@ -28,6 +28,7 @@ SCHEMA_FILES = {
     "unit": "data/schemas/unit.schema.json",
     "source": "data/schemas/source.schema.json",
     "registry": "data/schemas/registry.schema.json",
+    "place": "data/schemas/place.schema.json",
 }
 
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -42,6 +43,7 @@ class Dataset:
         self.registry_types = _load(os.path.join(self.root, "data/registry.json"))
         self.sources = _load(os.path.join(self.root, "data/sources.json"))
         self.units = _load(os.path.join(self.root, "data/units.json"))
+        self.places = _load(os.path.join(self.root, "data/places.json"))
         self.events = [
             (path, _load(os.path.join(self.root, path)))
             for path in sorted(
@@ -59,6 +61,9 @@ class Dataset:
 
     def unit_ids(self) -> set[str]:
         return {u["id"] for u in self.units["units"]}
+
+    def place_ids(self) -> set[str]:
+        return {p["id"] for p in self.places["places"]}
 
     def event_list(self) -> list[tuple[str, dict]]:
         out: list[tuple[str, dict]] = []
@@ -185,6 +190,7 @@ def check_schemas(ds: Dataset, errors: list[str]) -> None:
         ("data/registry.json", ds.registry_types, "registry"),
         ("data/sources.json", ds.sources, "source"),
         ("data/units.json", ds.units, "unit"),
+        ("data/places.json", ds.places, "place"),
     ]
     checks += [(path, payload, "event") for path, payload in ds.events]
     for path, payload, schema_name in checks:
@@ -205,6 +211,12 @@ def check_sources(ds: Dataset, errors: list[str]) -> None:
         derivative = os.path.join(ds.root, src["derivative_path"])
         if not os.path.exists(derivative):
             errors.append(f"{sid}: производная {src['derivative_path']} не найдена в репозитории")
+
+        if src.get("kind") in {"gazetteer", "historical-map"}:
+            cache_dir = os.path.join(ds.root, src["cache_path"])
+            if not os.path.isdir(cache_dir):
+                errors.append(f"{sid}: каталог кэша {src['cache_path']} не найден")
+            continue
 
         original = os.path.join(ds.vault, src["vault_path"])
         if not os.path.exists(original):
@@ -240,6 +252,82 @@ def check_units(ds: Dataset, errors: list[str]) -> None:
                 errors.append(f"{where}.subordination[{j}]: неизвестное формирование '{sub['unit_id']}'")
             _check_fact(f"{where}.subordination[{j}].period", sub["period"], ds, known_sources, errors)
             _check_period(f"{where}.subordination[{j}].period", sub["period"], ds, errors)
+
+
+def _journal_path(ds: Dataset) -> str | None:
+    for src in ds.sources["sources"]:
+        if src.get("kind") in {"gazetteer", "historical-map"}:
+            return os.path.join(ds.root, src["derivative_path"])
+    return None
+
+
+def check_places(ds: Dataset, errors: list[str]) -> None:
+    known_sources = ds.source_ids()
+    bbox = ds.registry_types.get("bbox")
+    journal_path = _journal_path(ds)
+    journal_text = ""
+    if journal_path and os.path.exists(journal_path):
+        with open(journal_path, encoding="utf-8") as fh:
+            journal_text = fh.read()
+
+    seen: set[str] = set()
+    for idx, place in enumerate(ds.places["places"]):
+        pid = place["id"]
+        where = f"data/places.json:places[{idx}] ({pid})"
+        if pid in seen:
+            errors.append(f"{where}: повторяющийся id места")
+        seen.add(pid)
+
+        coords = place.get("coords")
+        entries: list[tuple[str, dict]] = []
+        if isinstance(coords, dict) and coords.get("value") is not None:
+            entries.append((f"{where}.coords", coords))
+        elif isinstance(coords, dict) and coords.get("conflict") is True:
+            variants = coords.get("variants", [])
+            if len(variants) < 2:
+                errors.append(f"{where}.coords: конфликт координат без двух вариантов")
+            for i, variant in enumerate(variants):
+                entries.append((f"{where}.coords.variants[{i}]", variant))
+
+        if place["state"] in {"found", "tract"} and not entries:
+            errors.append(f"{where}: состояние «{place['state']}», но координат нет")
+        if place["state"] == "unfound" and entries:
+            errors.append(f"{where}: состояние «unfound», но координаты заданы")
+
+        for path, entry in entries:
+            _check_single(path, entry, ds, known_sources, errors)
+            value = entry.get("value") or {}
+            lon, lat = value.get("lon"), value.get("lat")
+            if lon is None or lat is None:
+                errors.append(f"{path}: координата без lon/lat")
+                continue
+            if not (-180 <= lon <= 180):
+                errors.append(f"{path}: долгота {lon} вне диапазона -180..180")
+            if not (-90 <= lat <= 90):
+                errors.append(f"{path}: широта {lat} вне диапазона -90..90")
+            if bbox and not (
+                bbox["west"] <= lon <= bbox["east"] and bbox["south"] <= lat <= bbox["north"]
+            ):
+                errors.append(
+                    f"{path}: координата ({lat}, {lon}) вне ожидаемого района проекта "
+                    "— вероятно, перепутаны широта и долгота или найден другой объект"
+                )
+            prov = entry.get("provenance") or {}
+            prov_entries = prov if isinstance(prov, list) else [prov]
+            for prov_entry in prov_entries:
+                locator = prov_entry.get("locator") or {}
+                paragraph = locator.get("paragraph", "")
+                source = known_sources.get(prov_entry.get("source_id", ""), {})
+                if source.get("kind") in {"gazetteer", "historical-map"}:
+                    if not paragraph.startswith("geo-"):
+                        errors.append(f"{path}: провенанс геоданных должен ссылаться на запись журнала geo-…")
+                        continue
+                    if f"## {paragraph} " not in journal_text:
+                        errors.append(f"{path}: в журнале геокодирования нет записи «{paragraph}»")
+                        continue
+                    cache_rel = f"{source.get('cache_path', 'data/cache/geocode')}/{paragraph.removeprefix('geo-')}.json"
+                    if not os.path.exists(os.path.join(ds.root, cache_rel)):
+                        errors.append(f"{path}: сырой ответ кэша отсутствует: {cache_rel}")
 
 
 def check_events(ds: Dataset, errors: list[str]) -> None:
@@ -278,6 +366,10 @@ def check_events(ds: Dataset, errors: list[str]) -> None:
             if uid not in known_units:
                 errors.append(f"{where}: неизвестное формирование '{uid}'")
 
+        place_id = event.get("place")
+        if place_id is not None and place_id not in ds.place_ids():
+            errors.append(f"{where}: ссылка на несуществующее место '{place_id}'")
+
         for key, fact in _iter_facts(event):
             _check_fact(f"{where}.{key}", fact, ds, known_sources, errors)
         _check_period(f"{where}.period", event["period"], ds, errors)
@@ -293,6 +385,7 @@ def run(root: str, vault: str | None = None) -> list[str]:
     check_schemas(ds, errors)
     check_sources(ds, errors)
     check_units(ds, errors)
+    check_places(ds, errors)
     check_events(ds, errors)
     return errors
 

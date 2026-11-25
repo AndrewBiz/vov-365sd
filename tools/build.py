@@ -127,7 +127,7 @@ def _locators(fact: dict) -> list[str]:
     return [_locator_label(e) for e in entries]
 
 
-def render_chronology(ds: vov.Dataset, events: list[dict], digest: str) -> str:
+def render_chronology(ds: vov.Dataset, events: list[dict], digest: str, places: dict[str, dict]) -> str:
     lines = [
         "<!-- СГЕНЕРИРОВАНО tools/build.py. Не редактировать вручную: изменения будут перезаписаны. -->",
         "",
@@ -149,6 +149,13 @@ def render_chronology(ds: vov.Dataset, events: list[dict], digest: str) -> str:
         lines.append("")
         lines.append(f"- Части: {', '.join(ev['units'])}")
         lines.append(f"- Статус: {_fact_status(ev['period'])}")
+        place_id = ev.get("place")
+        if place_id:
+            place = places.get(place_id, {})
+            state = place.get("state", "?")
+            label = place.get("names", {}).get("modern", place_id)
+            suffix = " — место не локализовано" if state in {"unfound", "tract"} else ""
+            lines.append(f"- Место: {label} (`{place_id}`, состояние `{state}`){suffix}")
         for loc in _locators(ev["period"]):
             lines.append(f"- Период: {loc}")
         for loc in _locators(ev["title"]):
@@ -195,10 +202,33 @@ def _source_ids_of_variant(variant: dict) -> list[str]:
     return vov._source_ids_of(variant)
 
 
-def render_geojson(events: list[dict]) -> str:
+def resolve_geometry(event: dict, places: dict[str, dict]) -> tuple[dict | None, str, str | None, str | None]:
+    """Возвращает (геометрия, уровень локализации, id места, состояние места).
+
+    Собственная геометрия события имеет приоритет над местом.
+    """
+    place_id = event.get("place")
+    place = places.get(place_id) if place_id else None
+    if event.get("geometry") is not None:
+        return event["geometry"], event["localization"], place_id, (place or {}).get("state")
+    if place:
+        coords = place.get("coords")
+        if isinstance(coords, dict) and coords.get("value"):
+            value = coords["value"]
+            return (
+                {"type": "Point", "coordinates": [value["lon"], value["lat"]]},
+                place["accuracy"],
+                place_id,
+                place["state"],
+            )
+        return None, event["localization"], place_id, place.get("state")
+    return None, event["localization"], None, None
+
+
+def render_geojson(events: list[dict], places: dict[str, dict]) -> str:
     features = []
     for ev in events:
-        geometry = ev.get("geometry")
+        geometry, localization, place_id, place_state = resolve_geometry(ev, places)
         if geometry is None:
             continue
         features.append(
@@ -210,7 +240,9 @@ def render_geojson(events: list[dict]) -> str:
                     "type": ev["type"],
                     "title": _value_label(ev["title"]),
                     "units": ev["units"],
-                    "localization": ev["localization"],
+                    "localization": localization,
+                    "place": place_id,
+                    "place_state": place_state,
                     "period": ev["period"].get("value"),
                     "status": _fact_status(ev["period"]),
                 },
@@ -229,9 +261,10 @@ def build(root: str, vault: str | None, check: bool = False) -> tuple[int, list[
     events = collect_events(ds)
     digest = dataset_hash(root)
 
+    places = {place["id"]: place for place in ds.places["places"]}
     artifacts = {
-        os.path.join(root, CHRONO_PATH): render_chronology(ds, events, digest),
-        os.path.join(root, GEOJSON_PATH): render_geojson(events),
+        os.path.join(root, CHRONO_PATH): render_chronology(ds, events, digest, places),
+        os.path.join(root, GEOJSON_PATH): render_geojson(events, places),
     }
 
     messages: list[str] = []

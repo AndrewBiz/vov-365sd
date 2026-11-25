@@ -1,0 +1,77 @@
+{
+  "place_id": "pl-gologuzovo",
+  "queries": [
+    "Гологузово, Лотошинский район, Московская область, Россия",
+    "Гологузово, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Гологузово, Лотошинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%93%D0%BE%D0%BB%D0%BE%D0%B3%D1%83%D0%B7%D0%BE%D0%B2%D0%BE%2C+%D0%9B%D0%BE%D1%82%D0%BE%D1%88%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:49+00:00",
+      "results": []
+    },
+    {
+      "query": "Гологузово, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%93%D0%BE%D0%BB%D0%BE%D0%B3%D1%83%D0%B7%D0%BE%D0%B2%D0%BE%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:51+00:00",
+      "results": [
+        {
+          "display_name": "Гологузово, городской округ Клин, Московская область, Центральный федеральный округ, Россия",
+          "type": "hamlet",
+          "lon": "36.3127938",
+          "place_id": 197355644,
+          "osm_type": "way",
+          "lat": "56.4094532",
+          "category": "place",
+          "osm_id": 56474197,
+          "importance": 0.23992860907835414,
+          "boundingbox": [
+            "56.4035442",
+            "56.4168911",
+            "36.3052111",
+            "36.3203360"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Гологузово, Ростовский муниципальный округ, Ярославская область, Центральный федеральный округ, Россия",
+          "type": "locality",
+          "lon": "39.6099146",
+          "place_id": 197688868,
+          "osm_type": "node",
+          "lat": "57.1488048",
+          "category": "place",
+          "osm_id": 830059446,
+          "importance": 0.06671666819256886,
+          "boundingbox": [
+            "57.1388048",
+            "57.1588048",
+            "39.5999146",
+            "39.6199146"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Гологузово, Мышкинский муниципальный округ, Ярославская область, Центральный федеральный округ, 152832, Россия",
+          "type": "locality",
+          "lon": "38.2304159",
+          "place_id": 197764993,
+          "osm_type": "node",
+          "lat": "57.6989565",
+          "category": "place",
+          "osm_id": 1297010289,
+          "importance": 0.06671666819256886,
+          "boundingbox": [
+            "57.6889565",
+            "57.7089565",
+            "38.2204159",
+            "38.2404159"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": null
+}

@@ -1,0 +1,53 @@
+{
+  "place_id": "pl-pavda",
+  "queries": [
+    "Павда, Свердловская область, Россия",
+    "Павда, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Павда, Свердловская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9F%D0%B0%D0%B2%D0%B4%D0%B0%2C+%D0%A1%D0%B2%D0%B5%D1%80%D0%B4%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:55+00:00",
+      "results": [
+        {
+          "display_name": "Павда, Новолялинский муниципальный округ, Свердловская область, Уральский федеральный округ, Россия",
+          "type": "village",
+          "lon": "59.5053652",
+          "place_id": 198456177,
+          "osm_type": "way",
+          "lat": "59.2521485",
+          "category": "place",
+          "osm_id": 135846844,
+          "importance": 0.3331894015087746,
+          "boundingbox": [
+            "59.2390839",
+            "59.2644410",
+            "59.4802877",
+            "59.5325249"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Павда, Новолялинский муниципальный округ, Свердловская область, Уральский федеральный округ, Россия",
+          "type": "river",
+          "lon": "59.3506578",
+          "place_id": 198453529,
+          "osm_type": "relation",
+          "lat": "59.2676283",
+          "category": "waterway",
+          "osm_id": 11366242,
+          "importance": 0.16000999999999999,
+          "boundingbox": [
+            "59.2411734",
+            "59.3721234",
+            "59.1749253",
+            "59.5151308"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": 0
+}

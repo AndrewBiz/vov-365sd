@@ -1,0 +1,22 @@
+{
+  "place_id": "pl-kopylo",
+  "queries": [
+    "Копыло, Лотошинский район, Московская область, Россия",
+    "Копыло, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Копыло, Лотошинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9A%D0%BE%D0%BF%D1%8B%D0%BB%D0%BE%2C+%D0%9B%D0%BE%D1%82%D0%BE%D1%88%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:40+00:00",
+      "results": []
+    },
+    {
+      "query": "Копыло, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9A%D0%BE%D0%BF%D1%8B%D0%BB%D0%BE%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:42+00:00",
+      "results": []
+    }
+  ],
+  "accepted_attempt": null
+}

@@ -1,0 +1,35 @@
+{
+  "place_id": "pl-konakovo",
+  "queries": [
+    "Конаково, Тверская область, Россия",
+    "Конаково, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Конаково, Тверская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9A%D0%BE%D0%BD%D0%B0%D0%BA%D0%BE%D0%B2%D0%BE%2C+%D0%A2%D0%B2%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:53+00:00",
+      "results": [
+        {
+          "display_name": "Конаково, Конаковский муниципальный округ, Тверская область, Центральный федеральный округ, Россия",
+          "type": "town",
+          "lon": "36.7790000",
+          "place_id": 196047907,
+          "osm_type": "relation",
+          "lat": "56.7126000",
+          "category": "place",
+          "osm_id": 4757151,
+          "importance": 0.526720686019962,
+          "boundingbox": [
+            "56.6715528",
+            "56.7689864",
+            "36.7205688",
+            "36.8094761"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": 0
+}

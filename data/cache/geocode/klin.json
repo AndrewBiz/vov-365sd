@@ -1,0 +1,71 @@
+{
+  "place_id": "pl-klin",
+  "queries": [
+    "Клин, Московская область, Россия",
+    "Клин, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Клин, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9A%D0%BB%D0%B8%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:23:59+00:00",
+      "results": [
+        {
+          "display_name": "Клин, городской округ Клин, Московская область, Центральный федеральный округ, Россия",
+          "type": "town",
+          "lon": "36.7346463",
+          "place_id": 199430802,
+          "osm_type": "relation",
+          "lat": "56.3353282",
+          "category": "place",
+          "osm_id": 5886982,
+          "importance": 0.5594254413046985,
+          "boundingbox": [
+            "56.3068917",
+            "56.3780556",
+            "36.6642251",
+            "36.8171526"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Клин, Одинцовский городской округ, Московская область, Центральный федеральный округ, Россия",
+          "type": "hamlet",
+          "lon": "36.7521492",
+          "place_id": 196911241,
+          "osm_type": "way",
+          "lat": "55.6428399",
+          "category": "place",
+          "osm_id": 122107256,
+          "importance": 0.37898700054830464,
+          "boundingbox": [
+            "55.6422562",
+            "55.6438969",
+            "36.7503884",
+            "36.7543606"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Клин, Наро-Фоминский городской округ, Московская область, Центральный федеральный округ, Россия",
+          "type": "hamlet",
+          "lon": "36.3393186",
+          "place_id": 196954199,
+          "osm_type": "way",
+          "lat": "55.3204646",
+          "category": "place",
+          "osm_id": 204921090,
+          "importance": 0.3508056963223209,
+          "boundingbox": [
+            "55.3185906",
+            "55.3226602",
+            "36.3318593",
+            "36.3472123"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": 0
+}

@@ -169,7 +169,8 @@
           ],
           "status": "выверено"
         }
-      }
+      },
+      "place": "pl-pavda"
     },
     {
       "id": "ev-1941-11-02-subordination-28ra",
@@ -251,7 +252,8 @@
           },
           "status": "черновик"
         }
-      }
+      },
+      "place": "pl-kineshma"
     },
     {
       "id": "ev-1941-11-30-subordination-30a",
@@ -364,7 +366,8 @@
         },
         "status": "черновик"
       },
-      "localization": "approximate"
+      "localization": "approximate",
+      "place": "pl-dmitrov"
     },
     {
       "id": "ev-1941-12-06-vyukhovo",
@@ -424,7 +427,8 @@
           },
           "status": "черновик"
         }
-      }
+      },
+      "place": "pl-vyukhovo"
     },
     {
       "id": "ev-1941-12-21-365sd-position",
@@ -459,7 +463,8 @@
         "status": "черновик"
       },
       "localization": "approximate",
-      "note": "Архивная справка 1988 г. по донесению, оп. 5806 д. 22 лл. 12, 16а; номер донесения в скане не читается."
+      "note": "Архивная справка 1988 г. по донесению, оп. 5806 д. 22 лл. 12, 16а; номер донесения в скане не читается.",
+      "place": "pl-volovnikovo"
     },
     {
       "id": "ev-1941-12-21-bizyaev-letter",
@@ -542,7 +547,8 @@
           },
           "status": "черновик"
         }
-      }
+      },
+      "place": "pl-kalitsino"
     },
     {
       "id": "ev-1941-12-30-dyakovo-379sd",
@@ -589,7 +595,8 @@
           },
           "status": "черновик"
         }
-      }
+      },
+      "place": "pl-dyakovo"
     },
     {
       "id": "ev-1941-camo-no-record",

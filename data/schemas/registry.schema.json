@@ -3,11 +3,21 @@
   "$id": "https://vov-365sd.local/schemas/registry.schema.json",
   "title": "Реестр типов и уровней",
   "type": "object",
-  "required": ["event_types", "localization", "date_precision", "fact_status"],
+  "required": ["event_types", "localization", "date_precision", "fact_status", "place_types", "place_states"],
   "properties": {
     "event_types": {
       "type": "object",
       "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 3 }
+    },
+    "place_types": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 3 }
+    },
+    "place_states": {
+      "type": "object",
+      "minProperties": 3,
       "additionalProperties": { "type": "string", "minLength": 3 }
     },
     "localization": {
@@ -27,6 +37,18 @@
       "minItems": 2,
       "uniqueItems": true,
       "items": { "enum": ["черновик", "выверено"] }
+    },
+    "bbox": {
+      "type": "object",
+      "description": "Ожидаемый район координат: выход за границы считается ошибкой (ловит перепутанные широту и долготу).",
+      "required": ["west", "south", "east", "north"],
+      "properties": {
+        "west": { "type": "number" },
+        "south": { "type": "number" },
+        "east": { "type": "number" },
+        "north": { "type": "number" }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

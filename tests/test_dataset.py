@@ -86,10 +86,61 @@ class DatasetCase(unittest.TestCase):
                         "derivative_path": "docs/sources/недат_Тест.md",
                         "sha256": hashlib.sha256(b"test scan").hexdigest(),
                         "received": "2026-11-25",
-                    }
+                    },
+                    {
+                        "id": "src-osm-test",
+                        "kind": "gazetteer",
+                        "title": "Тестовый газеттир",
+                        "derivative_path": "docs/sources/недат_Геокодирование — тест.md",
+                        "cache_path": "data/cache/geocode",
+                        "received": "2026-11-25",
+                    },
                 ]
             },
         )
+        # геоисточник, журнал и кэш
+        os.makedirs(os.path.join(self.root, "data/cache/geocode"), exist_ok=True)
+        _write(
+            os.path.join(self.root, "data/cache/geocode/test-place.json"),
+            {"place_id": "pl-test-place", "queries": ["Тестовое место"], "attempts": [], "accepted_attempt": 0},
+        )
+        journal = os.path.join(self.root, "docs/sources/недат_Геокодирование — тест.md")
+        with open(journal, "w", encoding="utf-8") as fh:
+            fh.write("# Журнал\n\n## geo-test-place — Тестовое место\n\n- запрос: `Тестовое место`\n")
+
+        _write(
+            os.path.join(self.root, "data/places.json"),
+            {
+                "places": [
+                    {
+                        "id": "pl-test-place",
+                        "type": "village",
+                        "names": {"modern": "Тестовое место"},
+                        "state": "found",
+                        "accuracy": "settlement",
+                        "region": "Московская область",
+                        "coords": {
+                            "value": {"lon": 36.5, "lat": 56.3},
+                            "provenance": {
+                                "source_id": "src-osm-test",
+                                "locator": {"paragraph": "geo-test-place"},
+                            },
+                            "status": "черновик",
+                        },
+                    },
+                    {
+                        "id": "pl-test-lost",
+                        "type": "village",
+                        "names": {"modern": "Потерянное место"},
+                        "state": "unfound",
+                        "accuracy": "approximate",
+                        "region": "Московская область",
+                        "coords": None,
+                    },
+                ]
+            },
+        )
+
         _write(
             os.path.join(self.root, "data/units.json"),
             {
@@ -285,6 +336,112 @@ class TestEvents(DatasetCase):
         payload["year"] = 1943
         self.save("data/events/1941.json", payload)
         self.assert_error("не совпадает с именем файла")
+
+
+class TestPlaces(DatasetCase):
+    def _coords(self, **overrides) -> dict:
+        coords = {
+            "value": {"lon": 36.5, "lat": 56.3},
+            "provenance": {"source_id": "src-osm-test", "locator": {"paragraph": "geo-test-place"}},
+            "status": "черновик",
+        }
+        coords.update(overrides)
+        return coords
+
+    def load_places(self) -> dict:
+        return self.load("data/places.json")
+
+    def test_valid_places_have_no_errors(self) -> None:
+        self.assertEqual(self.errors(), [])
+
+    def test_coordinates_out_of_range(self) -> None:
+        payload = self.load_places()
+        payload["places"][0]["coords"]["value"] = {"lon": 200.0, "lat": 56.3}
+        self.save("data/places.json", payload)
+        self.assert_error("вне диапазона")
+
+    def test_swapped_lat_lon_caught_by_bbox(self) -> None:
+        payload = self.load_places()
+        payload["places"][0]["coords"]["value"] = {"lon": 56.3, "lat": 36.5}
+        self.save("data/places.json", payload)
+        self.assert_error("вне ожидаемого района")
+
+    def test_found_place_without_coords(self) -> None:
+        payload = self.load_places()
+        payload["places"][0]["coords"] = None
+        self.save("data/places.json", payload)
+        self.assert_error("координат нет")
+
+    def test_unfound_place_with_coords(self) -> None:
+        payload = self.load_places()
+        payload["places"][1]["coords"] = self._coords()
+        self.save("data/places.json", payload)
+        self.assert_error("но координаты заданы")
+
+    def test_coords_without_journal_entry(self) -> None:
+        payload = self.load_places()
+        payload["places"][0]["coords"]["provenance"]["locator"]["paragraph"] = "geo-unknown"
+        self.save("data/places.json", payload)
+        self.assert_error("нет записи")
+
+    def test_coords_without_geo_locator(self) -> None:
+        payload = self.load_places()
+        payload["places"][0]["coords"]["provenance"]["locator"] = {"page": 5}
+        self.save("data/places.json", payload)
+        self.assert_error("запись журнала geo-")
+
+    def test_missing_cache_file(self) -> None:
+        os.remove(os.path.join(self.root, "data/cache/geocode/test-place.json"))
+        self.assert_error("кэша отсутствует")
+
+    def test_event_referencing_missing_place(self) -> None:
+        payload = self.load("data/events/1941.json")
+        payload["events"][0]["place"] = "pl-nope"
+        self.save("data/events/1941.json", payload)
+        self.assert_error("несуществующее место")
+
+
+class TestDerivedGeometry(DatasetCase):
+    def test_geometry_derived_from_place(self) -> None:
+        payload = self.load("data/events/1941.json")
+        payload["events"][0]["place"] = "pl-test-place"
+        payload["events"][0]["localization"] = "approximate"
+        self.save("data/events/1941.json", payload)
+        code, messages = builder.build(self.root, self.vault)
+        self.assertEqual(code, 0, messages)
+        with open(os.path.join(self.root, builder.GEOJSON_PATH), encoding="utf-8") as fh:
+            geo = json.load(fh)
+        self.assertEqual(len(geo["features"]), 1)
+        feature = geo["features"][0]
+        self.assertEqual(feature["geometry"]["coordinates"], [36.5, 56.3])
+        self.assertEqual(feature["properties"]["localization"], "settlement")
+        self.assertEqual(feature["properties"]["place_state"], "found")
+
+    def test_own_geometry_wins_over_place(self) -> None:
+        payload = self.load("data/events/1941.json")
+        payload["events"][0]["place"] = "pl-test-place"
+        payload["events"][0]["geometry"] = {"type": "Point", "coordinates": [35.0, 55.0]}
+        payload["events"][0]["localization"] = "exact"
+        self.save("data/events/1941.json", payload)
+        code, messages = builder.build(self.root, self.vault)
+        self.assertEqual(code, 0, messages)
+        with open(os.path.join(self.root, builder.GEOJSON_PATH), encoding="utf-8") as fh:
+            geo = json.load(fh)
+        feature = geo["features"][0]
+        self.assertEqual(feature["geometry"]["coordinates"], [35.0, 55.0])
+        self.assertEqual(feature["properties"]["localization"], "exact")
+
+    def test_unfound_place_excluded_from_geojson(self) -> None:
+        payload = self.load("data/events/1941.json")
+        payload["events"][0]["place"] = "pl-test-lost"
+        self.save("data/events/1941.json", payload)
+        code, messages = builder.build(self.root, self.vault)
+        self.assertEqual(code, 0, messages)
+        with open(os.path.join(self.root, builder.GEOJSON_PATH), encoding="utf-8") as fh:
+            geo = json.load(fh)
+        self.assertEqual(geo["features"], [])
+        with open(os.path.join(self.root, builder.CHRONO_PATH), encoding="utf-8") as fh:
+            self.assertIn("место не локализовано", fh.read())
 
 
 class TestBuild(DatasetCase):

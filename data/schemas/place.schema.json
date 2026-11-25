@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vov-365sd.local/schemas/place.schema.json",
+  "title": "Реестр мест",
+  "type": "object",
+  "required": ["places"],
+  "properties": {
+    "places": { "type": "array", "items": { "$ref": "#/$defs/place" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "coordsValue": {
+      "type": "object",
+      "required": ["lon", "lat"],
+      "properties": {
+        "lon": { "type": "number" },
+        "lat": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "coordsSingle": {
+      "type": "object",
+      "required": ["value", "provenance", "status"],
+      "properties": {
+        "value": { "$ref": "#/$defs/coordsValue" },
+        "provenance": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/provenance" },
+        "status": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/status" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "place": {
+      "type": "object",
+      "required": ["id", "type", "names", "state", "accuracy", "region"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^pl-[a-z0-9][a-z0-9-]*$" },
+        "type": {
+          "enum": ["city", "town", "village", "settlement", "hamlet", "tract", "district", "object"]
+        },
+        "names": {
+          "type": "object",
+          "required": ["modern"],
+          "properties": {
+            "modern": { "type": "string", "minLength": 2 },
+            "historical": { "type": "string" },
+            "alternate": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        },
+        "state": { "enum": ["found", "tract", "unfound"] },
+        "accuracy": { "enum": ["exact", "settlement", "district", "approximate"] },
+        "region": {
+          "type": "string",
+          "description": "Уточнение для геокодирования: район, область, страна."
+        },
+        "coords": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/coordsSingle" },
+            {
+              "type": "object",
+              "required": ["conflict", "variants"],
+              "properties": {
+                "conflict": { "const": true },
+                "variants": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": { "$ref": "#/$defs/coordsSingle" }
+                },
+                "note": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "place_id": "pl-palkino",
+  "queries": [
+    "Палкино, Лотошинский район, Московская область, Россия",
+    "Палкино, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Палкино, Лотошинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9F%D0%B0%D0%BB%D0%BA%D0%B8%D0%BD%D0%BE%2C+%D0%9B%D0%BE%D1%82%D0%BE%D1%88%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:12+00:00",
+      "results": [
+        {
+          "display_name": "Палкино, муниципальный округ Лотошино, Московская область, Центральный федеральный округ, Россия",
+          "type": "hamlet",
+          "lon": "35.7870380",
+          "place_id": 197474918,
+          "osm_type": "way",
+          "lat": "56.3391250",
+          "category": "place",
+          "osm_id": 236052784,
+          "importance": 0.24930035976498935,
+          "boundingbox": [
+            "56.3353496",
+            "56.3445906",
+            "35.7785017",
+            "35.7924347"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": 0
+}

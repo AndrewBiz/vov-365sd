@@ -1,0 +1,77 @@
+{
+  "place_id": "pl-kryukovo",
+  "queries": [
+    "Крюково, Лотошинский район, Московская область, Россия",
+    "Крюково, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Крюково, Лотошинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9A%D1%80%D1%8E%D0%BA%D0%BE%D0%B2%D0%BE%2C+%D0%9B%D0%BE%D1%82%D0%BE%D1%88%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:43+00:00",
+      "results": []
+    },
+    {
+      "query": "Крюково, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9A%D1%80%D1%8E%D0%BA%D0%BE%D0%B2%D0%BE%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:45+00:00",
+      "results": [
+        {
+          "display_name": "Крюково, Верхнехотемльский сельсовет, Фатежский район, Курская область, Центральный федеральный округ, Россия",
+          "type": "hamlet",
+          "lon": "35.8716091",
+          "place_id": 195578223,
+          "osm_type": "way",
+          "lat": "52.0080772",
+          "category": "place",
+          "osm_id": 482468914,
+          "importance": 0.44985542542417367,
+          "boundingbox": [
+            "51.9992452",
+            "52.0146787",
+            "35.8614072",
+            "35.8865127"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Крюково, Орлово, Вологодский муниципальный округ, Вологодская область, Северо-Западный федеральный округ, Россия",
+          "type": "isolated_dwelling",
+          "lon": "39.2332610",
+          "place_id": 198242959,
+          "osm_type": "node",
+          "lat": "59.6214180",
+          "category": "place",
+          "osm_id": 1382226059,
+          "importance": 0.44018975936105537,
+          "boundingbox": [
+            "59.6213680",
+            "59.6214680",
+            "39.2332110",
+            "39.2333110"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Крюково, Калязинский муниципальный округ, Тверская область, Центральный федеральный округ, Россия",
+          "type": "hamlet",
+          "lon": "37.8432708",
+          "place_id": 197856406,
+          "osm_type": "way",
+          "lat": "56.9753045",
+          "category": "place",
+          "osm_id": 266916367,
+          "importance": 0.42547726432748295,
+          "boundingbox": [
+            "56.9725333",
+            "56.9773468",
+            "37.8359596",
+            "37.8454811"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": null
+}

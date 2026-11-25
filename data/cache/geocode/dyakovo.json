@@ -1,0 +1,77 @@
+{
+  "place_id": "pl-dyakovo",
+  "queries": [
+    "Дьяково, Лотошинский район, Московская область, Россия",
+    "Дьяково, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Дьяково, Лотошинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%94%D1%8C%D1%8F%D0%BA%D0%BE%D0%B2%D0%BE%2C+%D0%9B%D0%BE%D1%82%D0%BE%D1%88%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:18+00:00",
+      "results": []
+    },
+    {
+      "query": "Дьяково, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%94%D1%8C%D1%8F%D0%BA%D0%BE%D0%B2%D0%BE%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-25T08:24:20+00:00",
+      "results": [
+        {
+          "display_name": "Дьяково, Грязовецкий муниципальный округ, Вологодская область, Северо-Западный федеральный округ, Россия",
+          "type": "hamlet",
+          "lon": "40.0010000",
+          "place_id": 198182637,
+          "osm_type": "node",
+          "lat": "58.8566000",
+          "category": "place",
+          "osm_id": 1368872569,
+          "importance": 0.43033063500823676,
+          "boundingbox": [
+            "58.8366000",
+            "58.8766000",
+            "39.9810000",
+            "40.0210000"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Дьяково, Грибково, Вологодский муниципальный округ, Вологодская область, Северо-Западный федеральный округ, Россия",
+          "type": "hamlet",
+          "lon": "40.0387340",
+          "place_id": 200939942,
+          "osm_type": "node",
+          "lat": "59.1197280",
+          "category": "place",
+          "osm_id": 1313524836,
+          "importance": 0.4294069168155019,
+          "boundingbox": [
+            "59.0997280",
+            "59.1397280",
+            "40.0187340",
+            "40.0587340"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        },
+        {
+          "display_name": "Дьяково, Псковский муниципальный округ, Псковская область, Северо-Западный федеральный округ, 180568, Россия",
+          "type": "locality",
+          "lon": "28.3178750",
+          "place_id": 171043251,
+          "osm_type": "node",
+          "lat": "57.6502570",
+          "category": "place",
+          "osm_id": 3444859608,
+          "importance": 0.422548132356114,
+          "boundingbox": [
+            "57.6402570",
+            "57.6602570",
+            "28.3078750",
+            "28.3278750"
+          ],
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": null
+}
