@@ -4,39 +4,71 @@
   "iiif_service": "https://tile.loc.gov/image-services/iiif/service:gmd:gmd7m:g7001m:g7001sm:gct00491",
   "license": "Library of Congress, Geography and Map Division — free to use and reuse (no rights advisory)",
   "fetched_at": "2026-11-25",
+  "resolution": "IIIF full/pct:75 (5600 x 11091 px); pct:100 сервер отдаёт обрывом, полное разрешение добирается тайлами",
   "vault_dir": "Хобби/365сд/Исходники/Lage Ost — атлас Генштаба (LOC)",
   "sheets": [
     {
+      "date": "1941-11-02",
+      "page": "ca000116",
+      "file": "Lage Ost 1941-11-02 (LOC gct00491 ca000116) pct75.jpg",
+      "sha256": "6423758ff21122b383213ae25a3f14d28f680c2ed23e539d53de65ece680648e",
+      "bytes": 7881693
+    },
+    {
+      "date": "1941-11-05",
+      "page": "ca000117",
+      "file": "Lage Ost 1941-11-05 (LOC gct00491 ca000117) pct75.jpg",
+      "sha256": "8fb6b7344f316340153b5603601a1c32d28faf8c8d8eb0b54a930b085454d236",
+      "bytes": 7763506
+    },
+    {
+      "date": "1941-11-09",
+      "page": "ca000118",
+      "file": "Lage Ost 1941-11-09 (LOC gct00491 ca000118) pct75.jpg",
+      "sha256": "51f15ee76166d600a9b18fc8651e80265698b362ccf06eac6843d39e5e54a5d3",
+      "bytes": 7295609
+    },
+    {
+      "date": "1941-11-12",
+      "page": "ca000119",
+      "file": "Lage Ost 1941-11-12 (LOC gct00491 ca000119) pct75.jpg",
+      "sha256": "79a2e9874f3ccb9c89188a1719a8e920d1f8954a774985696faa132e86126935",
+      "bytes": 7796906
+    },
+    {
+      "date": "1941-11-18",
+      "page": "ca000120",
+      "file": "Lage Ost 1941-11-18 (LOC gct00491 ca000120) pct75.jpg",
+      "sha256": "e7421726def1b59e2471599a459768e1de82f549a13138c02c5707ab091ff34d",
+      "bytes": 7341157
+    },
+    {
       "date": "1941-11-23",
       "page": "ca000121",
-      "file": "Lage Ost 1941-11-23 (LOC gct00491 ca000121).jpg",
-      "sha256": "62d23dca819b66e7bae2d74715421762f33fdb17520c2af21ebbb85fe12d0f1a",
-      "bytes": 4054198,
-      "resolution": "IIIF full/pct:50 (~3733 px по ширине)"
+      "file": "Lage Ost 1941-11-23 (LOC gct00491 ca000121) pct75.jpg",
+      "sha256": "389dcbb8f2df7769986221f0d192fb3e7b8b2346496d436e0c728dad9060a723",
+      "bytes": 7913840
     },
     {
       "date": "1941-11-25",
       "page": "ca000122",
-      "file": "Lage Ost 1941-11-25 (LOC gct00491 ca000122).jpg",
-      "sha256": "a0d620bd1e2aa3d02f8ec72f555ffea3746f1c4a34c7f2d69bbd1916a6b83bfb",
-      "bytes": 4121342,
-      "resolution": "IIIF full/pct:50 (~3733 px по ширине)"
+      "file": "Lage Ost 1941-11-25 (LOC gct00491 ca000122) pct75.jpg",
+      "sha256": "b8482ef8c49b26f7fba3c179d7d23832f7c64571469ddf9e60016d60886908b2",
+      "bytes": 7947013
     },
     {
       "date": "1941-11-28",
       "page": "ca000123",
-      "file": "Lage Ost 1941-11-28 (LOC gct00491 ca000123).jpg",
-      "sha256": "c6054ae90c02cc5e6855c8fdf0bc402420ba0f6e8e8f2673f485a28c43f0f3b5",
-      "bytes": 3831207,
-      "resolution": "IIIF full/pct:50 (~3733 px по ширине)"
+      "file": "Lage Ost 1941-11-28 (LOC gct00491 ca000123) pct75.jpg",
+      "sha256": "a40e4483e9789f67049dd75a30c1e9bad1498212325e971b4df715ff3ff869eb",
+      "bytes": 7511286
     },
     {
       "date": "1941-12-06",
       "page": "ca000124",
-      "file": "Lage Ost 1941-12-06 (LOC gct00491 ca000124).jpg",
-      "sha256": "348ff775d0692ae26361aad02817ab1a8882c2112356981df58895b7ce75cac7",
-      "bytes": 4293250,
-      "resolution": "IIIF full/pct:50 (~3733 px по ширине)"
+      "file": "Lage Ost 1941-12-06 (LOC gct00491 ca000124) pct75.jpg",
+      "sha256": "3ac999c09d23bf3d04e308c6399ce45f30df48bbe2244753a6120c25b0a4f46e",
+      "bytes": 8317786
     }
   ]
 }
