@@ -170,10 +170,11 @@
         }
       },
       "documents": [
+        "doc-front-info-1942-01-31",
         "doc-opersvodka-61-1942-01-31",
-        "doc-zhbd-kalinin-front-1942-01-31",
         "doc-opersvodka-62-1942-01-31",
-        "doc-front-info-1942-01-31"
+        "doc-pn-466-0005866-0621-p00000093",
+        "doc-zhbd-kalinin-front-1942-01-31"
       ]
     },
     {
@@ -338,7 +339,10 @@
           },
           "status": "черновик"
         }
-      }
+      },
+      "documents": [
+        "doc-pn-466-0005866-0621-p00000093"
+      ]
     },
     {
       "id": "ev-1942-02-25-no-mention",

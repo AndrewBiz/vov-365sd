@@ -83,6 +83,22 @@
       "derivative_path": "docs/sources/недат_Снимок LOC — атлас Lage Ost (1941).md",
       "cache_path": "data/cache/lage-ost-loc",
       "received": "2026-11-25"
+    },
+    {
+      "id": "src-pamyat-naroda",
+      "kind": "archive-portal",
+      "title": "Портал «Память народа» — документы 365 сд за 09.1941–05.1942",
+      "derivative_path": "docs/sources/недат_Память народа — выгрузка документов 365 сд.md",
+      "cache_path": "data/cache/pamyat-naroda",
+      "portal": "https://pamyat-naroda.ru/documents/",
+      "fetched_at": "2026-11-25",
+      "query": {
+        "division": "365сд",
+        "begin_date": "01.10.1941",
+        "end_date": "01.05.1942",
+        "types": "все"
+      },
+      "received": "2026-11-25"
     }
   ]
 }

@@ -41,8 +41,9 @@ ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 class Dataset:
     """Загруженные данные проекта."""
 
-    def __init__(self, root: str, vault: str | None):
+    def __init__(self, root: str, vault: str | None, deep: bool = False):
         self.root = os.path.abspath(root)
+        self.deep = deep
         self.vault = vault or os.environ.get("VOV_VAULT", "/home/anb/Documents/Obsidian Vault")
         self.registry_types = _load(os.path.join(self.root, "data/registry.json"))
         self.sources = _load(os.path.join(self.root, "data/sources.json"))
@@ -305,6 +306,20 @@ def check_sources(ds: Dataset, errors: list[str]) -> None:
                     f"{sid}: снимок сайта не найден (ожидался {os.path.relpath(snapshot, ds.root)})"
                 )
 
+        if src.get("kind") == "archive-portal":
+            cache_dir = os.path.join(ds.root, src.get("cache_path", ""))
+            if not os.path.isdir(cache_dir):
+                errors.append(f"{sid}: каталог выгрузки {src.get('cache_path', '')} не найден")
+            elif not os.path.exists(os.path.join(cache_dir, "catalogue.json")):
+                errors.append(f"{sid}: в каталоге выгрузки нет catalogue.json")
+            if not src.get("portal"):
+                errors.append(f"{sid}: у портального источника нет адреса портала")
+            if not src.get("fetched_at"):
+                errors.append(f"{sid}: у портального источника нет даты выгрузки")
+            if not src.get("query"):
+                errors.append(f"{sid}: не записан запрос отбора — происхождение выборки не восстановить")
+            continue
+
         if src.get("kind") in {"gazetteer", "historical-map"}:
             cache_dir = os.path.join(ds.root, src["cache_path"])
             if not os.path.isdir(cache_dir):
@@ -352,6 +367,34 @@ def _journal_path(ds: Dataset) -> str | None:
         if src.get("kind") in {"gazetteer", "historical-map"}:
             return os.path.join(ds.root, src["derivative_path"])
     return None
+
+
+_PORTAL_CACHE: dict[str, dict] = {}
+
+
+def _portal_catalogue(ds: Dataset, source: dict) -> dict:
+    """Индекс «путь файла в хранилище» → запись каталога выгрузки."""
+    sid = source["id"]
+    if sid in _PORTAL_CACHE:
+        return _PORTAL_CACHE[sid]
+    prefix = source.get("vault_prefix", "Хобби/365сд/Исходники/ЦАМО — Память народа/")
+    path = os.path.join(ds.root, source.get("cache_path", ""), "catalogue.json")
+    index: dict[str, dict] = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fh:
+            payload = json.load(fh)
+        for entry in payload.get("files") or []:
+            index[prefix + entry["file"]] = entry
+    _PORTAL_CACHE[sid] = index
+    return index
+
+
+def _sha256_file(path: str) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def _norm_name(text: str) -> str:
@@ -407,7 +450,39 @@ def check_documents(ds: Dataset, errors: list[str]) -> None:
             errors.append(f"{where}: носитель ссылается на неизвестный источник '{sid}'")
             continue
         source = known_sources[sid]
-        if source.get("kind") == "website":
+        kind = source.get("kind")
+        if kind == "archive-portal":
+            portal_url = carrier.get("portal_url")
+            if not portal_url:
+                errors.append(f"{where}: у портального носителя нет ссылки на карточку портала")
+            if not carrier.get("portal_id"):
+                errors.append(f"{where}: у портального носителя нет идентификатора карточки")
+            file_path = carrier.get("file_path")
+            if not file_path:
+                errors.append(f"{where}: у портального носителя нет пути к файлу листа")
+                continue
+            abs_path = os.path.join(ds.vault, file_path)
+            if not os.path.exists(abs_path):
+                errors.append(f"{where}: файл листа {file_path} не найден в хранилище")
+                continue
+            catalog = _portal_catalogue(ds, source)
+            entry = catalog.get(file_path)
+            size = os.path.getsize(abs_path)
+            if entry is not None:
+                if carrier.get("bytes") is not None and carrier["bytes"] != entry.get("bytes"):
+                    errors.append(
+                        f"{where}: размер файла {size} не совпадает с каталогом ({entry.get('bytes')})"
+                    )
+            elif carrier.get("bytes") is not None and carrier["bytes"] != size:
+                errors.append(f"{where}: размер файла {size} не совпадает с записанным ({carrier['bytes']})")
+            if ds.deep:
+                digest = _sha256_file(abs_path)
+                expected = (entry or {}).get("sha256") or carrier.get("sha256")
+                if expected and digest != expected:
+                    errors.append(f"{where}: sha256 файла {file_path} не совпадает с каталогом")
+            continue
+
+        if kind == "website":
             url = carrier.get("url")
             if not url:
                 errors.append(f"{where}: у веб-носителя нет url страницы")
@@ -686,11 +761,12 @@ def check_events(ds: Dataset, errors: list[str]) -> None:
         _check_period(f"{where}.period", event["period"], ds, errors)
 
 
-def run(root: str, vault: str | None = None) -> list[str]:
+def run(root: str, vault: str | None = None, deep: bool = False) -> list[str]:
     """Полный прогон проверок. Возвращает список нарушений."""
     errors: list[str] = []
+    _PORTAL_CACHE.clear()
     try:
-        ds = Dataset(root, vault)
+        ds = Dataset(root, vault, deep=deep)
     except FileNotFoundError as exc:
         return [f"не найден обязательный файл: {exc.filename}"]
     check_schemas(ds, errors)
@@ -711,9 +787,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", default=os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     parser.add_argument("--vault", default=None)
     parser.add_argument("--quiet", action="store_true", help="печатать только итог")
+    parser.add_argument("--deep", action="store_true", help="сверять sha256 файлов листов с каталогом")
     args = parser.parse_args(argv)
 
-    errors = sorted(run(args.root, args.vault))
+    errors = sorted(run(args.root, args.vault, deep=args.deep))
     if errors:
         if not args.quiet:
             for err in errors:

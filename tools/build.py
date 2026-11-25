@@ -202,15 +202,42 @@ def render_chronology(ds: vov.Dataset, events: list[dict], digest: str, places: 
 
     documents = documents or {}
     if documents:
-        lines += ["## Документы", ""]
-        for doc_id in sorted(documents):
-            doc = documents[doc_id]
-            linked = sum(1 for ev in events if doc_id in (ev.get("documents") or []))
-            suffix = "" if linked else " — не привязан ни к одному событию"
-            lines.append(f"- `{doc_id}` — {_document_label(doc)}; носитель: {doc['carrier']['source_id']}{suffix}")
-            if doc.get("note"):
-                lines.append(f"  - примечание: {doc['note']}")
+        used = {doc_id for ev in events for doc_id in (ev.get("documents") or [])}
+        lines += ["## Документы, привязанные к событиям", ""]
+        linked_ids = [d for d in sorted(documents) if d in used]
+        if linked_ids:
+            for doc_id in linked_ids:
+                doc = documents[doc_id]
+                lines.append(f"- `{doc_id}` — {_document_label(doc)}; носитель: {doc['carrier']['source_id']}")
+                if doc.get("note"):
+                    lines.append(f"  - примечание: {doc['note']}")
+        else:
+            lines.append("Ни один документ пока не привязан к событию.")
         lines.append("")
+
+        unlinked = [d for d in sorted(documents) if d not in used]
+        lines += ["## Документы без привязки к событиям", ""]
+        if unlinked:
+            lines.append(
+                f"{len(unlinked)} документов внесены, но ни одно событие на них не ссылается — "
+                "это очередь на разбор, а не утверждение, что они не нужны."
+            )
+            lines.append("")
+            by_type: dict[str, list[str]] = {}
+            for doc_id in unlinked:
+                by_type.setdefault(documents[doc_id].get("_type_label", "?"), []).append(doc_id)
+            for type_label in sorted(by_type):
+                ids = by_type[type_label]
+                lines.append(f"### {type_label} ({len(ids)})")
+                lines.append("")
+                for doc_id in ids:
+                    doc = documents[doc_id]
+                    date_label = _period_label(doc["date"]) if doc.get("date") else "дата не установлена"
+                    lines.append(f"- {date_label} — {_value_label(doc['title'])}; `{doc_id}`")
+                lines.append("")
+        else:
+            lines.append("Все документы привязаны к событиям.")
+            lines.append("")
 
     if ds.people["people"]:
         lines += ["## Люди и списки", ""]

@@ -122,6 +122,26 @@
             "page": {
               "type": "integer",
               "minimum": 1
+            },
+            "portal_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "portal_id": {
+              "type": "string",
+              "minLength": 3
+            },
+            "file_path": {
+              "type": "string",
+              "description": "Путь к файлу листа относительно корня Obsidian vault."
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
             }
           },
           "additionalProperties": false

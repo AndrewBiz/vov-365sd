@@ -40,7 +40,8 @@
             "gazetteer",
             "historical-map",
             "website",
-            "other"
+            "other",
+            "archive-portal"
           ]
         },
         "title": {
@@ -87,6 +88,18 @@
             "pattern": "^src-[a-z0-9][a-z0-9-]*$"
           },
           "description": "Источники, текстом которых является этот источник (перепечатка, компиляция)."
+        },
+        "portal": {
+          "type": "string",
+          "format": "uri"
+        },
+        "fetched_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "query": {
+          "type": "object",
+          "description": "Фильтры отбора на портале (часть, период, типы)."
         }
       },
       "additionalProperties": false,
@@ -101,7 +114,8 @@
                 "not": {
                   "enum": [
                     "gazetteer",
-                    "historical-map"
+                    "historical-map",
+                    "archive-portal"
                   ]
                 }
               }
@@ -124,7 +138,8 @@
                 "enum": [
                   "gazetteer",
                   "historical-map",
-                  "website"
+                  "website",
+                  "archive-portal"
                 ]
               }
             }
@@ -149,6 +164,26 @@
           "then": {
             "required": [
               "snapshot_at",
+              "cache_path"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "archive-portal"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "portal",
+              "fetched_at",
+              "query",
               "cache_path"
             ]
           }

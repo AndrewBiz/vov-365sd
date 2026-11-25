@@ -807,6 +807,126 @@ class TestPersonEvidence(DatasetCase):
         self.assert_error("схема document")
 
 
+class TestPortalIntake(DatasetCase):
+    PORTAL = {
+        "id": "src-portal-test",
+        "kind": "archive-portal",
+        "title": "Тестовый портал",
+        "derivative_path": "docs/sources/недат_Тест.md",
+        "cache_path": "data/cache/portal-test",
+        "portal": "https://portal.test/documents/",
+        "fetched_at": "2026-11-25",
+        "query": {"division": "365сд"},
+        "received": "2026-11-25",
+    }
+
+    def _portal(self, files=None, catalogue=True) -> str:
+        sources = self.load("data/sources.json")
+        sources["sources"].append(dict(self.PORTAL))
+        self.save("data/sources.json", sources)
+        cache = os.path.join(self.root, "data/cache/portal-test")
+        os.makedirs(cache, exist_ok=True)
+        if catalogue:
+            _write(os.path.join(cache, "catalogue.json"), {"files": files or []})
+        return cache
+
+    def _leaf(self, size: int = 11, name: str = "передача/208-0002511-0275/p00000003.jpg") -> str:
+        path = os.path.join(self.vault, "Хобби/365сд/Исходники/ЦАМО — Память народа", name)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "wb") as fh:
+            fh.write(b"x" * size)
+        return "Хобби/365сд/Исходники/ЦАМО — Память народа/" + name
+
+    def _portal_doc(self, **overrides) -> dict:
+        doc = TestDocuments._doc(self)
+        doc["id"] = "doc-pn-208-0002511-0275-p00000003"
+        doc["type"] = "map"
+        doc["carrier"] = {
+            "source_id": "src-portal-test",
+            "portal_url": "https://portal.test/documents/view/?id=map1",
+            "portal_id": "map1",
+            "file_path": self._leaf(),
+            "bytes": 11,
+            "page": 3,
+        }
+        doc.update(overrides)
+        return doc
+
+    def test_portal_source_with_catalogue(self) -> None:
+        self._portal()
+        self.assertEqual(self.errors(), [])
+
+    def test_portal_source_without_catalogue(self) -> None:
+        self._portal(catalogue=False)
+        self.assert_error("нет catalogue.json")
+
+    def test_portal_source_without_query(self) -> None:
+        sources = self.load("data/sources.json")
+        portal = dict(self.PORTAL); portal.pop("query")
+        sources["sources"].append(portal)
+        self.save("data/sources.json", sources)
+        cache = os.path.join(self.root, "data/cache/portal-test")
+        os.makedirs(cache, exist_ok=True)
+        _write(os.path.join(cache, "catalogue.json"), {"files": []})
+        self.assert_error("запрос отбора")
+
+    def test_portal_document_valid(self) -> None:
+        self._portal([{"file": "передача/208-0002511-0275/p00000003.jpg", "bytes": 11,
+                       "sha256": hashlib.sha256(b"x" * 11).hexdigest()}])
+        self.save("data/documents.json", {"documents": [self._portal_doc()]})
+        self.assertEqual(self.errors(), [])
+
+    def test_portal_document_without_card(self) -> None:
+        self._portal()
+        carrier = dict(self._portal_doc()["carrier"]); carrier.pop("portal_url")
+        self.save("data/documents.json", {"documents": [self._portal_doc(carrier=carrier)]})
+        self.assert_error("нет ссылки на карточку портала")
+
+    def test_portal_document_without_file(self) -> None:
+        self._portal()
+        carrier = dict(self._portal_doc()["carrier"]); carrier.pop("file_path")
+        self.save("data/documents.json", {"documents": [self._portal_doc(carrier=carrier)]})
+        self.assert_error("нет пути к файлу листа")
+
+    def test_portal_document_missing_leaf(self) -> None:
+        self._portal([{"file": "нет/такого/файла.jpg", "bytes": 11}])
+        carrier = dict(self._portal_doc()["carrier"])
+        carrier["file_path"] = "Хобби/365сд/Исходники/ЦАМО — Память народа/нет/такого/файла.jpg"
+        self.save("data/documents.json", {"documents": [self._portal_doc(carrier=carrier)]})
+        self.assert_error("не найден в хранилище")
+
+    def test_portal_document_size_mismatch(self) -> None:
+        self._portal([{"file": "передача/208-0002511-0275/p00000003.jpg", "bytes": 99}])
+        self.save("data/documents.json", {"documents": [self._portal_doc()]})
+        self.assert_error("не совпадает с каталогом")
+
+    def test_deep_hash_mismatch(self) -> None:
+        self._portal([{"file": "передача/208-0002511-0275/p00000003.jpg", "bytes": 11,
+                       "sha256": "0" * 64}])
+        self.save("data/documents.json", {"documents": [self._portal_doc()]})
+        errors = vov.run(self.root, self.vault, deep=True)
+        self.assertTrue(any("sha256" in e for e in errors), errors)
+
+    def test_intake_is_idempotent_and_rejects_unknown_type(self) -> None:
+        import importlib
+        pi = importlib.import_module("portal_intake")
+        entry = {
+            "id": "map1", "type": "Карты", "name": "Карта", "deal": "208-0002511-0275",
+            "page": "00000003", "period_from": "05.12.1941", "period_to": "06.12.1941",
+            "doc_date": "06.12.1941", "file": "передача/208-0002511-0275/p00000003.jpg",
+            "bytes": 11, "sha256": "0" * 64, "portal_url": "https://portal.test/documents/view/?id=map1",
+        }
+        reg = self.load("data/registry.json")
+        doc = pi.build_document(entry, "src-portal-test", "prefix/", reg["portal_types"])
+        self.assertEqual(doc["id"], "doc-pn-208-0002511-0275-p00000003")
+        self.assertEqual(doc["type"], "map")
+        self.assertEqual(doc["requisites"], {"fund": "208", "inventory": "2511", "file": "275"})
+        self.assertIn("выведены из пути портала", doc["note"])
+        bad = dict(entry); bad["type"] = "Неизвестный тип"
+        with self.assertRaises(SystemExit):
+            pi.build_document(bad, "src-portal-test", "prefix/", reg["portal_types"])
+
+
 class TestBuild(DatasetCase):
     def test_build_writes_artifacts(self) -> None:
         code, messages = builder.build(self.root, self.vault)

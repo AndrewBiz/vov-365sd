@@ -13,7 +13,8 @@
     "document_types",
     "fate_outcomes",
     "person_fact_keys",
-    "evidence_basis"
+    "evidence_basis",
+    "portal_types"
   ],
   "properties": {
     "event_types": {
@@ -127,6 +128,14 @@
       }
     },
     "evidence_basis": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "portal_types": {
       "type": "object",
       "minProperties": 1,
       "additionalProperties": {
