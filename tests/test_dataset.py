@@ -621,8 +621,11 @@ class TestDocuments(DatasetCase):
 
 
 class TestPersonnel(DatasetCase):
-    def _person(self, pid="p-ivanov-ivan", name="Иванов Иван Иванович", year="неизвестен") -> dict:
-        return {"id": pid, "name": name, "birth_year": year}
+    def _person(self, pid="p-ivanov-ivan", name="Иванов Иван Иванович", year="неизвестен",
+                claims: dict | None = None) -> dict:
+        person = {"id": pid, "name": name, "birth_year": year}
+        person["claims"] = claims or {"fate": [{**_fact("погиб"), "basis": "publication"}]}
+        return person
 
     def test_duplicate_person(self) -> None:
         self.save("data/people.json", {"people": [
@@ -682,7 +685,7 @@ class TestPersonnel(DatasetCase):
         self.assertEqual(self.errors(), [])
 
     def test_stale_conflict_flag(self) -> None:
-        person = {"id": "p-ivanov-ivan", "name": "Иванов Иван Иванович", "birth_year": "неизвестен", "conflict": True}
+        person = {**self._person(), "conflict": True}
         self.save("data/documents.json", {"documents": [TestDocuments._doc(self)]})
         self.save("data/people.json", {"people": [person]})
         self.save("data/rosters.json", {"entries": [self._entry()]})
@@ -722,6 +725,86 @@ class TestRosterParsing(DatasetCase):
         self.assertEqual((persons, entries), (2, 2))
         persons2, entries2 = pr.apply_draft(self.root, draft, "https://site.test/list/", "src-web-test", "test")
         self.assertEqual((persons2, entries2), (0, 0))
+
+
+class TestPersonEvidence(DatasetCase):
+    def _claim(self, **overrides) -> dict:
+        claim = {
+            "value": "радист",
+            "provenance": {"source_id": "src-test", "locator": {"page": 96, "quote": "Радист."}},
+            "status": "черновик",
+            "basis": "publication",
+        }
+        claim.update(overrides)
+        return claim
+
+    def _person(self, claims=None, **overrides) -> dict:
+        person = {
+            "id": "p-dyatkov-konstantin",
+            "name": "Дятков Константин Александрович",
+            "birth_year": 1913,
+            "claims": claims if claims is not None else {"speciality": [self._claim()]},
+        }
+        person.update(overrides)
+        return person
+
+    def test_valid_claims(self) -> None:
+        self.save("data/people.json", {"people": [self._person()]})
+        self.assertEqual(self.errors(), [])
+
+    def test_claim_without_basis(self) -> None:
+        claim = self._claim()
+        claim.pop("basis")
+        self.save("data/people.json", {"people": [self._person({"speciality": [claim]})]})
+        self.assert_error("без вида свидетельства")
+
+    def test_unknown_basis(self) -> None:
+        self.save("data/people.json", {"people": [self._person({"speciality": [self._claim(basis="слухи")]})]})
+        self.assert_error("неизвестный вид свидетельства")
+
+    def test_unknown_claim_key(self) -> None:
+        self.save("data/people.json", {"people": [self._person({"favourite_color": [self._claim()]})]})
+        self.assert_error("неизвестное имя утверждения")
+
+    def test_claim_without_provenance(self) -> None:
+        claim = self._claim()
+        claim.pop("provenance")
+        self.save("data/people.json", {"people": [self._person({"speciality": [claim]})]})
+        self.assert_error("без провенанса")
+
+    def test_empty_person(self) -> None:
+        person = {"id": "p-empty-person", "name": "Пустая Персона", "birth_year": "неизвестен"}
+        self.save("data/people.json", {"people": [person]})
+        self.assert_error("персона пуста")
+
+    def test_claims_divergence_needs_flag(self) -> None:
+        claims = {"speciality": [self._claim(), self._claim(value="связист")]}
+        self.save("data/people.json", {"people": [self._person(claims)]})
+        self.assert_error("не помечена conflict")
+
+    def test_claims_divergence_with_flag_ok(self) -> None:
+        claims = {"speciality": [self._claim(), self._claim(value="связист")]}
+        self.save("data/people.json", {"people": [self._person(claims, conflict=True)]})
+        self.assertEqual(self.errors(), [])
+
+    def test_publication_requisites_ok(self) -> None:
+        doc = TestDocuments._doc(self)
+        doc["requisites"] = {"edition": "Книга Памяти Свердловской области", "volume": "16", "page": "202", "entry": "№ 12"}
+        doc["type"] = "memorial-card"
+        self.save("data/documents.json", {"documents": [doc]})
+        self.assertEqual(self.errors(), [])
+
+    def test_mixed_requisites_rejected(self) -> None:
+        doc = TestDocuments._doc(self)
+        doc["requisites"] = {"fund": "3067", "inventory": "1", "file": "6", "edition": "Книга Памяти"}
+        self.save("data/documents.json", {"documents": [doc]})
+        self.assert_error("схема document")
+
+    def test_publication_without_page(self) -> None:
+        doc = TestDocuments._doc(self)
+        doc["requisites"] = {"edition": "Книга Памяти", "volume": "16"}
+        self.save("data/documents.json", {"documents": [doc]})
+        self.assert_error("схема document")
 
 
 class TestBuild(DatasetCase):

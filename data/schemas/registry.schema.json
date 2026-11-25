@@ -11,7 +11,9 @@
     "place_types",
     "place_states",
     "document_types",
-    "fate_outcomes"
+    "fate_outcomes",
+    "person_fact_keys",
+    "evidence_basis"
   ],
   "properties": {
     "event_types": {
@@ -109,6 +111,22 @@
       }
     },
     "fate_outcomes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "person_fact_keys": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "evidence_basis": {
       "type": "object",
       "minProperties": 1,
       "additionalProperties": {

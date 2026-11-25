@@ -3,32 +3,100 @@
   "$id": "https://vov-365sd.local/schemas/document.schema.json",
   "title": "Реестр архивных документов",
   "type": "object",
-  "required": ["documents"],
+  "required": [
+    "documents"
+  ],
   "properties": {
-    "documents": { "type": "array", "items": { "$ref": "#/$defs/document" } }
+    "documents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/document"
+      }
+    }
   },
   "additionalProperties": false,
   "$defs": {
     "document": {
       "type": "object",
-      "required": ["id", "type", "title", "date", "carrier"],
+      "required": [
+        "id",
+        "type",
+        "title",
+        "date",
+        "carrier"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^doc-[a-z0-9][a-z0-9-]*$" },
-        "type": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
-        "title": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/fact" },
-        "date": { "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/periodFact" },
+        "id": {
+          "type": "string",
+          "pattern": "^doc-[a-z0-9][a-z0-9-]*$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "title": {
+          "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/fact"
+        },
+        "date": {
+          "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/periodFact"
+        },
         "requisites": {
-          "description": "Либо полные реквизиты (фонд, опись, дело обязательны), либо null с примечанием.",
+          "description": "Полные архивные (фонд, опись, дело; листы опционально) либо полные публикационные (издание, том, страница; номер записи опционально), либо null с примечанием.",
           "oneOf": [
-            { "type": "null" },
+            {
+              "type": "null"
+            },
             {
               "type": "object",
-              "required": ["fund", "inventory", "file"],
+              "required": [
+                "fund",
+                "inventory",
+                "file"
+              ],
               "properties": {
-                "fund": { "type": "string", "minLength": 1 },
-                "inventory": { "type": "string", "minLength": 1 },
-                "file": { "type": "string", "minLength": 1 },
-                "sheets": { "type": "string", "minLength": 1 }
+                "fund": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "inventory": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "file": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sheets": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "edition",
+                "volume",
+                "page"
+              ],
+              "properties": {
+                "edition": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "volume": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "page": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "entry": {
+                  "type": "string",
+                  "minLength": 1
+                }
               },
               "additionalProperties": false
             }
@@ -36,16 +104,31 @@
         },
         "carrier": {
           "type": "object",
-          "required": ["source_id"],
+          "required": [
+            "source_id"
+          ],
           "properties": {
-            "source_id": { "type": "string", "pattern": "^src-[a-z0-9][a-z0-9-]*$" },
-            "url": { "type": "string", "format": "uri" },
-            "derivative_path": { "type": "string" },
-            "page": { "type": "integer", "minimum": 1 }
+            "source_id": {
+              "type": "string",
+              "pattern": "^src-[a-z0-9][a-z0-9-]*$"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "derivative_path": {
+              "type": "string"
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
           },
           "additionalProperties": false
         },
-        "note": { "type": "string" }
+        "note": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     }

@@ -382,9 +382,24 @@ def check_documents(ds: Dataset, errors: list[str]) -> None:
                     f"{where}: реквизиты не установлены, но нет примечания, объясняющего это"
                 )
         else:
-            missing = [f for f in ("fund", "inventory", "file") if not str(requisites.get(f, "")).strip()]
-            if missing:
-                errors.append(f"{where}: неполные реквизиты — отсутствуют {', '.join(missing)}")
+            archive = ("fund", "inventory", "file")
+            publication = ("edition", "volume", "page")
+            if any(f in requisites for f in archive):
+                missing = [f for f in archive if not str(requisites.get(f, "")).strip()]
+                if missing:
+                    errors.append(
+                        f"{where}: неполные архивные реквизиты — отсутствуют {', '.join(missing)}"
+                    )
+                if any(f in requisites for f in publication):
+                    errors.append(f"{where}: реквизиты смешивают архивный и публикационный виды")
+            elif any(f in requisites for f in publication):
+                missing = [f for f in publication if not str(requisites.get(f, "")).strip()]
+                if missing:
+                    errors.append(
+                        f"{where}: неполные публикационные реквизиты — отсутствуют {', '.join(missing)}"
+                    )
+            else:
+                errors.append(f"{where}: реквизиты не архивные и не публикационные")
 
         carrier = doc["carrier"]
         sid = carrier["source_id"]
@@ -422,6 +437,93 @@ def check_people(ds: Dataset, errors: list[str]) -> None:
             )
         else:
             by_key[key] = pid
+
+
+def _claim_values(claim: dict) -> set[str]:
+    variants = claim.get("variants") if claim.get("conflict") is True else [claim]
+    return {
+        json.dumps(v.get("value"), sort_keys=True, ensure_ascii=False)
+        for v in variants
+        if isinstance(v, dict)
+    }
+
+
+def _claim_bases(claim: dict) -> list[object]:
+    variants = claim.get("variants") if claim.get("conflict") is True else [claim]
+    return [v.get("basis") for v in variants if isinstance(v, dict)]
+
+
+def _is_period_claim(claim: dict) -> bool:
+    value = claim.get("value")
+    return isinstance(value, dict) and "precision" in value
+
+
+def check_person_claims(ds: Dataset, errors: list[str]) -> None:
+    known_sources = ds.source_ids()
+    keys = ds.registry_types.get("person_fact_keys", {})
+    bases = ds.registry_types.get("evidence_basis", {})
+    for person in ds.people["people"]:
+        pid = person["id"]
+        for key, claims in (person.get("claims") or {}).items():
+            where = f"data/people.json ({pid}).claims.{key}"
+            if key not in keys:
+                errors.append(f"{where}: неизвестное имя утверждения '{key}'")
+            if not isinstance(claims, list) or not claims:
+                errors.append(f"{where}: утверждение должно быть непустым массивом")
+                continue
+            for index, claim in enumerate(claims):
+                spot = f"{where}[{index}]"
+                _check_fact(spot, claim, ds, known_sources, errors)
+                if _is_period_claim(claim):
+                    _check_period(spot, claim, ds, errors)
+                claim_bases = _claim_bases(claim)
+                if not claim_bases or any(not b for b in claim_bases):
+                    errors.append(f"{spot}: утверждение без вида свидетельства (basis)")
+                for basis in claim_bases:
+                    if basis and basis not in bases:
+                        errors.append(f"{spot}: неизвестный вид свидетельства '{basis}'")
+
+
+def check_person_conflicts(ds: Dataset, errors: list[str]) -> None:
+    entries_by_person: dict[str, list[dict]] = {}
+    for entry in ds.rosters["entries"]:
+        entries_by_person.setdefault(entry["person"], []).append(entry)
+
+    for person in ds.people["people"]:
+        pid = person["id"]
+        entries = entries_by_person.get(pid, [])
+        claims = person.get("claims") or {}
+        where = f"data/people.json ({pid})"
+
+        if not entries and not claims:
+            errors.append(f"{where}: персона пуста — ни записей списка, ни утверждений")
+
+        divergence: list[str] = []
+        values = {str(e["fate"].get("value")) for e in entries}
+        dates = {
+            json.dumps(e.get("fate_date", {}).get("value"), sort_keys=True, ensure_ascii=False)
+            for e in entries
+            if e.get("fate_date")
+        }
+        if len(entries) > 1 and (len(values) > 1 or len(dates) > 1):
+            divergence.append("записи списков")
+
+        for key, claim_list in claims.items():
+            seen: set[str] = set()
+            for claim in claim_list:
+                seen |= _claim_values(claim)
+            if key == "birth_year" and person["birth_year"] != "неизвестен":
+                seen.add(json.dumps(person["birth_year"]))
+            if len(seen) > 1:
+                divergence.append(f"утверждение '{key}'")
+
+        flag = person.get("conflict", False)
+        if divergence and not flag:
+            errors.append(
+                f"{where}: расхождение ({'; '.join(divergence)}), но персона не помечена conflict"
+            )
+        if flag and not divergence:
+            errors.append(f"{where}: флаг conflict без расхождений")
 
 
 def check_rosters(ds: Dataset, errors: list[str]) -> None:
@@ -462,23 +564,7 @@ def check_rosters(ds: Dataset, errors: list[str]) -> None:
 
         by_person.setdefault(entry["person"], []).append(entry)
 
-    for person in ds.people["people"]:
-        pid = person["id"]
-        entries = by_person.get(pid, [])
-        values = {str(e["fate"].get("value")) for e in entries}
-        dates = {
-            json.dumps(e.get("fate_date", {}).get("value"), sort_keys=True, ensure_ascii=False)
-            for e in entries
-            if e.get("fate_date")
-        }
-        diverges = len(entries) > 1 and (len(values) > 1 or len(dates) > 1)
-        flag = person.get("conflict", False)
-        if diverges and not flag:
-            errors.append(
-                f"data/people.json ({pid}): записи разных списков расходятся, но персона не помечена conflict"
-            )
-        if flag and not diverges:
-            errors.append(f"data/people.json ({pid}): флаг conflict без расхождений в записях")
+
 
 
 def check_places(ds: Dataset, errors: list[str]) -> None:
@@ -613,6 +699,8 @@ def run(root: str, vault: str | None = None) -> list[str]:
     check_places(ds, errors)
     check_documents(ds, errors)
     check_people(ds, errors)
+    check_person_claims(ds, errors)
+    check_person_conflicts(ds, errors)
     check_rosters(ds, errors)
     check_events(ds, errors)
     return errors

@@ -92,6 +92,11 @@
         },
         "note": {
           "type": "string"
+        },
+        "basis": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Вид свидетельства из evidence_basis реестра; обязателен для утверждений о человеке."
         }
       },
       "additionalProperties": false
@@ -185,6 +190,11 @@
         },
         "note": {
           "type": "string"
+        },
+        "basis": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Вид свидетельства из evidence_basis реестра; обязателен для утверждений о человеке."
         }
       },
       "additionalProperties": false
@@ -218,6 +228,77 @@
           "additionalProperties": false
         }
       ]
+    },
+    "claim": {
+      "type": "object",
+      "description": "Утверждение о человеке: значение (простое или период) либо конфликт вариантов; провенанс и вид свидетельства.",
+      "properties": {
+        "value": {},
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "basis": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Вид свидетельства из evidence_basis реестра; обязателен для утверждений о человеке."
+        },
+        "note": {
+          "type": "string"
+        },
+        "conflict": {
+          "const": true
+        },
+        "variants": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/claimVariant"
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "value",
+            "status"
+          ]
+        },
+        {
+          "required": [
+            "conflict",
+            "variants"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    },
+    "claimVariant": {
+      "type": "object",
+      "required": [
+        "value",
+        "status"
+      ],
+      "properties": {
+        "value": {},
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "basis": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "Вид свидетельства из evidence_basis реестра; обязателен для утверждений о человеке."
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

@@ -157,6 +157,48 @@
         "url": "https://365sd.org/imennoy-spisok-na-komandu-dlya-1213-sp-otra/"
       },
       "note": "Продолжение списка л. 213—215 об.; по документу видно, что команда формировалась Серовским РВК и шла в Камышловские (Еланские) лагеря."
+    },
+    {
+      "id": "doc-memorial-card-dyatkov",
+      "type": "memorial-card",
+      "title": {
+        "value": "Запись о Дяткове К. А. в Книге Памяти Свердловской области (том 16, Нижне-Туринский район, с. 202, № 12)",
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+            "quote": "В книге Памяти Свердловской области том 16, (Нижне-Туринский район) с. 202, № 12 числится Дятков Константин Александрович 1912 г.р."
+          }
+        },
+        "status": "черновик"
+      },
+      "date": {
+        "value": {
+          "from": null,
+          "to": null,
+          "precision": "range"
+        },
+        "provenance": {
+          "source_id": "src-365sd-org",
+          "locator": {
+            "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+            "quote": "В книге Памяти Свердловской области том 16"
+          }
+        },
+        "status": "черновик",
+        "note": "Дата записи в Книге Памяти не публикуется; страница сайта её тоже не называет."
+      },
+      "requisites": {
+        "edition": "Книга Памяти Свердловской области",
+        "volume": "16 (Нижне-Туринский район)",
+        "page": "202",
+        "entry": "№ 12"
+      },
+      "carrier": {
+        "source_id": "src-365sd-org",
+        "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/"
+      },
+      "note": "Реквизиты публикационные: это запись в издании, а не архивное дело."
     }
   ]
 }

@@ -134,9 +134,14 @@ def _requisites_label(doc: dict) -> str:
     req = doc.get("requisites")
     if not req:
         return "реквизиты не установлены"
-    label = f"ф. {req['fund']}, оп. {req['inventory']}, д. {req['file']}"
-    if req.get("sheets"):
-        label += f", л. {req['sheets']}"
+    if "fund" in req:
+        label = f"ф. {req['fund']}, оп. {req['inventory']}, д. {req['file']}"
+        if req.get("sheets"):
+            label += f", л. {req['sheets']}"
+        return label
+    label = f"{req['edition']}, т. {req['volume']}, с. {req['page']}"
+    if req.get("entry"):
+        label += f", {req['entry']}"
     return label
 
 
@@ -273,6 +278,135 @@ def resolve_geometry(event: dict, places: dict[str, dict]) -> tuple[dict | None,
     return None, event["localization"], None, None
 
 
+PEOPLE_PATH = "docs/research/Люди — что известно (сгенерировано).md"
+
+
+def _claim_label(claim: dict) -> str:
+    if isinstance(claim.get("value"), dict) and "precision" in claim["value"]:
+        return _period_label(claim)
+    return _value_label(claim)
+
+
+def _claim_basis_label(ds: vov.Dataset, claim: dict) -> str:
+    labels = ds.registry_types.get("evidence_basis", {})
+    variants = claim.get("variants") if claim.get("conflict") is True else [claim]
+    names = []
+    for variant in variants:
+        basis = variant.get("basis")
+        if basis:
+            label = labels.get(basis, basis)
+            if label not in names:
+                names.append(label)
+    return ", ".join(names) if names else "вид не указан"
+
+
+def _claim_sources(ds: vov.Dataset, claim: dict) -> str:
+    source_titles = {s["id"]: s.get("title") or s["id"] for s in ds.sources["sources"]}
+    variants = claim.get("variants") if claim.get("conflict") is True else [claim]
+    parts: list[str] = []
+    for variant in variants:
+        entries = variant.get("provenance")
+        entries = entries if isinstance(entries, list) else ([entries] if entries else [])
+        for entry in entries:
+            sid = entry.get("source_id", "")
+            locator = entry.get("locator") or {}
+            spot = locator.get("slide") and f"слайд {locator['slide']}" or (
+                locator.get("page") and f"с. {locator['page']}"
+            ) or locator.get("url", "")
+            label = f"`{sid}`" + (f", {spot}" if spot else "")
+            if label not in parts:
+                parts.append(label)
+    return "; ".join(parts)
+
+
+def render_people(ds: vov.Dataset, digest: str) -> str:
+    keys = ds.registry_types.get("person_fact_keys", {})
+    entries_by_person: dict[str, list[dict]] = {}
+    for entry in ds.rosters["entries"]:
+        entries_by_person.setdefault(entry["person"], []).append(entry)
+    documents = {doc["id"]: doc for doc in ds.documents["documents"]}
+
+    people = sorted(ds.people["people"], key=lambda p: (p["name"], p["id"]))
+    with_claims = [p for p in people if p.get("claims")]
+    conflicted = [p for p in people if p.get("conflict")]
+    single = [p for p in with_claims if sum(len(v) for v in p["claims"].values()) == 1]
+
+    lines = [
+        "# Люди — что известно",
+        "",
+        "<!-- Сгенерировано tools/build.py из data/people.json, data/rosters.json, data/documents.json. "
+        "Ручная правка не имеет силы. -->",
+        "",
+        f"Набор данных: `{digest[:16]}…`",
+        "",
+        f"Персон в реестре: {len(people)}. С утверждениями из свидетельств: {len(with_claims)}. "
+        f"С расхождениями: {len(conflicted)}. С единственным сведением: {len(single)}.",
+        "",
+        "## Утверждения по людям",
+        "",
+    ]
+
+    if not with_claims:
+        lines += ["Пока ни у одной персоны нет утверждений из свидетельств.", ""]
+
+    for person in with_claims:
+        mark = " ⚠ конфликт" if person.get("conflict") else ""
+        birth = person["birth_year"] if person["birth_year"] != "неизвестен" else "год рождения неизвестен"
+        lines.append(f"### {person['name']} ({birth}){mark}")
+        lines.append("")
+        lines.append(f"`{person['id']}`")
+        lines.append("")
+        for key in sorted(person["claims"]):
+            label = keys.get(key, key)
+            for claim in person["claims"][key]:
+                basis = _claim_basis_label(ds, claim)
+                sources = _claim_sources(ds, claim)
+                lines.append(f"- **{label}**: {_claim_label(claim)} — {basis}; {sources}")
+        for entry in sorted(entries_by_person.get(person["id"], []), key=lambda e: e["id"]):
+            doc = documents.get(entry["document"], {})
+            doc_label = _document_label(doc) if doc else entry["document"]
+            date_label = _period_label(entry["fate_date"]) if entry.get("fate_date") else "дата не указана"
+            lines.append(
+                f"- **Запись списка**: {entry['fate']['value']} ({date_label}) — {entry['unit']}; {doc_label}"
+            )
+        lines.append("")
+
+    lines += ["## Расхождения", ""]
+    if conflicted:
+        for person in conflicted:
+            keys_with = []
+            for key, claims in (person.get("claims") or {}).items():
+                values = {_claim_label(c) for c in claims}
+                if len(values) > 1:
+                    keys_with.append(f"{keys.get(key, key)}: " + " / ".join(sorted(values)))
+            if not keys_with:
+                keys_with.append("записи списков")
+            lines.append(f"- {person['name']} (`{person['id']}`) — " + "; ".join(keys_with))
+    else:
+        lines.append("Расхождений нет.")
+    lines.append("")
+
+    lines += ["## Известно одно сведение", ""]
+    if single:
+        for person in single:
+            key, claims = next(iter(person["claims"].items()))
+            lines.append(
+                f"- {person['name']} (`{person['id']}`) — {keys.get(key, key)}: {_claim_label(claims[0])}"
+            )
+    else:
+        lines.append("Нет людей с единственным сведением.")
+    lines.append("")
+
+    lines += ["## Люди без свидетельств", ""]
+    bare = [p for p in people if not p.get("claims")]
+    lines.append(
+        f"{len(bare)} персон известны только по именным спискам — об их жизни, призыве и родных "
+        "сведений в данных нет. Это очередь на поиск, а не утверждение, что сведений не существует."
+    )
+    lines.append("")
+    return "\n".join(lines)
+
+
 def render_geojson(events: list[dict], places: dict[str, dict]) -> str:
     features = []
     for ev in events:
@@ -318,6 +452,7 @@ def build(root: str, vault: str | None, check: bool = False) -> tuple[int, list[
     artifacts = {
         os.path.join(root, CHRONO_PATH): render_chronology(ds, events, digest, places, documents),
         os.path.join(root, GEOJSON_PATH): render_geojson(events, places),
+        os.path.join(root, PEOPLE_PATH): render_people(ds, digest),
     }
 
     messages: list[str] = []

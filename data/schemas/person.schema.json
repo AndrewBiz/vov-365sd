@@ -51,6 +51,20 @@
         "conflict": {
           "type": "boolean",
           "description": "Истина, если записи разных списков расходятся по судьбе или дате."
+        },
+        "claims": {
+          "type": "object",
+          "description": "Утверждения о человеке: имя из person_fact_keys → массив свидетельств.",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "https://vov-365sd.local/schemas/fact.schema.json#/$defs/claim"
+            }
+          }
         }
       },
       "additionalProperties": false

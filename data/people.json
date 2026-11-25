@@ -2439,6 +2439,657 @@
       "id": "p-shalomov-fedor-elizarovich",
       "name": "Шаломов Федор Елизарович",
       "birth_year": "неизвестен"
+    },
+    {
+      "id": "p-bizyaev-erofey-mikhailovich",
+      "name": "Бизяев Ерофей Михайлович",
+      "birth_year": 1901,
+      "conflict": true,
+      "claims": {
+        "birth_date": [
+          {
+            "value": {
+              "from": "1901-10-17",
+              "to": "1901-10-17",
+              "precision": "day"
+            },
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "ФИО Бизяев Ерофей Михайлович Дата рождения 17 октября 1901"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          }
+        ],
+        "birth_place": [
+          {
+            "value": "пос. Павда, Свердловская обл., Новолялинский р-н",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Место рождения пос. Павда, Свердловская обл., Новолялинский р-н"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          }
+        ],
+        "education": [
+          {
+            "value": "начальное",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Образование начальное"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          }
+        ],
+        "employment": [
+          {
+            "value": "чернорабочий, ГлавВостБумПром, Новолялинский леспромхоз, лесохозяйственный отдел Павдинского механизированного лесопункта (с 20.06.1939 по 29.07.1941)",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Место работы чернорабочий, ГлавВостБумПром, Новолялинский леспромхоз, лесохозяйственный отдел Павдинского механизированного лесопункта (с 20.06.1939 по 29.07.1941)"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          }
+        ],
+        "conscription": [
+          {
+            "value": {
+              "from": "1941-07-29",
+              "to": "1941-07-29",
+              "precision": "day"
+            },
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Призван в армию 29.07.1941 Исовским военкоматом (пос. Ис, свердловской обл.)"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          },
+          {
+            "value": "призван Исовским РВК 29.08.1941",
+            "provenance": {
+              "source_id": "src-book-p96",
+              "locator": {
+                "page": 96,
+                "quote": "призван 29.08.1941 Исовским РВК"
+              }
+            },
+            "status": "черновик",
+            "basis": "publication",
+            "note": "расходится с презентацией на месяц"
+          }
+        ],
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Воинская часть 365 стрелковая дивизия"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          },
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-book-p96",
+              "locator": {
+                "page": 96,
+                "quote": "365-я стрелковая дивизия"
+              }
+            },
+            "status": "черновик",
+            "basis": "publication",
+            "note": "та же часть, что и в презентации; формулировка источника — «365 сд»"
+          }
+        ],
+        "rank": [
+          {
+            "value": "рядовой роты автоматчиков (пехота)",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Род войск, звание Рядовой роты автоматчиков (пехота)"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          }
+        ],
+        "fate": [
+          {
+            "value": "пропал без вести, приблизительно январь–февраль 1942, в боях в районе Клин–Ржев",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Пропал без вести. Приблизительно январь- февраль 1942 года в боях в районе Клин-Ржев."
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          },
+          {
+            "value": "погиб в декабре 1941 в боях за Калицино; последнее письмо 21.12.1941, п/п 1438",
+            "provenance": {
+              "source_id": "src-book-p96",
+              "locator": {
+                "page": 96,
+                "quote": "последнее письмо пришло 21.12.1941"
+              }
+            },
+            "status": "черновик",
+            "basis": "publication"
+          },
+          {
+            "value": "в проверенных документах 365 сд за 1941 г. не значится",
+            "provenance": {
+              "source_id": "src-camo-1988-01-21",
+              "locator": {
+                "quote": "в проверенных документах 365 сд за 1941 г. Бизяев Е. М. не значится"
+              }
+            },
+            "status": "черновик",
+            "basis": "archive-document",
+            "note": "ответ ЦАМО № 9/165750 от 21.01.1988, адресат — Красногвардейский райвоенком"
+          },
+          {
+            "value": "пропал без вести в феврале–марте 1942",
+            "provenance": {
+              "source_id": "src-museum-konakovo",
+              "locator": {
+                "quote": "пропал без вести в февр.–марте 1942"
+              }
+            },
+            "status": "черновик",
+            "basis": "museum-exhibit",
+            "note": "подпись под музейной схемой (краеведческий музей Конаково)"
+          }
+        ],
+        "fate_date": [
+          {
+            "value": {
+              "from": "1941-12-01",
+              "to": "1941-12-31",
+              "precision": "month"
+            },
+            "provenance": {
+              "source_id": "src-book-p96",
+              "locator": {
+                "page": 96,
+                "quote": "декабрь 1941"
+              }
+            },
+            "status": "черновик",
+            "basis": "publication"
+          },
+          {
+            "value": {
+              "from": "1942-01-01",
+              "to": "1942-02-28",
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Приблизительно январь- февраль 1942 года"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          },
+          {
+            "value": {
+              "from": "1942-02-01",
+              "to": "1942-03-31",
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-museum-konakovo",
+              "locator": {
+                "quote": "февр.–марте 1942"
+              }
+            },
+            "status": "черновик",
+            "basis": "museum-exhibit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-dyatkov-konstantin-aleksandrovich",
+      "name": "Дятков Константин Александрович",
+      "birth_year": 1913,
+      "conflict": true,
+      "claims": {
+        "birth_year": [
+          {
+            "value": 1913,
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "Дятков Константин Александрович 1913 г."
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          },
+          {
+            "value": 1912,
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "В книге Памяти Свердловской области том 16, (Нижне-Туринский район) с. 202, № 12 числится Дятков Константин Александрович 1912 г.р."
+              }
+            },
+            "status": "черновик",
+            "basis": "publication",
+            "note": "расходится с карточкой на сайте"
+          }
+        ],
+        "birth_place": [
+          {
+            "value": "Свердловская обл., Исовский р-он, Павдинский с/с, д. Павда",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "Свердлоаская обл., Исовский р-он, Павдинский с/с, д. Павда."
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "speciality": [
+          {
+            "value": "радист",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "Радист."
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "conscription": [
+          {
+            "value": "мобилизован Исовским РВК Свердловской области",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "Мобилизован Исовским РВК Свердловской области."
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "relatives": [
+          {
+            "value": "Логинова Анисия Ивановна; по данным 9 отдела ЦАМО РФ в 1947 г. проживала: Татарская АССР, г. Буинск, ул. Бабеля 83 (донесение Буинского РВК, вх. № 65640с от 30.10.1947)",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "жена Дяткова, Логинова Анисия Ивановна в 1947 г. проживала по адресу: Татарская АССР, г. Буинск, ул. Бабеля 83 (донесение о потерях Буинского РВК Татарской АССР Вх. №65640с от 30 октября 1947 г.)"
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "fate": [
+          {
+            "value": "погиб при освобождении д. Полуханово и Голяди",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "Погиб 9 – 14 декабря 1941 г. при освобождении д. Полуханово и Голяди."
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "fate_date": [
+          {
+            "value": {
+              "from": "1941-12-09",
+              "to": "1941-12-14",
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "Погиб 9 – 14 декабря 1941 г."
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "burial": [
+          {
+            "value": "братская могила в пос. Папивина (бывшая д. Голяди), Клинский р-н Московской обл.; перезахоронен 17.10.2007",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-nay/",
+                "quote": "17 октября 2007 г. торжественно перезахоронен в братскую могилу в поселке Папивина (бывшая д. Голяди) в Клинском районе Московской области."
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-panov-mikhail-stepanovich",
+      "name": "Панов Михаил Степанович",
+      "birth_year": 1904,
+      "claims": {
+        "birth_place": [
+          {
+            "value": "г. Невьянск; призван с прииска Глубокая (Исовский прииск)",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-mob/",
+                "quote": "Панов Михаил Степанович 1904гр г. Невьянск, призван с прииска глубокая, (Исовской прииск)"
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "conscription": [
+          {
+            "value": {
+              "from": "1941-09-24",
+              "to": "1941-09-24",
+              "precision": "day"
+            },
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-mob/",
+                "quote": "24.09.41г Исовским РВК"
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "fate": [
+          {
+            "value": "погиб; по письму из Кинешмы (Елин Иван) — 6.12.1941 под городом Клином Калининской области",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-mob/",
+                "quote": "было письмо из г. Кинешмы Ивановской обл. Тов. Елиным Иваном было сообщено, что Панов М.С. погиб 6.12.41г под городом Клином Калининской области"
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "fate_date": [
+          {
+            "value": {
+              "from": "1941-12-06",
+              "to": "1941-12-06",
+              "precision": "day"
+            },
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-mob/",
+                "quote": "6.12.41г"
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ],
+        "burial": [
+          {
+            "value": "место захоронения неизвестно",
+            "provenance": {
+              "source_id": "src-365sd-org",
+              "locator": {
+                "url": "https://365sd.org/spisok-boycov-365-strelkovoy-divizii-mob/",
+                "quote": "погиб, место зах. неизвестно"
+              }
+            },
+            "status": "черновик",
+            "basis": "memorial-card"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-stremin-petr-alekseevich",
+      "name": "Стремин Петр Алексеевич",
+      "birth_year": "неизвестен",
+      "claims": {
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "служил вместе с товарищами из поселка Павда ... в уральской стрелковой дивизии № 365"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation",
+            "note": "упомянут в перечне товарищей без года рождения и без даты"
+          }
+        ],
+        "fate": [
+          {
+            "value": "вернулся домой после ранения под Ржевом",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "Стреминым Петром Алек (вернулся домой после ранения под Ржевом)"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-ankushin-egor-mikhailovich",
+      "name": "Анкушин Егор Михайлович",
+      "birth_year": "неизвестен",
+      "claims": {
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "служил вместе с товарищами из поселка Павда ... в уральской стрелковой дивизии № 365"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation",
+            "note": "упомянут в перечне товарищей без года рождения и без даты"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-baturin-obaturin",
+      "name": "Батурин (или Обатурин)",
+      "birth_year": "неизвестен",
+      "claims": {
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "служил вместе с товарищами из поселка Павда ... в уральской стрелковой дивизии № 365"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation",
+            "note": "упомянут в перечне товарищей без года рождения и без даты"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-kolupaev-v-k",
+      "name": "Колупаев В. К.",
+      "birth_year": "неизвестен",
+      "claims": {
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "служил вместе с товарищами из поселка Павда ... в уральской стрелковой дивизии № 365"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation",
+            "note": "упомянут в перечне товарищей без года рождения и без даты"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-zhuravin-k",
+      "name": "Журавин К.",
+      "birth_year": "неизвестен",
+      "claims": {
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "служил вместе с товарищами из поселка Павда ... в уральской стрелковой дивизии № 365"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation",
+            "note": "упомянут в перечне товарищей без года рождения и без даты"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-startsev-nikolay",
+      "name": "Старцев Николай",
+      "birth_year": "неизвестен",
+      "claims": {
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "служил вместе с товарищами из поселка Павда ... в уральской стрелковой дивизии № 365"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation",
+            "note": "упомянут в перечне товарищей без года рождения и без даты"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-dubrovskiy",
+      "name": "Дубровский",
+      "birth_year": "неизвестен",
+      "claims": {
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "служил вместе с товарищами из поселка Павда ... в уральской стрелковой дивизии № 365"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation",
+            "note": "упомянут в перечне товарищей без года рождения и без даты"
+          }
+        ]
+      }
+    },
+    {
+      "id": "p-novosolov-f-f",
+      "name": "Новосолов Ф. Ф.",
+      "birth_year": "неизвестен",
+      "claims": {
+        "unit": [
+          {
+            "value": "365 стрелковая дивизия",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 17,
+                "quote": "служил вместе с товарищами из поселка Павда ... в уральской стрелковой дивизии № 365"
+              }
+            },
+            "status": "черновик",
+            "basis": "presentation",
+            "note": "упомянут в перечне товарищей без года рождения и без даты"
+          }
+        ]
+      }
     }
   ]
 }
