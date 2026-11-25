@@ -1,0 +1,13 @@
+# исходники живут в Obsidian: Хобби/365сд/Исходники/
+# в репозиторий попадают только md-производные и геоданные
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.tif
+*.tiff
+*.zip
+*.djvu
+.DS_Store
+.venv/
+node_modules/
