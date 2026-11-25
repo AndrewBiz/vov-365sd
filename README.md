@@ -1,5 +1,7 @@
 # vov-365sd
 
+Репозиторий: [gitverse.ru/kazimir_bizik/vov-365sd](https://gitverse.ru/kazimir_bizik/vov-365sd)
+
 Хобби-проект: анимация фронта 1941–42 под Ржевом с фокусом на боевой путь **365-й стрелковой дивизии** (место службы и гибели деда).
 
 Идея и постановка: Obsidian → `Хобби/[идея] Анимация фронта 1941-42 под Ржевом (365сд).md`
@@ -82,7 +84,7 @@ python3 tools/build.py --check           # только сравнить арт�
 python3 -m unittest discover -s tests -v # тесты валидатора и сборки
 ```
 
-Корень Obsidian берётся из переменной `VOV_VAULT` (по умолчанию `/home/anb/Documents/Obsidian Vault`), переопределяется флагом `--vault`.
+Корень Obsidian берётся из переменной `VOV_VAULT` (по умолчанию `~/Documents/Obsidian Vault`), переопределяется флагом `--vault`.
 
 Артефакты: `docs/research/Боевой путь — хронология (сгенерировано).md` (не редактировать вручную) и `data/dist/features.geojson` (в git не попадает). Ручной анализ — `docs/research/Бизяев ЕМ — сводка и расхождения.md`.
 

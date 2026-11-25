@@ -45,7 +45,7 @@ class Dataset:
     def __init__(self, root: str, vault: str | None, deep: bool = False):
         self.root = os.path.abspath(root)
         self.deep = deep
-        self.vault = vault or os.environ.get("VOV_VAULT", "/home/anb/Documents/Obsidian Vault")
+        self.vault = vault or os.environ.get("VOV_VAULT", os.path.expanduser("~/Documents/Obsidian Vault"))
         self.registry_types = _load(os.path.join(self.root, "data/registry.json"))
         self.sources = _load(os.path.join(self.root, "data/sources.json"))
         self.units = _load(os.path.join(self.root, "data/units.json"))
