@@ -549,6 +549,97 @@
           "status": "выверено"
         }
       }
+    },
+    {
+      "id": "ev-1942-03-25-disbandment",
+      "type": "disbandment",
+      "title": {
+        "value": "Расформирование 365-й стрелковой дивизии (1-го формирования)",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #9"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1942-03-25",
+          "to": "1942-03-25",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #9"
+          }
+        },
+        "status": "черновик",
+        "note": "Дата названа вторичным источником без ссылки на документ; боевой период по справочнику bdsa — 01.12.1941–18.03.1942."
+      },
+      "localization": "approximate",
+      "facts": {
+        "excluded_from_ra": {
+          "value": "22 мая 1942 г. исключена из состава Красной Армии",
+          "provenance": {
+            "source_id": "src-polk-forum-2617",
+            "locator": {
+              "paragraph": "пост #9"
+            }
+          },
+          "status": "черновик"
+        }
+      },
+      "note": "До этого события точная дата расформирования в источниках проекта отсутствовала и была зафиксирована как пробел."
+    },
+    {
+      "id": "ev-1942-no-archive-fund",
+      "type": "source-gap",
+      "title": {
+        "value": "Архивный фонд 365 сд (1-го формирования) не сохранился",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #18"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": null,
+          "to": null,
+          "precision": "range"
+        },
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #18"
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "facts": {
+        "consequence": {
+          "value": "объясняет ответ ЦАМО 1988 г. «в документах 365сд за 1941 г. Бизяев Е. М. не значится»: фонда дивизии нет, сведения собирались по другим архивам",
+          "provenance": {
+            "source_id": "src-polk-forum-2617",
+            "locator": {
+              "paragraph": "пост #18"
+            }
+          },
+          "status": "черновик"
+        }
+      },
+      "note": "Со слов П. Пустырева (поисковый отряд «Подвиг», Клин), 10 лет сбора документов по другим архивам; вторичный источник."
     }
   ]
 }

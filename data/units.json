@@ -223,7 +223,44 @@
         },
         "status": "черновик"
       },
-      "parent": null
+      "parent": null,
+      "subordination": [
+        {
+          "unit_id": "zapfront",
+          "period": {
+            "value": {
+              "from": "1941-12-01",
+              "to": "1942-01-01",
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-polk-forum-2617",
+              "locator": {
+                "paragraph": "пост #2"
+              }
+            },
+            "status": "черновик"
+          },
+          "note": "Снимок на 01.12.1941: Западный фронт, 30 А; на 01.01.1942 — уже Калининский фронт."
+        },
+        {
+          "unit_id": "kalffront",
+          "period": {
+            "value": {
+              "from": "1942-01-01",
+              "to": null,
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-polk-forum-2617",
+              "locator": {
+                "paragraph": "пост #2"
+              }
+            },
+            "status": "черновик"
+          }
+        }
+      ]
     },
     {
       "id": "29a",
@@ -239,7 +276,27 @@
         },
         "status": "черновик"
       },
-      "parent": null
+      "parent": null,
+      "subordination": [
+        {
+          "unit_id": "kalffront",
+          "period": {
+            "value": {
+              "from": "1942-02-01",
+              "to": null,
+              "precision": "range"
+            },
+            "provenance": {
+              "source_id": "src-polk-forum-2617",
+              "locator": {
+                "paragraph": "пост #2"
+              }
+            },
+            "status": "черновик"
+          },
+          "note": "Снимки на 01.02.1942 и 01.03.1942: Калининский фронт, 29 А."
+        }
+      ]
     },
     {
       "id": "kalffront",
@@ -256,6 +313,255 @@
         "status": "черновик"
       },
       "parent": null
+    },
+    {
+      "id": "zapfront",
+      "kind": "front",
+      "name": {
+        "value": "Западный фронт",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #2"
+          }
+        },
+        "status": "черновик"
+      }
+    },
+    {
+      "id": "233oiptd",
+      "kind": "battalion",
+      "name": {
+        "value": "233-й отдельный истребительно-противотанковый дивизион",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "259zenbatr",
+      "kind": "other",
+      "name": {
+        "value": "259-я зенитная артиллерийская батарея (621-й отдельный зенитный артиллерийский дивизион)",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "450md",
+      "kind": "battalion",
+      "name": {
+        "conflict": true,
+        "variants": [
+          {
+            "value": "450-й миномётный дивизион",
+            "provenance": {
+              "source_id": "src-polk-forum-2617",
+              "locator": {
+                "paragraph": "пост #1"
+              }
+            },
+            "status": "черновик"
+          },
+          {
+            "value": "450-й минно-инженерный дивизион",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 2
+              }
+            },
+            "status": "черновик"
+          }
+        ],
+        "note": "Расхождение наименования между справочником bdsa/форумом и презентацией; вероятна опечатка в презентации, но ни одна версия не выбрана."
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "426rr",
+      "kind": "other",
+      "name": {
+        "conflict": true,
+        "variants": [
+          {
+            "value": "426-я разведывательная рота",
+            "provenance": {
+              "source_id": "src-polk-forum-2617",
+              "locator": {
+                "paragraph": "пост #1"
+              }
+            },
+            "status": "черновик"
+          },
+          {
+            "value": "426-я рота регулировщиков",
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 2
+              }
+            },
+            "status": "черновик"
+          }
+        ],
+        "note": "Расхождение наименования; вероятна опечатка в презентации."
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "644osapb",
+      "kind": "battalion",
+      "name": {
+        "value": "644-й (433-й) отдельный сапёрный батальон",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #8"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "815obs",
+      "kind": "battalion",
+      "name": {
+        "value": "815-й отдельный батальон связи",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "449medsb",
+      "kind": "battalion",
+      "name": {
+        "value": "449-й медико-санитарный батальон",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "442orhz",
+      "kind": "other",
+      "name": {
+        "value": "442-я отдельная рота химической защиты",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "479atr",
+      "kind": "other",
+      "name": {
+        "value": "479-я автотранспортная рота",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "218php",
+      "kind": "other",
+      "name": {
+        "value": "218-я полевая хлебопекарня",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "787dvl",
+      "kind": "other",
+      "name": {
+        "value": "787-й дивизионный ветеринарный лазарет",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "1438pps",
+      "kind": "other",
+      "name": {
+        "value": "1438-я полевая почтовая станция",
+        "provenance": [
+          {
+            "source_id": "src-book-p96",
+            "locator": {
+              "paragraph": "с. 96"
+            }
+          },
+          {
+            "source_id": "src-polk-forum-2617",
+            "locator": {
+              "paragraph": "пост #1"
+            }
+          }
+        ],
+        "status": "выверено"
+      },
+      "parent": "365sd"
+    },
+    {
+      "id": "737pkg",
+      "kind": "other",
+      "name": {
+        "value": "737-я полевая касса Госбанка",
+        "provenance": {
+          "source_id": "src-polk-forum-2617",
+          "locator": {
+            "paragraph": "пост #1"
+          }
+        },
+        "status": "черновик"
+      },
+      "parent": "365sd"
     }
   ]
 }
