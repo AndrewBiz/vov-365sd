@@ -5,37 +5,38 @@
 <title>Обводка линии фронта по листу Lage Ost</title>
 <style>
   body { font: 14px/1.4 system-ui, sans-serif; margin: 0; background: #111; color: #eee; }
-  header { padding: 8px 12px; background: #1c1c1c; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  header { padding: 8px 12px; background: #1c1c1c; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   button, input { font: inherit; padding: 4px 8px; }
-  input[type=number] { width: 90px; }
-  #wrap { position: relative; overflow: auto; height: calc(100vh - 90px); }
+  input[type=number] { width: 92px; }
+  input[type=text] { width: 120px; }
+  #wrap { position: relative; overflow: auto; height: calc(100vh - 150px); }
   canvas { display: block; cursor: crosshair; }
   #hint { color: #9ad; }
-  .cal { color: #f90; }
+  #calList { font-size: 12px; color: #fb0; max-height: 54px; overflow: auto; padding: 0 12px; }
 </style>
 </head>
 <body>
 <header>
   <input type="file" id="file" accept="image/*">
   <span>Калибровка:</span>
-  <button id="calA">точка A</button>
-  <input type="number" id="lonA" step="0.001" placeholder="долгота A">
-  <input type="number" id="latA" step="0.001" placeholder="широта A">
-  <button id="calB">точка B</button>
-  <input type="number" id="lonB" step="0.001" placeholder="долгота B">
-  <input type="number" id="latB" step="0.001" placeholder="широта B">
-  <button id="undo">убрать точку</button>
+  <input type="text" id="calName" placeholder="название (Клин)">
+  <input type="number" id="calLon" step="0.001" placeholder="долгота">
+  <input type="number" id="calLat" step="0.001" placeholder="широта">
+  <button id="calAdd">добавить точку</button>
+  <button id="calClear">сбросить калибровку</button>
+  <button id="undo">убрать точку линии</button>
   <button id="export">выгрузить JSON</button>
-  <span id="hint">загрузи лист, поставь две калибровочные точки на известные города, потом кликай по линии фронта</span>
+  <span id="hint">загрузи лист → добавь 3–6 калибровочных точек (Клин, Калинин, Ржев, Дмитров, Москва) → кликай по линии фронта</span>
 </header>
+<div id="calList"></div>
 <div id="wrap"><canvas id="cv" width="10" height="10"></canvas></div>
-<pre id="out" style="padding:8px;background:#181818;margin:0;max-height:160px;overflow:auto"></pre>
+<pre id="out" style="padding:8px;background:#181818;margin:0;max-height:200px;overflow:auto"></pre>
 
 <script>
 let img = null, scale = 1;
-const pts = [];           // точки линии (в пикселях изображения)
-let cal = { A: null, B: null };  // {x, y, lon, lat}
-let mode = 'line';
+const pts = [];      // точки линии (пиксели изображения)
+const calib = [];    // {x, y, lon, lat, label}
+let pending = null;  // ожидает клика: {lon, lat, label}
 const cv = document.getElementById('cv');
 const ctx = cv.getContext('2d');
 
@@ -46,7 +47,7 @@ document.getElementById('file').onchange = ev => {
   im.onload = () => {
     img = im;
     const maxW = 1600;
-    scale = Math.min(1, maxW / im.width);
+    scale = Math.min(1, im.width > maxW ? maxW / im.width : 1);
     cv.width = Math.round(im.width * scale);
     cv.height = Math.round(im.height * scale);
     draw();
@@ -68,19 +69,20 @@ function draw() {
   ctx.stroke();
   ctx.fillStyle = '#ff2d2d';
   pts.forEach(p => ctx.fillRect(p.x * scale - 2, p.y * scale - 2, 4, 4));
-  for (const key of ['A', 'B']) {
-    const c = cal[key];
-    if (!c) continue;
-    ctx.strokeStyle = '#ffaa00';
+  ctx.strokeStyle = '#ffaa00';
+  ctx.fillStyle = '#ffaa00';
+  calib.forEach((c, i) => {
     ctx.beginPath();
     ctx.arc(c.x * scale, c.y * scale, 7, 0, Math.PI * 2);
     ctx.stroke();
-    ctx.fillStyle = '#ffaa00';
-    ctx.fillText(key, c.x * scale + 9, c.y * scale - 9);
-  }
+    ctx.fillText(String(i + 1), c.x * scale + 9, c.y * scale - 9);
+  });
+  document.getElementById('calList').textContent = calib.length
+    ? 'точки: ' + calib.map((c, i) => `${i + 1}.${c.label || '?'} (${c.lon}, ${c.lat})`).join(' · ')
+    : 'калибровочных точек нет';
   document.getElementById('out').textContent =
-    'точек линии: ' + pts.length +
-    ' | A: ' + (cal.A ? 'есть' : '—') + ' | B: ' + (cal.B ? 'есть' : '—');
+    'точек линии: ' + pts.length + ' | калибровочных точек: ' + calib.length +
+    (calib.length < 3 ? ' — по двум будет только подобие, для аффинной подгонки нужно 3+' : ' — аффинная подгонка');
 }
 
 cv.onclick = ev => {
@@ -88,23 +90,33 @@ cv.onclick = ev => {
   const r = cv.getBoundingClientRect();
   const x = (ev.clientX - r.left) / scale;
   const y = (ev.clientY - r.top) / scale;
-  if (mode === 'A' || mode === 'B') {
-    const lon = parseFloat(document.getElementById('lon' + mode).value);
-    const lat = parseFloat(document.getElementById('lat' + mode).value);
-    if (!isFinite(lon) || !isFinite(lat)) { alert('сначала введи координаты точки ' + mode); return; }
-    cal[mode] = { x, y, lon, lat };
-    mode = 'line';
+  if (pending) {
+    calib.push({ x, y, lon: pending.lon, lat: pending.lat, label: pending.label });
+    pending = null;
   } else {
     pts.push({ x, y });
   }
   draw();
 };
 
-document.getElementById('calA').onclick = () => { mode = 'A'; alert('кликни по точке A на карте'); };
-document.getElementById('calB').onclick = () => { mode = 'B'; alert('кликни по точке B на карте'); };
+document.getElementById('calAdd').onclick = () => {
+  const lon = parseFloat(document.getElementById('calLon').value);
+  const lat = parseFloat(document.getElementById('calLat').value);
+  if (!isFinite(lon) || !isFinite(lat)) { alert('введи долготу и широту'); return; }
+  pending = { lon, lat, label: document.getElementById('calName').value.trim() };
+  alert('теперь кликни по этому городу на карте');
+};
+document.getElementById('calClear').onclick = () => { calib.length = 0; draw(); };
 document.getElementById('undo').onclick = () => { pts.pop(); draw(); };
 document.getElementById('export').onclick = () => {
-  const data = { pixels: pts, calibration: cal, image_size: img ? [img.width, img.height] : null };
+  const data = {
+    pixels: pts,
+    calibration_points: calib,
+    image_size: img ? [img.width, img.height] : null,
+    note: calib.length >= 3
+      ? 'аффинная подгонка по ' + calib.length + ' точкам'
+      : 'подобие по двум точкам'
+  };
   const blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);

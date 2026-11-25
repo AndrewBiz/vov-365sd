@@ -24,7 +24,7 @@ from PIL import Image
 
 ROOT_DEFAULT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT_DEFAULT, "tools"))
-from front_line_trace import similarity  # noqa: E402
+from front_line_trace import affine, collect_points, similarity  # noqa: E402
 
 
 def red_mask(arr: np.ndarray) -> np.ndarray:
@@ -89,10 +89,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
-    calibration = json.load(open(args.calib, encoding="utf-8")).get("calibration") or {}
-    a, b = calibration.get("A"), calibration.get("B")
-    if not a or not b:
-        raise SystemExit("в файле калибровки нет точек A и B")
+    calib_payload = json.load(open(args.calib, encoding="utf-8"))
+    calib = collect_points(calib_payload)
+    if len(calib) < 2:
+        raise SystemExit("в файле калибровки меньше двух точек")
 
     image = Image.open(args.image).convert("RGB")
     mask = red_mask(np.asarray(image))
@@ -104,7 +104,14 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit(f"точек линии получилось {len(points)} — слишком мало, нужна ручная обводка")
     points = simplify(points, args.eps_px)
 
-    coords, residual = similarity(points, a, b)
+    if len(calib) >= 3:
+        coords, stats = affine(points, calib)
+        residual = stats["rms_m"] / 1000.0
+        calib_note = f"аффинная подгонка по {len(calib)} точкам (RMS {residual:.1f} км)"
+    else:
+        coords, residual_m = similarity(points, calib[0], calib[1])
+        residual = residual_m / 1000.0
+        calib_note = f"подобие по двум точкам (остаток {residual:.1f} км)"
     line = {
         "id": f"fl-{args.date}",
         "date": {
@@ -121,7 +128,7 @@ def main(argv: list[str] | None = None) -> int:
                        "locator": {"sheet": args.sheet, "sheet_date": args.date},
                        "traced_by": "автотрассировка по цвету + калибровка по двум точкам"},
         "note": (f"ЧЕРНОВИК: вытянуто по красной линии на листе {args.sheet}, "
-                 f"остаток калибровки {residual / 1000:.1f} км, точек {len(coords)}. "
+                 f"{calib_note}, точек {len(coords)}. "
                  "Требует просмотра: подписи и врезки могли разорвать линию."),
     }
 
@@ -136,7 +143,7 @@ def main(argv: list[str] | None = None) -> int:
             json.dump(registry, fh, ensure_ascii=False, indent=2)
             fh.write("\n")
 
-    print(f"{line['id']}: точек {len(coords)}, остаток калибровки {residual / 1000:.1f} км")
+    print(f"{line['id']}: точек {len(coords)}, {calib_note}")
     print("записано" if not args.dry_run else "(dry-run: не записано)")
     return 0
 

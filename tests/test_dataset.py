@@ -1002,6 +1002,35 @@ class TestFrontLines(DatasetCase):
         self.assertEqual(self.errors(), [])
         self.assertTrue(any("от линии" in w for w in vov.WARNINGS), vov.WARNINGS)
 
+    def test_affine_recovers_known_transform(self) -> None:
+        import importlib, math
+        ft = importlib.import_module("front_line_trace")
+        lon0, lat0 = 36.0, 56.0
+        kx = math.cos(math.radians(lat0)) * ft.M_PER_DEG_LON_EQ
+
+        def truth(px, py):
+            east = 0.9 * px + 0.08 * py - 400
+            north = -0.06 * px - 0.92 * py + 3000
+            return lon0 + east / kx, lat0 + north / ft.M_PER_DEG_LAT
+
+        calib = [{"x": px, "y": py, "lon": round(truth(px, py)[0], 5),
+                  "lat": round(truth(px, py)[1], 5), "label": f"p{i}"}
+                 for i, (px, py) in enumerate([(1200, 1600), (1400, 900), (900, 1450), (1900, 1900)])]
+        coords, stats = ft.affine([{"x": 1200, "y": 1600}, {"x": 1300, "y": 1500}], calib)
+        self.assertLess(stats["rms_m"], 50)
+        expected = truth(1300, 1500)
+        self.assertAlmostEqual(coords[1][0], round(expected[0], 5), places=3)
+        self.assertAlmostEqual(coords[1][1], round(expected[1], 5), places=3)
+
+    def test_affine_rejects_collinear_calibration(self) -> None:
+        import importlib
+        ft = importlib.import_module("front_line_trace")
+        bad = [{"x": 0, "y": 0, "lon": 36.0, "lat": 56.0},
+               {"x": 100, "y": 100, "lon": 36.1, "lat": 56.1},
+               {"x": 200, "y": 200, "lon": 36.2, "lat": 56.2}]
+        with self.assertRaises(SystemExit):
+            ft.affine([{"x": 0, "y": 0}, {"x": 10, "y": 10}], bad)
+
     def test_trace_tool_maps_calibration_points(self) -> None:
         import importlib
         ft = importlib.import_module("front_line_trace")
