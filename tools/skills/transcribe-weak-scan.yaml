@@ -1,0 +1,44 @@
+name: transcribe-weak-scan
+title: Транскрипция плохо читаемого скана (изображение)
+version: 1
+
+input:
+  kind: image
+  from: files
+  max_pages: 1
+
+model:
+  hint: "модель со зрением; один кадр — один ответ, без рассуждений"
+  temperature: 0
+
+output:
+  type: object
+  required: [readable, text]
+  additionalProperties: false
+  properties:
+    readable:
+      type: boolean
+    text:
+      type: string
+    uncertain:
+      type: array
+      items:
+        type: string
+    note:
+      type: [string, "null"]
+
+rules:
+  - "Не додумывать: сомнительные слова писать с [?] и перечислять в uncertain."
+  - "Если текст не читается, вернуть readable: false и пустой text, а не пересказ."
+  - "Не исправлять опечатки машинописи и не нормализовать названия."
+  - "Никаких выводов о содержании: только транскрипция."
+
+prompt: |
+  Это фотокопия советского документа 1941–1942 года. Перепиши текст дословно,
+  сохраняя опечатки, сокращения и регистр. Фрагменты, которые не читаются,
+  помечай [?] и перечисляй в uncertain.
+
+  Ответ — строго JSON:
+    {"readable": true|false, "text": "...", "uncertain": ["..."], "note": "..." | null}
+
+  Если текст не читается совсем — {"readable": false, "text": "", "uncertain": [], "note": "почему"}.

@@ -1,0 +1,22 @@
+slug: pn-354-10-l295
+kind: archive-document
+title: Оперативная сводка № 11 штаба 365 сд за 19.12.1941
+source_id: src-pamyat-naroda
+received: '2026-11-26'
+origin:
+  portal_url: https://pamyat-naroda.ru/documents/view/?id=document20219
+requisites:
+  fund: '354'
+  inventory: '5806'
+  file: '10'
+  sheet: '295'
+date:
+  from: '1941-12-19'
+  to: '1941-12-19'
+  precision: day
+unit: 365 сд, штаб
+files:
+- files/p00000295.jpg
+original_location: ЦАМО — Память народа/Передача_001_КП097Р-С28/354-0005806-0010
+expectations: сосредоточение дивизии после марша, действия полков 18–19.12
+document_type: operational-summary

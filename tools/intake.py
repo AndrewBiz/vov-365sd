@@ -248,6 +248,12 @@ def state_of(root: pathlib.Path, slug: str, entries: list[dict] | None = None) -
         return "rejected"
     if any(e.get("step") == "apply" and e.get("state") == "applied" for e in mine):
         return "applied"
+    if any(str(e.get("step", "")).startswith("apply-proposal:") and e.get("state") == "applied"
+           for e in mine):
+        return "applied"
+    if any(str(e.get("step", "")).startswith("propose:") and e.get("state") == "proposed"
+           for e in mine):
+        return "proposed"
     if any(e.get("step") == "scan" and e.get("state") == "duplicate" for e in mine):
         return "duplicate"
     if (root / PROPOSALS / slug / "extraction.json").exists():

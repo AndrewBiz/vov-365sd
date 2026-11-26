@@ -1,0 +1,88 @@
+name: extract-facts
+title: Извлечение фактов из текста документа
+version: 1
+
+input:
+  kind: text
+  from: ocr
+  max_chars: 24000
+
+model:
+  hint: "модель с длинным контекстом, температура 0, русский язык"
+  temperature: 0
+
+output:
+  type: object
+  required: [items]
+  additionalProperties: false
+  properties:
+    items:
+      type: array
+      maxItems: 40
+      items:
+        type: object
+        required: [kind, summary, quote, confidence]
+        additionalProperties: false
+        properties:
+          kind:
+            enum: [event, order, movement, combat, loss, subordination]
+          event_type:
+            enum: [combat, order, movement, loss, subordination, formation]
+          date_from:
+            type: [string, "null"]
+            pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          date_to:
+            type: [string, "null"]
+            pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          precision:
+            enum: [day, month, year, range]
+          units:
+            type: array
+            items:
+              type: string
+          place_name:
+            type: [string, "null"]
+          summary:
+            type: string
+            minLength: 10
+          quote:
+            type: string
+            minLength: 10
+          confidence:
+            type: number
+            minimum: 0
+            maximum: 1
+
+rules:
+  - "Цитата — дословный фрагмент входа, без правок и сокращений; по ней позицию проверяют."
+  - "Нет даты в тексте — date_from: null, а не догадка; нет места — place_name: null."
+  - "Одна позиция — один проверяемый факт: не склеивать бой, потери и приказ в одну строку."
+  - "Не пересказывать документ целиком: только то, что можно процитировать."
+  - "Числа (потери, номера полков) переносить как в тексте; сомнительное чтение — снижать confidence."
+
+prompt: |
+  Ты разбираешь советский архивный документ периода Великой Отечественной войны
+  для исторического датасета. Ниже — распознанный текст листа.
+
+  Задача: выделить факты, каждый из которых проверяется цитатой из текста.
+  Формат ответа — строго JSON:
+    {"items": [{"kind": "...", "event_type": "...", "date_from": "ГГГГ-ММ-ДД" | null,
+                "date_to": "..." | null, "precision": "day|month|year|range",
+                "units": ["365sd"], "place_name": "..." | null,
+                "summary": "краткая формулировка факта по-русски",
+                "quote": "дословный фрагмент текста", "confidence": 0.0-1.0}]}
+
+  Правила:
+  - quote — дословно из текста, включая опечатки машинописи; не исправляй.
+  - Нет даты в тексте — null. Не подставляй дату документа, если факт относится к другому дню.
+  - place_name — только если населённый пункт назван в тексте.
+  - units — коды частей из списка: 365sd, 1211sp, 1213sp, 1215sp, 927ap, 30a, 371sd, 379sd.
+  - confidence ниже 0.6 — когда чтение текста сомнительно или факт выведен из контекста.
+  - Максимум 40 позиций; лучше меньше, но проверяемых.
+
+  Метаданные артефакта: {meta}
+
+  Текст листа:
+  ---
+  {text}
+  ---

@@ -1,0 +1,80 @@
+{
+ "slug": "pn-354-10-l295",
+ "core_version": "1.1.0",
+ "kind": "archive-document",
+ "digests": [
+  "7318e3b1693584636163f9396e7608a90cc0e0e1ac226bc7eb51f8898463347f"
+ ],
+ "files": [
+  {
+   "name": "p00000295.jpg",
+   "bytes": 363312,
+   "sha256": "7318e3b1693584636163f9396e7608a90cc0e0e1ac226bc7eb51f8898463347f",
+   "format": "jpeg",
+   "width": 2327,
+   "height": 3474,
+   "ocr": {
+    "words": 154,
+    "plausible": 154,
+    "readability_pct": 100,
+    "text_chars": 1872
+   }
+  }
+ ],
+ "duplicates": [
+  {
+   "by": "sha256",
+   "document": "doc-pn-354-0005806-0010-p00000295",
+   "file": "p00000295.jpg"
+  }
+ ],
+ "warnings": [
+  "дубликат по sha256: документ doc-pn-354-0005806-0010-p00000295"
+ ],
+ "suggested_document": {
+  "id": "doc-pn-354-0005806-0010-p00000295",
+  "type": "operational-summary",
+  "title": {
+   "value": "Оперативная сводка № 11 штаба 365 сд за 19.12.1941",
+   "provenance": {
+    "source_id": "src-pamyat-naroda",
+    "locator": {
+     "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+     "quote": "сосредоточение дивизии после марша, действия полков 18–19.12",
+     "paragraph": "манифест артефакта"
+    }
+   },
+   "status": "черновик"
+  },
+  "date": {
+   "value": {
+    "from": "1941-12-19",
+    "to": "1941-12-19",
+    "precision": "day"
+   },
+   "provenance": {
+    "source_id": "src-pamyat-naroda",
+    "locator": {
+     "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+     "quote": "сосредоточение дивизии после марша, действия полков 18–19.12",
+     "paragraph": "манифест артефакта"
+    }
+   },
+   "status": "черновик"
+  },
+  "carrier": {
+   "source_id": "src-pamyat-naroda",
+   "sha256": "7318e3b1693584636163f9396e7608a90cc0e0e1ac226bc7eb51f8898463347f",
+   "bytes": 363312,
+   "portal_url": "https://pamyat-naroda.ru/documents/view/?id=document20219"
+  },
+  "requisites": {
+   "fund": "354",
+   "inventory": "5806",
+   "file": "10",
+   "sheets": "295"
+  },
+  "note": "Часть: 365 сд, штаб."
+ },
+ "ready": false
+}
