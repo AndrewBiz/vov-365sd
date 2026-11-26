@@ -119,13 +119,13 @@
   }
   if (levelZ === null) {
     // шифр задан вручную или родители не нашлись: перебрать мелкую сетку
-    const z = anchor.z > 0 ? anchor.z : ZMIN;
+    const z = anchor.z > 0 ? anchor.z : 4;
     if (anchor.z > 0) {
       const blob = await getTile(anchor.z, anchor.x, anchor.y);
       if (!blob || blob === 'off') { log('плитка не отдалась: защита или CORS'); return; }
       level = new Map([[`${anchor.x}:${anchor.y}`, blob]]); levelZ = anchor.z;
     } else {
-      const side = 2 ** z;
+      const side = 2 ** z;   // ручной режим: мелкая сетка дешевле (z=4 → 256 запросов)
       for (let x = 0; x < side; x++) for (let y = 0; y < side; y++) {
         const blob = await getTile(z, x, y);
         if (blob && blob !== 'off') level.set(`${x}:${y}`, blob);
