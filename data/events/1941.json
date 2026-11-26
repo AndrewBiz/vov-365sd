@@ -314,7 +314,10 @@
         "status": "черновик"
       },
       "localization": "approximate",
-      "place": "pl-dmitrov"
+      "place": "pl-dmitrov",
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000041"
+      ]
     },
     {
       "id": "ev-1941-12-06-vyukhovo",
