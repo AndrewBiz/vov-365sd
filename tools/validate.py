@@ -287,6 +287,7 @@ def check_schemas(ds: Dataset, errors: list[str]) -> None:
 
 def check_sources(ds: Dataset, errors: list[str]) -> None:
     seen: set[str] = set()
+    files_index: dict[str, list[str]] = {}
     for src in ds.sources["sources"]:
         sid = src["id"]
         if sid in seen:
@@ -331,18 +332,46 @@ def check_sources(ds: Dataset, errors: list[str]) -> None:
                 errors.append(f"{sid}: каталог кэша {src['cache_path']} не найден")
             continue
 
-        original = os.path.join(ds.vault, src["vault_path"])
-        if not os.path.exists(original):
-            errors.append(f"{sid}: исходник {src['vault_path']} не найден в Obsidian")
-            continue
-        digest = hashlib.sha256()
-        with open(original, "rb") as fh:
-            for chunk in iter(lambda: fh.read(1 << 20), b""):
-                digest.update(chunk)
-        if digest.hexdigest() != src["sha256"]:
-            errors.append(
-                f"{sid}: sha256 исходника не совпадает с записанным "
-                "(файл заменён или переименован — завести новую версию источника)"
+        files = src.get("files") or []
+        seen_paths: list[str] = []
+        for index, item in enumerate(files):
+            rel = item.get("path", "")
+            spot = f"{sid}.files[{index}] ({rel})"
+            if not rel:
+                errors.append(f"{spot}: пустой путь файла")
+                continue
+            if rel in seen_paths:
+                errors.append(f"{spot}: этот файл уже указан в источнике — дубль пути")
+                continue
+            seen_paths.append(rel)
+            role = item.get("role")
+            if role is not None and role not in ds.registry_types.get("file_roles", {}):
+                known_roles = ", ".join(sorted(ds.registry_types.get("file_roles", {})))
+                errors.append(f"{spot}: неизвестная роль файла '{role}' (допустимо: {known_roles})")
+            original = os.path.join(ds.vault, rel)
+            if not os.path.exists(original):
+                errors.append(f"{sid}: файл {rel} не найден в Obsidian — источник неполон")
+                continue
+            digest = hashlib.sha256()
+            with open(original, "rb") as fh:
+                for chunk in iter(lambda: fh.read(1 << 20), b""):
+                    digest.update(chunk)
+            if digest.hexdigest() != item.get("sha256"):
+                errors.append(
+                    f"{spot}: sha256 файла не совпадает с записанным "
+                    "(файл заменён или переименован — завести новую версию источника)"
+                )
+            owners = files_index.setdefault(rel, [])
+            if sid not in owners:
+                owners.append(sid)
+        if not files and src.get("kind") not in {"gazetteer", "historical-map", "archive-portal", "website"}:
+            errors.append(f"{sid}: у источника нет файлов")
+
+    for rel, owners in sorted(files_index.items()):
+        if len(owners) > 1:
+            WARNINGS.append(
+                f"файл {rel} указан в нескольких источниках ({', '.join(owners)}) — "
+                "проверить, не дубль ли это"
             )
 
 

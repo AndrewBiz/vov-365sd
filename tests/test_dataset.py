@@ -83,30 +83,33 @@ class DatasetCase(unittest.TestCase):
                         "id": "src-test",
                         "kind": "other",
                         "title": "Тестовый источник",
-                        "vault_path": "тема/Исходники/скан.pdf",
                         "derivative_path": "docs/sources/недат_Тест.md",
-                        "sha256": hashlib.sha256(b"test scan").hexdigest(),
+                        "files": [{"path": "тема/Исходники/скан.pdf",
+                                   "sha256": hashlib.sha256(b"test scan").hexdigest(),
+                                   "role": "original"}],
                         "received": "2026-11-25",
                     },
                     {
                         "id": "src-web-test",
                         "kind": "website",
                         "title": "Тестовый сайт",
-                        "vault_path": "тема/Исходники/скан.pdf",
                         "derivative_path": "docs/sources/недат_Веб — тест.md",
                         "cache_path": "data/cache/test-site",
                         "snapshot_at": "2026-11-25",
-                        "sha256": hashlib.sha256(b"test scan").hexdigest(),
+                        "files": [{"path": "тема/Исходники/скан.pdf",
+                                   "sha256": hashlib.sha256(b"test scan").hexdigest(),
+                                   "role": "scans"}],
                         "received": "2026-11-25",
                     },
                     {
                         "id": "src-web-copy",
                         "kind": "other",
                         "title": "Перепечатка тестового сайта",
-                        "vault_path": "тема/Исходники/скан.pdf",
                         "derivative_path": "docs/sources/недат_Тест.md",
                         "derived_from": ["src-web-test"],
-                        "sha256": hashlib.sha256(b"test scan").hexdigest(),
+                        "files": [{"path": "тема/Исходники/скан.pdf",
+                                   "sha256": hashlib.sha256(b"test scan").hexdigest(),
+                                   "role": "original"}],
                         "received": "2026-11-25",
                     },
                     {
@@ -265,7 +268,7 @@ class TestProvenance(DatasetCase):
 
     def test_broken_sha256(self) -> None:
         payload = self.load("data/sources.json")
-        payload["sources"][0]["sha256"] = "0" * 64
+        payload["sources"][0]["files"][0]["sha256"] = "0" * 64
         self.save("data/sources.json", payload)
         self.assert_error("sha256")
 
@@ -707,8 +710,9 @@ class TestPersonalLetters(DatasetCase):
             "kind": "personal-letters",
             "title": "Письма с фронта (тест)",
             "derivative_path": "docs/sources/недат_Письма — тест.md",
-            "vault_path": vault_path,
-            "sha256": sha or hashlib.sha256(b"letters").hexdigest(),
+            "files": [{"path": vault_path,
+                       "sha256": sha or hashlib.sha256(b"letters").hexdigest(),
+                       "role": "transcription"}],
             "received": "2026-11-26",
         })
         self.save("data/sources.json", payload)
@@ -731,7 +735,7 @@ class TestPersonalLetters(DatasetCase):
         with open(os.path.join(self.vault, "письма/l2.pdf"), "wb") as fh:
             fh.write(b"other")
         self._add_letters("письма/l2.pdf", sha=hashlib.sha256(b"letters").hexdigest())
-        self.assert_error("sha256 исходника не совпадает")
+        self.assert_error("sha256 файла не совпадает")
 
     def test_correspondence_is_not_a_conflict(self) -> None:
         person = {
@@ -763,6 +767,91 @@ class TestPersonalLetters(DatasetCase):
         }
         self.save("data/people.json", {"people": [person]})
         self.assert_error("неизвестный вид свидетельства")
+
+
+class TestSourceFiles(DatasetCase):
+    """Источник из нескольких файлов: роли, потерянные части, дубли путей."""
+
+    def _sources(self) -> dict:
+        return self.load("data/sources.json")
+
+    def _write_vault(self, name: str, payload: bytes) -> str:
+        os.makedirs(os.path.join(self.vault, "папка"), exist_ok=True)
+        with open(os.path.join(self.vault, "папка", name), "wb") as fh:
+            fh.write(payload)
+        return f"папка/{name}"
+
+    def _add(self, files: list[dict], sid: str = "src-multi") -> None:
+        payload = self._sources()
+        payload["sources"].append({
+            "id": sid,
+            "kind": "personal-letters",
+            "title": "Подборка из нескольких частей",
+            "derivative_path": "docs/sources/недат_Тест.md",
+            "files": files,
+            "received": "2026-11-26",
+        })
+        self.save("data/sources.json", payload)
+
+    def test_three_parts_accepted(self) -> None:
+        files = [
+            {"path": self._write_vault("a.pdf", b"a"), "sha256": hashlib.sha256(b"a").hexdigest(), "role": "transcription"},
+            {"path": self._write_vault("b.pdf", b"b"), "sha256": hashlib.sha256(b"b").hexdigest(), "role": "scans"},
+            {"path": self._write_vault("c.pdf", b"c"), "sha256": hashlib.sha256(b"c").hexdigest(), "role": "photos"},
+        ]
+        self._add(files)
+        self.assertEqual(self.errors(), [])
+
+    def test_second_part_missing(self) -> None:
+        good = self._write_vault("a2.pdf", b"a2")
+        files = [
+            {"path": good, "sha256": hashlib.sha256(b"a2").hexdigest(), "role": "transcription"},
+            {"path": "папка/нет-такой.pdf", "sha256": "0" * 64, "role": "scans"},
+        ]
+        self._add(files)
+        self.assert_error("источник неполон")
+
+    def test_second_part_checksum_mismatch(self) -> None:
+        a = self._write_vault("a3.pdf", b"a3")
+        b = self._write_vault("b3.pdf", b"b3")
+        files = [
+            {"path": a, "sha256": hashlib.sha256(b"a3").hexdigest(), "role": "transcription"},
+            {"path": b, "sha256": hashlib.sha256(b"not b3").hexdigest(), "role": "scans"},
+        ]
+        self._add(files)
+        self.assert_error("sha256 файла не совпадает")
+
+    def test_duplicate_path_in_one_source(self) -> None:
+        a = self._write_vault("a4.pdf", b"a4")
+        entry = {"path": a, "sha256": hashlib.sha256(b"a4").hexdigest(), "role": "scans"}
+        self._add([entry, dict(entry)])
+        self.assert_error("дубль пути")
+
+    def test_unknown_role(self) -> None:
+        a = self._write_vault("a5.pdf", b"a5")
+        self._add([{"path": a, "sha256": hashlib.sha256(b"a5").hexdigest(), "role": "черновик"}])
+        self.assert_error("неизвестная роль файла")
+
+    def test_file_in_two_sources_warns(self) -> None:
+        a = self._write_vault("a6.pdf", b"a6")
+        entry = {"path": a, "sha256": hashlib.sha256(b"a6").hexdigest(), "role": "scans"}
+        self._add([entry], sid="src-multi-1")
+        self._add([entry], sid="src-multi-2")
+        errors = self.errors()
+        self.assertEqual(errors, [])
+        self.assertTrue(any("нескольких источниках" in w for w in vov.WARNINGS), vov.WARNINGS)
+
+    def test_source_without_files(self) -> None:
+        payload = self._sources()
+        payload["sources"].append({
+            "id": "src-empty",
+            "kind": "book-page",
+            "title": "Источник без файлов",
+            "derivative_path": "docs/sources/недат_Тест.md",
+            "received": "2026-11-26",
+        })
+        self.save("data/sources.json", payload)
+        self.assert_error("'files' is a required property")
 
 
 class TestRosterParsing(DatasetCase):
@@ -1409,6 +1498,94 @@ class TestIntake(unittest.TestCase):
         source = (pathlib.Path(__file__).resolve().parent.parent / "tools/intake.py").read_text(encoding="utf-8")
         for forbidden in ("requests.", "urllib.request.urlopen(", "http.client."):
             self.assertNotIn(forbidden, source, f"офлайн-шаг не должен ходить в сеть: {forbidden}")
+
+    # --- входящие в хранилище -------------------------------------------------
+    def make_vault(self) -> pathlib.Path:
+        vault = self.root / "vault"
+        (vault / self.intake.VAULT_INBOX).mkdir(parents=True, exist_ok=True)
+        return vault
+
+    def put_in_vault(self, vault: pathlib.Path, name: str, payload: bytes) -> str:
+        target = vault / self.intake.VAULT_INBOX / name
+        target.write_bytes(payload)
+        return str(target.relative_to(vault))
+
+    def test_vault_inbox_lists_new_and_known(self) -> None:
+        vault = self.make_vault()
+        new_rel = self.put_in_vault(vault, "scan.pdf", b"%PDF-1.4 new")
+        known = self.json.loads((self.root / "data/sources.json").read_text(encoding="utf-8"))["sources"][0]["files"][0]
+        # известный файл: кладём в входящие копию с тем же содержимым, что и у источника
+        known_path = pathlib.Path(self.intake.vault_dir(None)) / known["path"]
+        payload = known_path.read_bytes() if known_path.exists() else b"known"
+        known_rel = self.put_in_vault(vault, "known.bin", payload)
+        (vault / self.intake.VAULT_INBOX / "README.md").write_text("инструкция", encoding="utf-8")
+        args = type("A", (), {"root": str(self.root), "vault": str(vault), "path": None, "json": True})()
+        import contextlib, io
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            self.intake.cmd_inbox(args)
+        rows = {r["path"]: r for r in self.json.loads(buffer.getvalue())}
+        self.assertIn(new_rel, rows)
+        self.assertNotIn(f"{self.intake.VAULT_INBOX}/README.md", rows, "инструкция не считается файлом для разбора")
+        self.assertEqual(rows[new_rel]["known"], [])
+        self.assertIn(known_rel, rows)
+        if rows[known_rel]["known"]:
+            self.assertTrue(rows[known_rel]["known"][0].startswith("src-"))
+
+    def test_adopt_keeps_file_in_vault(self) -> None:
+        vault = self.make_vault()
+        rel = self.put_in_vault(vault, "podborka.pdf", b"%PDF-1.4 letters")
+        args = type("A", (), {"root": str(self.root), "vault": str(vault), "file": rel,
+                              "slug": "letters-probe", "kind": "personal-letters",
+                              "title": "Проба писем", "source": None, "source_id_new": "src-letters-probe",
+                              "role": "transcription", "location": "Письма (проба)",
+                              "derivative": "docs/sources/недат_Проба.md", "comment": None,
+                              "path": None, "received": "2026-11-26", "force": False})()
+        self.intake.cmd_adopt(args)
+        manifest = self.intake.read_manifest(self.root, "letters-probe")
+        self.assertTrue(manifest["from_vault"])
+        self.assertEqual(manifest["files"][0]["path"], rel)
+        self.assertTrue((vault / rel).exists(), "файл не должен исчезать из хранилища при adopt")
+        self.assertFalse((self.root / "inbox" / "letters-probe" / "files").exists())
+
+    def test_source_apply_moves_file_and_registers(self) -> None:
+        vault = self.make_vault()
+        rel = self.put_in_vault(vault, "letters-2.pdf", b"%PDF-1.4 part two")
+        (self.root / "docs/sources").mkdir(parents=True, exist_ok=True)
+        (self.root / "docs/sources/недат_Проба.md").write_text("---\nисточник: проба\n---\n", encoding="utf-8")
+        adopt = type("A", (), {"root": str(self.root), "vault": str(vault), "file": rel,
+                               "slug": "l2", "kind": "personal-letters", "title": "Часть вторая",
+                               "source": None, "source_id_new": "src-l2", "role": "scans",
+                               "location": "Письма (проба)", "derivative": "docs/sources/недат_Проба.md",
+                               "comment": None, "path": None, "received": "2026-11-26", "force": False})()
+        self.intake.cmd_adopt(adopt)
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.intake.scan_one(self.root, "l2")
+        apply_args = type("A", (), {"root": str(self.root), "slug": "l2", "vault": str(vault),
+                                    "dry_run": False, "force": False, "source_id": None})()
+        self.intake.cmd_apply(apply_args)
+        sources = self.json.loads((self.root / "data/sources.json").read_text(encoding="utf-8"))["sources"]
+        created = next(s for s in sources if s["id"] == "src-l2")
+        target = vault / created["files"][0]["path"]
+        self.assertTrue(target.exists(), "файл должен оказаться в Исходники")
+        self.assertFalse((vault / rel).exists(), "файл должен уйти из входящих")
+        self.assertEqual(self.intake.validate_source_record(self.root, created), [])
+
+    def test_source_apply_rolls_back_on_schema_error(self) -> None:
+        vault = self.make_vault()
+        rel = self.put_in_vault(vault, "bad.pdf", b"%PDF-1.4 bad")
+        adopt = type("A", (), {"root": str(self.root), "vault": str(vault), "file": rel,
+                               "slug": "bad", "kind": "personal-letters", "title": "Плохая запись",
+                               "source": None, "source_id_new": "src-bad", "role": "scans",
+                               "location": "Письма (проба)", "derivative": None,
+                               "comment": None, "path": None, "received": "2026-11-26", "force": False})()
+        self.intake.cmd_adopt(adopt)
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()):
+            code = self.intake.scan_one(self.root, "bad")
+        self.assertEqual(code, 1, "без derivative_path разбор должен отказывать")
+        self.assertTrue((vault / rel).exists())
 
 
 class TestCoreVersion(unittest.TestCase):

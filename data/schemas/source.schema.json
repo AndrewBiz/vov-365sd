@@ -49,11 +49,6 @@
           "type": "string",
           "minLength": 3
         },
-        "vault_path": {
-          "type": "string",
-          "description": "Путь относительно корня Obsidian vault. Для газеттиров отсутствует.",
-          "minLength": 3
-        },
         "derivative_path": {
           "type": "string",
           "description": "Путь относительно корня репозитория: производная документа или журнал геокодирования.",
@@ -63,10 +58,6 @@
           "type": "string",
           "description": "Каталог с сырыми ответами геосервиса, относительно корня репозитория.",
           "pattern": "^data/cache/.+$"
-        },
-        "sha256": {
-          "type": "string",
-          "pattern": "^[a-f0-9]{64}$"
         },
         "received": {
           "type": "string",
@@ -101,6 +92,34 @@
         "query": {
           "type": "object",
           "description": "Фильтры отбора на портале (часть, период, типы)."
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Файлы источника: путь от корня хранилища, sha256 и роль.",
+          "items": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 3,
+                "description": "Путь относительно корня Obsidian vault."
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "role": {
+                "type": "string",
+                "description": "Что именно в файле: расшифровка, сканы, фотографии, справка."
+              }
+            },
+            "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false,
@@ -124,8 +143,7 @@
           },
           "then": {
             "required": [
-              "vault_path",
-              "sha256"
+              "files"
             ]
           }
         },
