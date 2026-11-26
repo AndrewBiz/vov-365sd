@@ -19,12 +19,14 @@
 
 (async () => {
   // ── настройки ───────────────────────────────────────────────────────────────
+  const METHOD = '';        // '' = определить пробой; 'img+cors' / 'fetch' — сразу, без пробы
   const DEAL = '';          // '' = искать автоматически; иначе '384-0008529-0207'
   const PAGE = '';          // '' = искать автоматически; иначе '00000002'
-  const SERVER = '';        // '' = склеить в браузере; 'http://127.0.0.1:8770' = отправить плитки приёмнику
+  const SERVER = 'http://127.0.0.1:8770';        // '' = склеить в браузере; 'http://127.0.0.1:8770' = отправить плитки приёмнику
   const ZMIN = 6;           // докуда подниматься по родителям (затравка обхода)
   const ZMAX = 17;          // докуда спускаться (реальный предел сервис найдёт сам)
-  const CONC = 6;           // одновременных запросов
+  const CONC = 2;           // одновременных запросов (больше — CDN начинает отвечать 403)
+  const DELAY_MS = 180;     // пауза после каждой плитки, мс (вежливый режим)
   const MAX_TILES = 8000;   // предохранитель по числу плиток на уровень
   const MAX_PIXELS = 100e6; // предохранитель по площади canvas (крупнее браузер не отдаст PNG)
   const TILE = 256;
@@ -93,12 +95,15 @@
   // 3. Загрузка плитки. Способы зависят от того, что разрешает сервер:
   //    fetch без cookie, fetch с cookie, <img crossOrigin> (чистый canvas), <img> (canvas «пачкается»).
   let method = null;
+  let protectHit = false;   // CDN ответил 403 — сработала защита от частых запросов
+  let skipped = 0;          // плитки, которые уже лежат у приёмника
 
   async function byFetchOn(base, z, x, y) {
     const url = tileUrlOn(base, z, x, y);
     for (const init of [{mode: 'cors'}, {mode: 'cors', credentials: 'include'}]) {
       try {
         const r = await fetch(url, init);
+        if (r.status === 403) protectHit = true;
         if (!r.ok) return {missing: true};
         const blob = await r.blob();
         return blob.size > 400 ? {blob} : {missing: true};
@@ -181,15 +186,32 @@
     return {base: null, how: null, rows};
   }
 
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
   async function pool(items, worker) {
     let i = 0;
     await Promise.all(Array.from({length: CONC}, async () => {
-      while (i < items.length) await worker(items[i++]);
+      while (i < items.length) {
+        await worker(items[i++]);
+        if (DELAY_MS) await sleep(DELAY_MS + Math.random() * DELAY_MS);
+      }
     }));
   }
 
+  // есть ли плитка уже у приёмника — чтобы не качать заново после обрыва
+  async function haveTile(z, x, y) {
+    if (!SERVER) return false;
+    try {
+      const r = await fetch(`${SERVER}/have?z=${z}&x=${x}&y=${y}`);
+      return r.ok;
+    } catch { return false; }
+  }
+
   // 3b. Проба: какой хост и способ реально работают (одна плитка, до 16 запросов)
-  if (anchor.z > 0) {
+  if (METHOD) {
+    method = METHOD;
+    log('способ задан в настройках:', method);
+  } else if (anchor.z > 0) {
     const probe = await probeAccess(anchor.z, anchor.x, anchor.y);
     (console.table ? console.table : console.log)(probe.rows);
     console.log('[карта] проба доступа (JSON):', JSON.stringify(probe.rows));
@@ -223,6 +245,10 @@
         return;
       }
       if (tile.missing) continue;
+      if (protectHit) {
+        log('CDN ответил 403 на затравке — подожди 10–15 минут и запусти снова');
+        return;
+      }
       level = new Map([[`${cx}:${cy}`, tile]]);
       levelZ = cz;
       break;
@@ -262,9 +288,19 @@
     }
     const next = new Map();
     await pool(children, async ([x, y]) => {
+      if (await haveTile(levelZ + 1, x, y)) {
+        next.set(`${x}:${y}`, {have: true});
+        skipped += 1;
+        return;
+      }
       const tile = await loadTile(levelZ + 1, x, y);
       if (tile && !tile.off && !tile.missing) next.set(`${x}:${y}`, tile);
     });
+    if (protectHit) {
+      log('CDN ответил 403 — сработала защита от частых запросов. Останавливаюсь.');
+      log('подожди 10–15 минут и запусти скрипт снова: уже скачанные плитки не перекачиваются.');
+      break;
+    }
     if (!next.size) break;
     levelZ += 1;
     level = next;
@@ -319,6 +355,7 @@
     let sent = 0;
     await pool([...tiles.entries()], async ([key, tile]) => {
       const [x, y] = key.split(':').map(Number);
+      if (tile.have) return;
       const blob = tile.blob || await imgToBlob(tile.img);
       if (!blob) return;
       const r = await fetch(`${SERVER}/tile?z=${chosen.z}&x=${x}&y=${y}`, {
@@ -326,7 +363,7 @@
       });
       if (r.ok) sent++;
     });
-    log(`отправлено в приёмник: ${sent} из ${tiles.size}`);
+    log(`отправлено в приёмник: ${sent} из ${tiles.size} (уже было: ${skipped})`);
     log('дальше: /usr/bin/python3 tools/pn_tiles_stitch.py build --out ~/карты/<имя>');
     return;
   }

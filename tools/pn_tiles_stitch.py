@@ -282,6 +282,20 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
             return
+        if parsed.path == "/have":
+            query = parse_qs(parsed.query)
+            try:
+                z, x, y = (int(query[k][0]) for k in ("z", "x", "y"))
+            except (KeyError, ValueError):
+                self.send_response(400)
+                self._cors()
+                self.end_headers()
+                return
+            exists = (self.collector.root / str(z) / str(x) / f"{y}.png").exists()
+            self.send_response(200 if exists else 404)
+            self._cors()
+            self.end_headers()
+            return
         if parsed.path in ("/", "/index.html"):
             body = _PAGE.format(count=self.collector.count, root=self.collector.root).encode()
             self.send_response(200)
