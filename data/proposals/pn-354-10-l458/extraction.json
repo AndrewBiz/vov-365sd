@@ -1,0 +1,77 @@
+{
+ "slug": "pn-354-10-l458",
+ "core_version": "1.2.1",
+ "kind": "archive-document",
+ "digests": [
+  "2b02b894e21989defc1dd6ea0fc4d15c36133e494814f77501af8183e676d1c4"
+ ],
+ "files": [
+  {
+   "name": "p00000458.jpg",
+   "bytes": 368320,
+   "sha256": "2b02b894e21989defc1dd6ea0fc4d15c36133e494814f77501af8183e676d1c4",
+   "format": "jpeg",
+   "width": 2334,
+   "height": 3436,
+   "ocr": {
+    "words": 219,
+    "plausible": 217,
+    "readability_pct": 99,
+    "text_chars": 2390
+   }
+  }
+ ],
+ "duplicates": [
+  {
+   "by": "sha256",
+   "document": "doc-pn-354-0005806-0010-p00000458",
+   "file": "p00000458.jpg"
+  }
+ ],
+ "warnings": [
+  "дубликат по sha256: документ doc-pn-354-0005806-0010-p00000458"
+ ],
+ "suggested_document": {
+  "id": "doc-pn-354-0005806-0010-p00000458",
+  "type": "operational-summary",
+  "title": {
+   "value": "Оперативная сводка № 16 штаба 365 сд за 31.12.1941",
+   "provenance": {
+    "source_id": "src-pamyat-naroda",
+    "locator": {
+     "quote": "штурм Калицино 30–31.12: кто атаковал, чем закончилось",
+     "paragraph": "манифест артефакта"
+    }
+   },
+   "status": "черновик"
+  },
+  "date": {
+   "value": {
+    "from": "1941-12-31",
+    "to": "1941-12-31",
+    "precision": "day"
+   },
+   "provenance": {
+    "source_id": "src-pamyat-naroda",
+    "locator": {
+     "quote": "штурм Калицино 30–31.12: кто атаковал, чем закончилось",
+     "paragraph": "манифест артефакта"
+    }
+   },
+   "status": "черновик"
+  },
+  "carrier": {
+   "source_id": "src-pamyat-naroda",
+   "sha256": "2b02b894e21989defc1dd6ea0fc4d15c36133e494814f77501af8183e676d1c4",
+   "bytes": 368320
+  },
+  "requisites": {
+   "fund": "354",
+   "inventory": "5806",
+   "file": "10",
+   "sheets": "458"
+  },
+  "note": "Часть: 365 сд, штаб."
+ },
+ "ready": false
+}
