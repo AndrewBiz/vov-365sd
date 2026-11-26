@@ -2614,18 +2614,6 @@
             "status": "черновик",
             "basis": "archive-document",
             "note": "ответ ЦАМО № 9/165750 от 21.01.1988, адресат — Красногвардейский райвоенком"
-          },
-          {
-            "value": "пропал без вести в феврале–марте 1942",
-            "provenance": {
-              "source_id": "src-museum-konakovo",
-              "locator": {
-                "quote": "пропал без вести в февр.–марте 1942"
-              }
-            },
-            "status": "черновик",
-            "basis": "museum-exhibit",
-            "note": "подпись под музейной схемой (краеведческий музей Конаково)"
           }
         ],
         "fate_date": [
@@ -2660,21 +2648,6 @@
             },
             "status": "черновик",
             "basis": "presentation"
-          },
-          {
-            "value": {
-              "from": "1942-02-01",
-              "to": "1942-03-31",
-              "precision": "range"
-            },
-            "provenance": {
-              "source_id": "src-museum-konakovo",
-              "locator": {
-                "quote": "февр.–марте 1942"
-              }
-            },
-            "status": "черновик",
-            "basis": "museum-exhibit"
           }
         ]
       }
