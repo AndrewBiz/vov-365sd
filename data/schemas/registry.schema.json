@@ -177,6 +177,14 @@
         }
       },
       "additionalProperties": false
+    },
+    "file_roles": {
+      "type": "object",
+      "description": "Роли файлов источника: что именно лежит в файле.",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 2
+      }
     }
   },
   "additionalProperties": false
