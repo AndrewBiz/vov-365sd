@@ -37,6 +37,13 @@ def classify(files: list[str]) -> dict:
             "all": files}
 
 
+def branch_violation(branch: str, files: list[str]) -> str | None:
+    """Ядро меняется только в ветке: прямой коммит в мастер — нарушение правила."""
+    if branch in ("master", "main") and classify(files)["core"]:
+        return "изменения ядра коммитятся только в ветке"
+    return None
+
+
 def decide(files: list[str]) -> tuple[int, str]:
     c = classify(files)
     if not files:
@@ -80,6 +87,15 @@ def main(argv: list[str] | None = None) -> int:
     if code != 0:
         print(f"ОТКАЗ ({branch}): {message}", file=sys.stderr)
         return code
+
+    # Правило: ядро меняется только в ветке. Коммит прямо в мастер — отказ,
+    # даже если версия поднята (иначе вся история ветки теряет смысл).
+    violation = branch_violation(branch, files) if args.staged else None
+    if violation:
+        print(f"ОТКАЗ ({branch}): {violation} ({', '.join(classify(files)['core'][:3])}).\n"
+              "  Сделай: git stash && git checkout -b feature/<тема> && git stash pop", file=sys.stderr)
+        return 1
+
     print(f"проверка пройдена ({branch}): {message}")
     return 0
 

@@ -1374,6 +1374,16 @@ class TestCoreVersion(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("tools/VERSION", message)
 
+    def test_guard_blocks_core_directly_on_master(self) -> None:
+        import guard_core
+        self.assertIsNotNone(guard_core.branch_violation("master", ["tools/validate.py"]))
+        self.assertIsNotNone(guard_core.branch_violation(
+            "master", ["tools/validate.py", "tools/VERSION", "tools/CHANGELOG.md"]))
+        # только версия и история — не файлы ядра, коммит не запрещён
+        self.assertIsNone(guard_core.branch_violation("master", ["tools/VERSION"]))
+        self.assertIsNone(guard_core.branch_violation("feature/x", ["tools/validate.py"]))
+        self.assertIsNone(guard_core.branch_violation("master", ["data/events/1941.json"]))
+
     def test_guard_allows_release_commit(self) -> None:
         import guard_core
         code, message = guard_core.decide(["tools/validate.py", "tools/VERSION", "tools/CHANGELOG.md"])
