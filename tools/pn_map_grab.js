@@ -85,14 +85,16 @@
   }
 
   const {deal, page, origin} = anchor;
-  const tileUrl = (z, x, y) => `${origin}/tiles/${deal}/${page}_tiles/${z}/${x}/${y}.png`;
-  log('шаблон плитки:', tileUrl('{z}', '{x}', '{y}'));
+  const tileUrlOn = (base, z, x, y) => `${base}/tiles/${deal}/${page}_tiles/${z}/${x}/${y}.png`;
+  let baseUrl = origin;      // выберется пробой ниже
+  let tileUrl = (z, x, y) => tileUrlOn(baseUrl, z, x, y);
 
-  // 3. Загрузка плитки: сначала fetch, потом <img>. Возвращает {blob} | {img} | {missing} | {off}
+  // 3. Загрузка плитки. Способы зависят от того, что разрешает сервер:
+  //    fetch без cookie, fetch с cookie, <img crossOrigin> (чистый canvas), <img> (canvas «пачкается»).
   let method = null;
 
-  async function byFetch(z, x, y) {
-    const url = tileUrl(z, x, y);
+  async function byFetchOn(base, z, x, y) {
+    const url = tileUrlOn(base, z, x, y);
     for (const init of [{mode: 'cors'}, {mode: 'cors', credentials: 'include'}]) {
       try {
         const r = await fetch(url, init);
@@ -106,8 +108,8 @@
     return null;
   }
 
-  function byImage(z, x, y, cross) {
-    const url = tileUrl(z, x, y);
+  function byImageOn(base, z, x, y, cross) {
+    const url = tileUrlOn(base, z, x, y);
     return new Promise(resolve => {
       const img = new Image();
       if (cross) img.crossOrigin = 'anonymous';
@@ -119,25 +121,63 @@
         lastErr[cross ? 'img-cors' : 'img'] = `onerror: ${url}`;
         finish(null);
       };
-      setTimeout(() => finish(null), 20000);
+      setTimeout(() => finish(null), 8000);
       img.src = url;
     });
   }
 
   async function loadTile(z, x, y) {
-    if (method === null || method === 'fetch') {
-      const got = await byFetch(z, x, y);
-      if (got) { if (got.blob) method = 'fetch'; return got; }
+    const base = baseUrl;
+    if (method === 'fetch' || method === 'fetch+cookie') {
+      const got = await byFetchOn(base, z, x, y);
+      if (got) return got;
     }
-    if (method === null || method === 'img-cors') {
-      const got = await byImage(z, x, y, true);
-      if (got) { method = 'img-cors'; return got; }
+    if (method === 'img+cors' || method === 'img') {
+      const cross = method === 'img+cors';
+      const got = await byImageOn(base, z, x, y, cross);
+      return got || {off: true};
     }
-    if (method === null || method === 'img') {
-      const got = await byImage(z, x, y, false);
-      if (got) { method = 'img'; return got; }
-    }
+    // способ ещё не выбран: пробуем по порядку на этом же хосте
+    const viaFetch = await byFetchOn(base, z, x, y);
+    if (viaFetch) { method = 'fetch'; return viaFetch; }
+    const viaImgCors = await byImageOn(base, z, x, y, true);
+    if (viaImgCors) { method = 'img+cors'; return viaImgCors; }
+    const viaImg = await byImageOn(base, z, x, y, false);
+    if (viaImg) { method = 'img'; return viaImg; }
     return {off: true};
+  }
+
+  // 3a. Проба: один и тот же лист через разные хосты и способы — что разрешено сервером
+  async function probeAccess(z, x, y) {
+    const bases = [...new Set([origin, location.origin, 'https://pamyat-naroda.ru',
+                               'https://cdn.pamyat-naroda.ru'].filter(Boolean))];
+    const rows = [];
+    for (const base of bases) {
+      const url = tileUrlOn(base, z, x, y);
+      // fetch без cookie
+      try {
+        const r = await fetch(url, {mode: 'cors'});
+        const b = r.ok ? await r.blob() : null;
+        rows.push({base, how: 'fetch', status: r.status, bytes: b ? b.size : 0});
+        if (b && b.size > 400) return {base, how: 'fetch', rows};
+      } catch (e) { rows.push({base, how: 'fetch', error: (e && e.name) || 'error'}); }
+      // fetch с cookie
+      try {
+        const r = await fetch(url, {mode: 'cors', credentials: 'include'});
+        const b = r.ok ? await r.blob() : null;
+        rows.push({base, how: 'fetch+cookie', status: r.status, bytes: b ? b.size : 0});
+        if (b && b.size > 400) return {base, how: 'fetch+cookie', rows};
+      } catch (e) { rows.push({base, how: 'fetch+cookie', error: (e && e.name) || 'error'}); }
+      // img с crossOrigin — даёт чистый canvas
+      const imgCors = await byImageOn(base, z, x, y, true);
+      rows.push({base, how: 'img+cors', ok: !!imgCors});
+      if (imgCors) return {base, how: 'img+cors', rows};
+      // img без CORS — грузится, но canvas «пачкается»
+      const imgPlain = await byImageOn(base, z, x, y, false);
+      rows.push({base, how: 'img', ok: !!imgPlain});
+      if (imgPlain) return {base, how: 'img', rows};
+    }
+    return {base: null, how: null, rows};
   }
 
   async function pool(items, worker) {
@@ -145,6 +185,25 @@
     await Promise.all(Array.from({length: CONC}, async () => {
       while (i < items.length) await worker(items[i++]);
     }));
+  }
+
+  // 3b. Проба: какой хост и способ реально работают (одна плитка, до 16 запросов)
+  if (anchor.z > 0) {
+    const probe = await probeAccess(anchor.z, anchor.x, anchor.y);
+    (console.table ? console.table : console.log)(probe.rows);
+    console.log('[карта] проба доступа (JSON):', JSON.stringify(probe.rows));
+    if (!probe.base) {
+      log('ни один способ не сработал — смотреть таблицу выше');
+      return;
+    }
+    baseUrl = probe.base;
+    method = probe.how;
+    tileUrl = (z, x, y) => tileUrlOn(baseUrl, z, x, y);
+    log(`выбран способ: ${method} через ${baseUrl}`);
+    if (method === 'img') {
+      log('ВНИМАНИЕ: плитки грузятся только как <img> без CORS — canvas «испачкается», PNG не выгрузится.');
+      log('Варианты: (1) Chromium; (2) забрать плитки через приёмник с cookie (скажи — сделаю режим grab).');
+    }
   }
 
   // 4. Затравка: подъём по родителям до первого существующего мелкого уровня

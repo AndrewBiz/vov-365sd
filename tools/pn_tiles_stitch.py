@@ -16,15 +16,114 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import math
 import pathlib
 import re
+import shlex
 import threading
+import urllib.error
+import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
 TILE = 256
+TILE_URL_RE = re.compile(r"(?P<base>.+_tiles)/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+)\.(?:png|jpe?g)")
+
+
+def parse_curl(text: str) -> tuple[str, dict[str, str]]:
+    """Разобрать «Copy as cURL» из DevTools: адрес плитки и заголовки."""
+    cleaned = text.replace("\\\n", " ").replace("\n", " ")
+    try:
+        parts = shlex.split(cleaned)
+    except ValueError:
+        parts = cleaned.split()
+    if parts and parts[0].lower().endswith("curl"):
+        parts = parts[1:]
+    url = ""
+    headers: dict[str, str] = {}
+    i = 0
+    while i < len(parts):
+        token = parts[i]
+        if token in ("-H", "--header") and i + 1 < len(parts):
+            name, _, value = parts[i + 1].partition(":")
+            headers[name.strip()] = value.strip()
+            i += 2
+            continue
+        if token in ("-A", "--user-agent") and i + 1 < len(parts):
+            headers["User-Agent"] = parts[i + 1]
+            i += 2
+            continue
+        if token in ("-b", "--cookie") and i + 1 < len(parts):
+            headers["Cookie"] = parts[i + 1]
+            i += 2
+            continue
+        if token.startswith("http"):
+            url = token
+        i += 1
+    if not url:
+        raise SystemExit("в файле cURL не найден адрес плитки")
+    return url, headers
+
+
+def grab_tiles(seed_url: str, headers: dict[str, str], zmin: int, zmax: int,
+               concurrency: int, max_tiles: int) -> list[tuple[int, int, int, bytes]]:
+    """Обход пирамиды от адреса одной плитки: вверх по родителям, затем вниз по детям."""
+    match = TILE_URL_RE.search(seed_url)
+    if not match:
+        raise SystemExit("адрес не похож на плитку: ожидалось ..._tiles/<z>/<x>/<y>.png")
+    base = match.group("base")
+    seed = (int(match.group("z")), int(match.group("x")), int(match.group("y")))
+
+    def fetch(z: int, x: int, y: int) -> bytes | None:
+        url = f"{base}/{z}/{x}/{y}.png"
+        request = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                if response.status != 200:
+                    return None
+                payload = response.read()
+                return payload if len(payload) > 400 else None
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError):
+            return None
+
+    # вверх: найти первый существующий мелкий уровень
+    level: tuple[int, int, int] | None = None
+    z, x, y = seed
+    while z > zmin:
+        z, x, y = z - 1, x // 2, y // 2
+        if fetch(z, x, y):
+            level = (z, x, y)
+            break
+    if level is None:
+        if fetch(*seed):
+            level = seed
+        else:
+            raise SystemExit("плитка не отдалась: проверить cookie/заголовки в cURL")
+
+    found: list[tuple[int, int, int, bytes]] = []
+    z, x, y = level
+    current = {(x, y)}
+    while current and z <= zmax and len(found) < max_tiles:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=concurrency) as pool:
+            def worker(coord: tuple[int, int]) -> tuple[int, int, bytes] | None:
+                cx, cy = coord
+                return (cx, cy, data) if (data := fetch(z, cx, cy)) else None
+            results = [r for r in pool.map(worker, sorted(current)) if r]
+        if not results:
+            break
+        found = [(z, cx, cy, data) for cx, cy, data in results]
+        print(f"  уровень {z}: {len(found)} плиток")
+        children = set()
+        for cx, cy, _ in results:
+            children.update({(cx * 2, cy * 2), (cx * 2 + 1, cy * 2),
+                             (cx * 2, cy * 2 + 1), (cx * 2 + 1, cy * 2 + 1)})
+        if len(children) > max_tiles:
+            print(f"  на уровне {z + 1} было бы {len(children)} плиток — стоп")
+            break
+        z, current = z + 1, children
+    return found
 
 
 def tile_bounds_3857(z: int, x: int, y_tms: int) -> tuple[float, float, float, float]:
@@ -216,6 +315,16 @@ def main(argv: list[str] | None = None) -> int:
     serve.add_argument("--dir", default=str(pathlib.Path.home() / ".cache/pn-tiles"))
     serve.add_argument("--port", type=int, default=8770)
 
+    grab = sub.add_parser("grab", help="скачать плитки по «Copy as cURL» из DevTools и собрать")
+    grab.add_argument("--curl", required=True, help="файл с текстом cURL (одна плитка)")
+    grab.add_argument("--out", required=True, help="файл без расширения")
+    grab.add_argument("--dir", default=str(pathlib.Path.home() / ".cache/pn-tiles"))
+    grab.add_argument("--zmin", type=int, default=5)
+    grab.add_argument("--zmax", type=int, default=18)
+    grab.add_argument("--conc", type=int, default=6)
+    grab.add_argument("--max-tiles", type=int, default=8000)
+    grab.add_argument("--no-geotiff", action="store_true")
+
     build = sub.add_parser("build", help="склеить принятые плитки в PNG/GeoTIFF")
     build.add_argument("--dir", default=str(pathlib.Path.home() / ".cache/pn-tiles"))
     build.add_argument("--zoom", type=int, default=None, help="уровень (по умолчанию максимальный)")
@@ -233,6 +342,26 @@ def main(argv: list[str] | None = None) -> int:
             server.serve_forever()
         except KeyboardInterrupt:
             print(f"\nпринято плиток: {collector.count}")
+        return 0
+
+    if args.cmd == "grab":
+        text = pathlib.Path(args.curl).expanduser().read_text(encoding="utf-8")
+        url, headers = parse_curl(text)
+        print(f"плитка-затравка: {url}")
+        print(f"заголовков из cURL: {len(headers)} ({', '.join(sorted(headers))})")
+        tiles = grab_tiles(url, headers, args.zmin, args.zmax, args.conc, args.max_tiles)
+        if not tiles:
+            raise SystemExit("ничего не скачалось")
+        collector = Collector(pathlib.Path(args.dir).expanduser())
+        for z, x, y, payload in tiles:
+            collector.save(z, x, y, payload)
+        print(f"скачано плиток: {len(tiles)}, уровень {tiles[0][0]}")
+        result = collector.mosaic(tiles[0][0])
+        written = write_outputs(result, pathlib.Path(args.out).expanduser().parent,
+                                pathlib.Path(args.out).expanduser().name, not args.no_geotiff)
+        print(f"размер: {result['meta']['width']}x{result['meta']['height']}, zoom {result['meta']['zoom']}")
+        for path in written:
+            print(f"  {path}")
         return 0
 
     collector = Collector(pathlib.Path(args.dir).expanduser())
