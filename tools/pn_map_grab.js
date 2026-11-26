@@ -31,6 +31,7 @@
   const TILE_RE = /([^/]+)\/([^/]+?)\.(?:jpe?g|png)_tiles\/(\d+)\/(\d+)\/(\d+)\.(?:png|jpe?g)/;
 
   try { performance.setResourceTimingBufferSize?.(10000); } catch {}
+  let lastFetchError = '';
 
   // 1. Собрать все адреса, где может быть плитка
   const candidates = new Set();
@@ -86,15 +87,21 @@
   log('шаблон плитки:', tileUrl('{z}', '{x}', '{y}'));
 
   // 3. Запрос плитки: blob | null (нет такой) | 'off' (защита/CORS)
+  //    CDN отдаёт Access-Control-Allow-Origin: *, а с таким заголовком браузер
+  //    запрещает запросы с cookie — поэтому сначала пробуем без учётных данных.
   async function getTile(z, x, y) {
-    try {
-      const r = await fetch(tileUrl(z, x, y), {credentials: 'include'});
-      if (!r.ok) return null;
-      const blob = await r.blob();
-      return blob.size > 400 ? blob : null;
-    } catch (e) {
-      return 'off';
+    const url = tileUrl(z, x, y);
+    for (const init of [{mode: 'cors'}, {mode: 'cors', credentials: 'include'}]) {
+      try {
+        const r = await fetch(url, init);
+        if (!r.ok) return null;
+        const blob = await r.blob();
+        return blob.size > 400 ? blob : null;
+      } catch (e) {
+        lastFetchError = e.message;
+      }
     }
+    return 'off';
   }
 
   async function pool(items, worker) {
@@ -113,7 +120,7 @@
     chain.reverse();                       // от мелкого к крупному
     for (const [cz, cx, cy] of chain) {
       const blob = await getTile(cz, cx, cy);
-      if (blob === 'off') { log('плитка не отдалась: защита или CORS — см. подсказку в конце'); break; }
+      if (blob === 'off') { log('плитка не отдалась:', lastFetchError || 'защита или CORS'); break; }
       if (blob) { level = new Map([[`${cx}:${cy}`, blob]]); levelZ = cz; break; }
     }
   }
