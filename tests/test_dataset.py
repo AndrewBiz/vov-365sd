@@ -1043,6 +1043,66 @@ class TestFrontLines(DatasetCase):
         self.assertAlmostEqual(coords[1][0], 36.5, places=1)
 
 
+class TestCoreVersion(unittest.TestCase):
+    """Правило проекта: у ядра есть версия, и она меняется вместе с изменением инструмента."""
+
+    def setUp(self) -> None:
+        import sys
+        import pathlib
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "tools"))
+
+    def test_version_is_semver_and_documented(self) -> None:
+        import coremeta
+        value = coremeta.version()
+        self.assertRegex(value, r"^\d+\.\d+\.\d+$")
+        self.assertTrue(coremeta.changelog_has(value), f"в CHANGELOG нет записи для {value}")
+
+    def test_version_rejects_bad_format(self) -> None:
+        import coremeta, tempfile, pathlib
+        with tempfile.TemporaryDirectory() as tmp:
+            bad = pathlib.Path(tmp) / "VERSION"
+            bad.write_text("v1.0\n", encoding="utf-8")
+            with self.assertRaises(coremeta.CoreVersionError):
+                coremeta.version(bad)
+
+    def test_version_rejects_missing_file(self) -> None:
+        import coremeta, tempfile, pathlib
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(coremeta.CoreVersionError):
+                coremeta.version(pathlib.Path(tmp) / "VERSION")
+
+    def test_guard_refuses_core_without_version(self) -> None:
+        import guard_core
+        code, message = guard_core.decide(["tools/validate.py"])
+        self.assertEqual(code, 1)
+        self.assertIn("tools/VERSION", message)
+
+    def test_guard_allows_release_commit(self) -> None:
+        import guard_core
+        code, message = guard_core.decide(["tools/validate.py", "tools/VERSION", "tools/CHANGELOG.md"])
+        self.assertEqual(code, 0)
+        self.assertIn("релизный", message)
+
+    def test_guard_allows_content_only(self) -> None:
+        import guard_core
+        code, message = guard_core.decide(["data/events/1941.json", "openspec/specs/core-versioning/spec.md"])
+        self.assertEqual(code, 0)
+        self.assertIn("контент", message)
+
+    def test_bump_levels(self) -> None:
+        import release_core
+        self.assertEqual(release_core.bump("1.2.3", "patch"), "1.2.4")
+        self.assertEqual(release_core.bump("1.2.3", "minor"), "1.3.0")
+        self.assertEqual(release_core.bump("1.2.3", "major"), "2.0.0")
+
+    def test_changelog_entry_goes_on_top(self) -> None:
+        import release_core
+        text = "# История версий ядра\n\nшапка\n\n## 1.0.0 — 2026-11-26\n\n- старое\n"
+        updated = release_core.insert_entry(text, "1.0.1", "2026-12-01")
+        self.assertLess(updated.index("## 1.0.1"), updated.index("## 1.0.0"))
+        self.assertIn("2026-12-01", updated)
+
+
 class TestBuild(DatasetCase):
     def test_build_writes_artifacts(self) -> None:
         code, messages = builder.build(self.root, self.vault)
