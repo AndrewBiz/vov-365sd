@@ -683,6 +683,9 @@ def check_person_claims(ds: Dataset, errors: list[str]) -> None:
                         errors.append(f"{spot}: неизвестный вид свидетельства '{basis}'")
 
 
+SEQUENTIAL_CLAIM_KEYS = {"correspondence"}
+
+
 def check_person_conflicts(ds: Dataset, errors: list[str]) -> None:
     entries_by_person: dict[str, list[dict]] = {}
     for entry in ds.rosters["entries"]:
@@ -708,6 +711,8 @@ def check_person_conflicts(ds: Dataset, errors: list[str]) -> None:
             divergence.append("записи списков")
 
         for key, claim_list in claims.items():
+            if key in SEQUENTIAL_CLAIM_KEYS:
+                continue
             seen: set[str] = set()
             for claim in claim_list:
                 seen |= _claim_values(claim)

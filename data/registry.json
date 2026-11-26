@@ -79,7 +79,8 @@
     "awards": "Награды",
     "burial": "Место захоронения",
     "fate": "Судьба",
-    "fate_date": "Дата выбытия"
+    "fate_date": "Дата выбытия",
+    "correspondence": "Пункты переписки"
   },
   "evidence_basis": {
     "archive-document": "Архивный документ",
@@ -88,7 +89,8 @@
     "presentation": "Презентация",
     "museum-exhibit": "Музейный экспонат",
     "forum-post": "Сообщение на форуме",
-    "oral-history": "Устное свидетельство"
+    "oral-history": "Устное свидетельство",
+    "personal-letter": "Личное письмо"
   },
   "portal_types": {
     "Боевые приказы и распоряжения": "combat-order",

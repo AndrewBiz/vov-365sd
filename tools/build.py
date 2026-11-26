@@ -312,11 +312,16 @@ def resolve_geometry(event: dict, places: dict[str, dict]) -> tuple[dict | None,
 
 
 PEOPLE_PATH = "docs/research/Люди — что известно (сгенерировано).md"
+SEQUENTIAL_REPORT_KEYS = {"correspondence"}
 
 
 def _claim_label(claim: dict) -> str:
-    if isinstance(claim.get("value"), dict) and "precision" in claim["value"]:
-        return _period_label(claim)
+    value = claim.get("value")
+    if isinstance(value, dict) and "precision" in value:
+        label = _period_label(claim)
+        if value.get("address"):
+            return f"{value['address']} ({label})"
+        return label
     return _value_label(claim)
 
 
@@ -409,6 +414,8 @@ def render_people(ds: vov.Dataset, digest: str) -> str:
         for person in conflicted:
             keys_with = []
             for key, claims in (person.get("claims") or {}).items():
+                if key in SEQUENTIAL_REPORT_KEYS:
+                    continue
                 values = {_claim_label(c) for c in claims}
                 if len(values) > 1:
                     keys_with.append(f"{keys.get(key, key)}: " + " / ".join(sorted(values)))
