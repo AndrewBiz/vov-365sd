@@ -1,0 +1,362 @@
+[
+ {
+  "id": "doc-pn-354-0005806-0010-p00000224",
+  "chars": 375,
+  "words": 26,
+  "good": 26,
+  "pct": 100,
+  "date": "1941-12-14",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-208-0002511-0082-p00000085",
+  "chars": 2239,
+  "words": 205,
+  "good": 202,
+  "pct": 99,
+  "date": "1941-12-12",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000139",
+  "chars": 2821,
+  "words": 256,
+  "good": 253,
+  "pct": 99,
+  "date": "1941-12-09",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000410",
+  "chars": 1302,
+  "words": 106,
+  "good": 105,
+  "pct": 99,
+  "date": "1941-12-26",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000269",
+  "chars": 2486,
+  "words": 203,
+  "good": 201,
+  "pct": 99,
+  "date": "1941-12-17",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000099",
+  "chars": 1096,
+  "words": 88,
+  "good": 87,
+  "pct": 99,
+  "date": "1941-12-07",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000177",
+  "chars": 2674,
+  "words": 233,
+  "good": 231,
+  "pct": 99,
+  "date": "1941-12-11",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000374",
+  "chars": 928,
+  "words": 75,
+  "good": 74,
+  "pct": 99,
+  "date": "1941-12-24",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000295",
+  "chars": 1872,
+  "words": 154,
+  "good": 154,
+  "pct": 100,
+  "date": "1941-12-19",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000241",
+  "chars": 2434,
+  "words": 218,
+  "good": 218,
+  "pct": 100,
+  "date": "1941-12-15",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000195",
+  "chars": 2395,
+  "words": 220,
+  "good": 218,
+  "pct": 99,
+  "date": "1941-12-12",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000458",
+  "chars": 2390,
+  "words": 219,
+  "good": 217,
+  "pct": 99,
+  "date": "1941-12-31",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000211",
+  "chars": 2092,
+  "words": 206,
+  "good": 206,
+  "pct": 100,
+  "date": "1941-12-13",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000251",
+  "chars": 1836,
+  "words": 165,
+  "good": 164,
+  "pct": 99,
+  "date": "1941-12-16",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-344-0005554-0078-p00000620",
+  "chars": 661,
+  "words": 45,
+  "good": 45,
+  "pct": 100,
+  "date": "1941-12-16",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-3067-0000001-0006-p00000071",
+  "chars": 254,
+  "words": 11,
+  "good": 11,
+  "pct": 100,
+  "date": "1941-12-11",
+  "type": "operational-summary"
+ },
+ {
+  "id": "doc-pn-3067-0000001-0006-p00000014",
+  "chars": 2240,
+  "words": 159,
+  "good": 152,
+  "pct": 96,
+  "date": "1941-12-05",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-3067-0000001-0006-p00000112",
+  "chars": 429,
+  "words": 3,
+  "good": 3,
+  "pct": 100,
+  "date": "1941-12-15",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-3484-0000001-0006-p00000169",
+  "chars": 2773,
+  "words": 248,
+  "good": 245,
+  "pct": 99,
+  "date": "1941-12-12",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-3067-0000001-0006-p00000077",
+  "chars": 8691,
+  "words": 195,
+  "good": 192,
+  "pct": 98,
+  "date": "1941-12-12",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-3067-0000001-0006-p00000075",
+  "chars": 2332,
+  "words": 213,
+  "good": 213,
+  "pct": 100,
+  "date": "1941-12-09",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000284",
+  "chars": 2592,
+  "words": 230,
+  "good": 229,
+  "pct": 100,
+  "date": "1941-12-18",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000187",
+  "chars": 2861,
+  "words": 272,
+  "good": 270,
+  "pct": 99,
+  "date": "1941-12-12",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000246",
+  "chars": 2645,
+  "words": 248,
+  "good": 247,
+  "pct": 100,
+  "date": "1941-12-16",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-3067-0000001-0006-p00000057",
+  "chars": 2779,
+  "words": 262,
+  "good": 255,
+  "pct": 97,
+  "date": "1941-12-09",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-3067-0000001-0006-p00000078",
+  "chars": 16523,
+  "words": 498,
+  "good": 488,
+  "pct": 98,
+  "date": "1941-12-12",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000420",
+  "chars": 2653,
+  "words": 227,
+  "good": 225,
+  "pct": 99,
+  "date": "1941-12-27",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000191",
+  "chars": 2078,
+  "words": 187,
+  "good": 187,
+  "pct": 100,
+  "date": "1941-12-12",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000137",
+  "chars": 2628,
+  "words": 252,
+  "good": 252,
+  "pct": 100,
+  "date": "1941-12-09",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000041",
+  "chars": 2236,
+  "words": 200,
+  "good": 200,
+  "pct": 100,
+  "date": "1941-12-05",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000455",
+  "chars": 2115,
+  "words": 179,
+  "good": 178,
+  "pct": 99,
+  "date": "1941-12-31",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000454",
+  "chars": 2242,
+  "words": 184,
+  "good": 180,
+  "pct": 98,
+  "date": "1941-12-27",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000395",
+  "chars": 2058,
+  "words": 182,
+  "good": 178,
+  "pct": 98,
+  "date": "1941-12-25",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0010-p00000150",
+  "chars": 1537,
+  "words": 144,
+  "good": 143,
+  "pct": 99,
+  "date": "1941-12-09",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-3067-0000001-0006-p00000109",
+  "chars": 391,
+  "words": 29,
+  "good": 28,
+  "pct": 97,
+  "date": "1941-12-15",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-354-0005806-0063-p00000091",
+  "chars": 481,
+  "words": 37,
+  "good": 37,
+  "pct": 100,
+  "date": "1941-12-21",
+  "type": "combat-order"
+ },
+ {
+  "id": "doc-pn-213-0002002-0042-p00000003",
+  "chars": 129,
+  "words": 10,
+  "good": 10,
+  "pct": 100,
+  "date": "1941-12-01",
+  "type": "combat-journal"
+ },
+ {
+  "id": "doc-pn-208-0002511-0222-p00000003",
+  "chars": 1252,
+  "words": 95,
+  "good": 95,
+  "pct": 100,
+  "date": "1941-12-05",
+  "type": "combat-journal"
+ },
+ {
+  "id": "doc-pn-1535-0000001-0035-p00000004",
+  "chars": 831,
+  "words": 69,
+  "good": 69,
+  "pct": 100,
+  "date": "1941-12-28",
+  "type": "combat-journal"
+ },
+ {
+  "id": "doc-pn-354-0005806-0062-p00000414",
+  "chars": 819,
+  "words": 74,
+  "good": 74,
+  "pct": 100,
+  "date": "1941-12-07",
+  "type": "combat-order"
+ }
+]

@@ -2,6 +2,95 @@
   "year": 1941,
   "events": [
     {
+      "id": "ev-1941-bizyaev-callup",
+      "type": "fate",
+      "title": {
+        "value": "Призыв Бизяева Ерофея Михайловича Исовским РВК",
+        "provenance": {
+          "source_id": "src-book-p96",
+          "locator": {
+            "page": 96,
+            "quote": "Мобилизован в ряды Красной Армии из запаса 29 августа 1941 года Исовским РВК"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "conflict": true,
+        "variants": [
+          {
+            "value": {
+              "from": "1941-08-29",
+              "to": "1941-08-29",
+              "precision": "day"
+            },
+            "provenance": {
+              "source_id": "src-book-p96",
+              "locator": {
+                "page": 96,
+                "quote": "29 августа 1941 года Исовским РВК"
+              }
+            },
+            "status": "черновик"
+          },
+          {
+            "value": {
+              "from": "1941-07-29",
+              "to": "1941-07-29",
+              "precision": "day"
+            },
+            "provenance": {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Призван в армию 29.07.1941 Исовским военкоматом"
+              }
+            },
+            "status": "черновик"
+          }
+        ],
+        "note": "Расхождение в месяц: книга — 29 августа, презентация — 29 июля (этой же датой закрыт период работы на лесопункте)."
+      },
+      "localization": "approximate",
+      "facts": {
+        "role": {
+          "value": "рядовой роты автоматчиков (пехота)",
+          "provenance": {
+            "source_id": "src-pptx-365",
+            "locator": {
+              "slide": 16,
+              "quote": "Рядовой роты автоматчиков (пехота)"
+            }
+          },
+          "status": "черновик"
+        },
+        "birthplace": {
+          "value": "пос. Павда, Исовский район, Свердловская область",
+          "provenance": [
+            {
+              "source_id": "src-book-p96",
+              "locator": {
+                "page": 96,
+                "quote": "уроженец посёлка Павда Исовского района"
+              }
+            },
+            {
+              "source_id": "src-pptx-365",
+              "locator": {
+                "slide": 16,
+                "quote": "Место рождения пос. Павда, Свердловская обл., Новолялинский р-н"
+              }
+            }
+          ],
+          "status": "выверено"
+        }
+      },
+      "place": "pl-pavda"
+    },
+    {
       "id": "ev-1941-camo-no-record",
       "type": "source-gap",
       "title": {
@@ -385,6 +474,212 @@
       ]
     },
     {
+      "id": "ev-1941-12-08-berezino",
+      "type": "combat",
+      "title": {
+        "value": "Полк дивизии к 19.00 8.12.1941 овладел Березино и к 3.00 9.12.1941 удерживает его",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+            "quote": "в 19.00 после напряжённого боя овладел БЕРЕЗИНО. К 3.00 9.12.41 г. полк занимает БЕРЕЗИНО"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-08",
+          "to": "1941-12-09",
+          "precision": "range"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+            "quote": "К 3.00 9.12.41 г. полк занимает БЕРЕЗИНО"
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": "pl-berezino",
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000139"
+      ],
+      "facts": {
+        "losses": {
+          "value": "потери полка за 6–7.12.1941: убитыми 84, отправлено в госпиталь 24, лошадей убито 28, ранено 4",
+          "provenance": {
+            "source_id": "src-pamyat-naroda",
+            "locator": {
+              "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+              "quote": "Потери полка за 6–7.12.41 г. в людях — убитыми 84, отправлено в госпиталь 24. Лошадей убито 28, ранено 4"
+            }
+          },
+          "status": "черновик"
+        }
+      },
+      "note": "Номер полка (OCR даёт «1211 сп» предположительно) не подтверждён; в сводке полк назван только по контексту абзаца."
+    },
+    {
+      "id": "ev-1941-12-08-vyukhovo",
+      "type": "combat",
+      "title": {
+        "value": "Бой за Вьюхово: занято в 8.00, очищено к 14.00 8.12.1941, затем полк сменён и выведен во второй эшелон",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+            "quote": "В 8.00 8.12.41 г. ВЫХОВО [Вьюхово] занято подразделениями полка и к 14.00 окончательно очистил населённый пункт от групп противника, засевших на чердаках, в подвалах и сараях"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-08",
+          "to": "1941-12-08",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+            "quote": "8.12.41 г."
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": "pl-vyukhovo",
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000139"
+      ],
+      "facts": {
+        "losses": {
+          "value": "потери полка: убитыми 310, ранеными [?], лошадей убито 8, ранено 5; в сводке есть оговорка «сведения о потерях проверены и вызывают сомнение»",
+          "provenance": {
+            "source_id": "src-pamyat-naroda",
+            "locator": {
+              "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+              "quote": "Потери полка: убитыми 310, ранено [?], лошадей убито 8, ранено 5"
+            }
+          },
+          "status": "черновик"
+        },
+        "relief": {
+          "value": "в 15.00 8.12.41 полк сменён 1255 сп [?] и выведен во второй эшелон дивизии",
+          "provenance": {
+            "source_id": "src-pamyat-naroda",
+            "locator": {
+              "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+              "quote": "В 15.00 8.12.41 г. полк сменён 1255 сп и выведен во второй эшелон дивизии"
+            }
+          },
+          "status": "черновик"
+        }
+      },
+      "note": "Номер полка в сводке не читается: текст говорит «полк», привязка к 1213 сп — предположение. Вьюхово в машинописи передано как «ВЫХОВО»; координаты взяты у pl-vyukhovo, сама сводка их не даёт, поэтому локализация приблизительная."
+    },
+    {
+      "id": "ev-1941-12-08-yamuga",
+      "type": "combat",
+      "title": {
+        "value": "Овладение Ямугой к 12.00 8.12.1941; противник отошёл в направлении Клина, полк занял круговую оборону",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+            "quote": "в 6.00 8.12.41 г. организовал наступление и к 12.00 овладел ЯМУГА. Противник отошёл в направлении КЛИН, оставив много машин и вооружения"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-08",
+          "to": "1941-12-08",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+            "quote": "к 12.00 овладел ЯМУГА"
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": "pl-yamuga",
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000139"
+      ],
+      "facts": {
+        "trophies": {
+          "value": "противник оставил в Ямуге много машин и вооружения; полк разобрал дороги и подготовил к взрыву железнодорожный мост",
+          "provenance": {
+            "source_id": "src-pamyat-naroda",
+            "locator": {
+              "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+              "quote": "оставив много машин и вооружения; полк занял круговую оборону в районе ЯМУГА, разобрав дороги и подготовив железнодорожный мост"
+            }
+          },
+          "status": "черновик"
+        }
+      },
+      "note": "Ямуга названа в сводке; координаты не определены, поэтому локализация приблизительная."
+    },
+    {
+      "id": "ev-1941-12-09-maydanovo-airfield",
+      "type": "combat",
+      "title": {
+        "value": "Немецкий аэродром в районе Майданово (до 20 самолётов) обстрелян дальнобойной артиллерией",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+            "quote": "в районе МАЙДАНОВО находится до 20 немецких самолётов. После обстрела аэродрома в районе МАЙДАНОВО огнём дальнобойной артиллерии с аэродрома поднялись самолёты"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-08",
+          "to": "1941-12-09",
+          "precision": "range"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20100",
+            "quote": "В течение 8.12.41 г. действия авиации противника не отмечалось"
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": "pl-maydanovo",
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000139"
+      ],
+      "note": "Сводка не называет часть, чья артиллерия вела огонь; «дальнобойная артиллерия» — формулировка документа."
+    },
+    {
       "id": "ev-1941-12-09-klin-attack-order",
       "type": "order",
       "title": {
@@ -474,6 +769,69 @@
         "doc-pn-354-0005806-0010-p00000150"
       ],
       "note": "Это приказ, а не донесение: документ фиксирует задачу на 14.00 9.12.41, а не результат атаки. Рубежи названы в тексте приказа, координаты не установлены, поэтому уровень — «приблизительно»."
+    },
+    {
+      "id": "ev-1941-12-12-borisovo-maydanovo",
+      "type": "combat",
+      "title": {
+        "value": "Наступление дивизии на Борисово и Майданово 12.12.1941 отбито контратакой пехоты и танков",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20145",
+            "quote": "Дивизия в течение дня 12.12.41 г. вела упорный бой за овладение БОРИСОВО, МАЙДАНОВО, но в результате контратаки пехоты и танков противника с большими потерями отброшена в исходное положение"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-11",
+          "to": "1941-12-12",
+          "precision": "range"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20145",
+            "quote": "1215 сп к 6.00 11.12.41 г. занял исходное положение для атаки ПОЛУХАНОВО, МАЙДАНОВО"
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": "pl-maydanovo",
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000195"
+      ],
+      "facts": {
+        "enemy": {
+          "value": "противник на рубеже Борисово — Майданово держал до полка пехоты и танки",
+          "provenance": {
+            "source_id": "src-pamyat-naroda",
+            "locator": {
+              "url": "https://pamyat-naroda.ru/documents/view/?id=document20145",
+              "quote": "Противник оказывает упорное сопротивление на рубеже БОРИСОВО, МАЙДАНОВО, сосредоточив в этом направлении до полка пехоты"
+            }
+          },
+          "status": "черновик"
+        },
+        "losses": {
+          "value": "в 1211 сп [?] после боёв осталось 42 человека среднего и старшего начсостава и 867 рядового; винтовок 720, станковых пулемётов 5, ручных 19",
+          "provenance": {
+            "source_id": "src-pamyat-naroda",
+            "locator": {
+              "url": "https://pamyat-naroda.ru/documents/view/?id=document20145",
+              "quote": "в полку имеется 42 чел. среднего и старшего начсостава, рядового состава 867 чел.; винтовок 720, станк. пулемётов 5, ручных пулемётов 19"
+            }
+          },
+          "status": "черновик"
+        }
+      },
+      "note": "Сводка № 6 штаба 365 сд, л. 195. Номера полков в машинописи читаются плохо: 1211 сп и 1215 сп — предположение по составу дивизии; 2/1215 сп отброшен с потерями западнее Маланино."
     },
     {
       "id": "ev-1941-12-21-365sd-position",
@@ -666,95 +1024,6 @@
         }
       },
       "place": "pl-dyakovo"
-    },
-    {
-      "id": "ev-1941-bizyaev-callup",
-      "type": "fate",
-      "title": {
-        "value": "Призыв Бизяева Ерофея Михайловича Исовским РВК",
-        "provenance": {
-          "source_id": "src-book-p96",
-          "locator": {
-            "page": 96,
-            "quote": "Мобилизован в ряды Красной Армии из запаса 29 августа 1941 года Исовским РВК"
-          }
-        },
-        "status": "черновик"
-      },
-      "units": [
-        "365sd"
-      ],
-      "period": {
-        "conflict": true,
-        "variants": [
-          {
-            "value": {
-              "from": "1941-08-29",
-              "to": "1941-08-29",
-              "precision": "day"
-            },
-            "provenance": {
-              "source_id": "src-book-p96",
-              "locator": {
-                "page": 96,
-                "quote": "29 августа 1941 года Исовским РВК"
-              }
-            },
-            "status": "черновик"
-          },
-          {
-            "value": {
-              "from": "1941-07-29",
-              "to": "1941-07-29",
-              "precision": "day"
-            },
-            "provenance": {
-              "source_id": "src-pptx-365",
-              "locator": {
-                "slide": 16,
-                "quote": "Призван в армию 29.07.1941 Исовским военкоматом"
-              }
-            },
-            "status": "черновик"
-          }
-        ],
-        "note": "Расхождение в месяц: книга — 29 августа, презентация — 29 июля (этой же датой закрыт период работы на лесопункте)."
-      },
-      "localization": "approximate",
-      "facts": {
-        "role": {
-          "value": "рядовой роты автоматчиков (пехота)",
-          "provenance": {
-            "source_id": "src-pptx-365",
-            "locator": {
-              "slide": 16,
-              "quote": "Рядовой роты автоматчиков (пехота)"
-            }
-          },
-          "status": "черновик"
-        },
-        "birthplace": {
-          "value": "пос. Павда, Исовский район, Свердловская область",
-          "provenance": [
-            {
-              "source_id": "src-book-p96",
-              "locator": {
-                "page": 96,
-                "quote": "уроженец посёлка Павда Исовского района"
-              }
-            },
-            {
-              "source_id": "src-pptx-365",
-              "locator": {
-                "slide": 16,
-                "quote": "Место рождения пос. Павда, Свердловская обл., Новолялинский р-н"
-              }
-            }
-          ],
-          "status": "выверено"
-        }
-      },
-      "place": "pl-pavda"
     }
   ]
 }
