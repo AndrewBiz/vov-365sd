@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import pathlib
 import shutil
 import sys
 import tempfile
@@ -1041,6 +1042,128 @@ class TestFrontLines(DatasetCase):
         self.assertAlmostEqual(coords[0][0], 36.0, places=2)
         self.assertAlmostEqual(coords[2][0], 37.0, places=2)
         self.assertAlmostEqual(coords[1][0], 36.5, places=1)
+
+
+class TestIntake(unittest.TestCase):
+    """Входной конвейер: манифест, журнал, состояния, дедуп, dry-run применения."""
+
+    def setUp(self) -> None:
+        import json
+        import pathlib
+        import shutil
+        import sys
+        import tempfile
+        import yaml
+
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = pathlib.Path(self.tmp.name)
+        real = pathlib.Path(__file__).resolve().parent.parent
+        (self.root / "data").mkdir()
+        shutil.copytree(real / "data/schemas", self.root / "data/schemas")
+        for name in ("sources.json", "documents.json", "registry.json"):
+            shutil.copy2(real / "data" / name, self.root / "data" / name)
+        (self.root / "inbox").mkdir()
+        (self.root / "data/intake").mkdir(exist_ok=True)
+        sys.path.insert(0, str(real / "tools"))
+        import intake
+        self.intake = intake
+        self.yaml = yaml
+        self.json = json
+
+    def tearDown(self) -> None:
+        self.tmp.cleanup()
+
+    def make_artifact(self, slug: str = "probe", **overrides) -> pathlib.Path:
+        folder = self.root / "inbox" / slug
+        (folder / "files").mkdir(parents=True, exist_ok=True)
+        (folder / "files" / "leaf.jpg").write_bytes(b"\xff\xd8\xff\xe0probe")
+        manifest = {
+            "slug": slug, "kind": "archive-document", "title": "Проба",
+            "source_id": "src-pamyat-naroda", "received": "2026-11-26",
+            "origin": {"portal_url": "https://pamyat-naroda.ru/documents/view/?id=document1"},
+            "requisites": {"fund": "354", "inventory": "5806", "file": "10", "sheet": "777"},
+            "date": {"from": "1941-12-16", "to": "1941-12-16", "precision": "day"},
+            "unit": "365 сд", "files": ["files/leaf.jpg"],
+            "original_location": "Тест/конвейер", "document_type": "operational-summary",
+        }
+        manifest.update(overrides)
+        (folder / "artifact.yaml").write_text(self.yaml.safe_dump(manifest, allow_unicode=True), encoding="utf-8")
+        return folder
+
+    def test_manifest_requires_files(self) -> None:
+        folder = self.make_artifact()
+        (folder / "files" / "leaf.jpg").unlink()
+        manifest = self.intake.read_manifest(self.root, "probe")
+        problems = self.intake.validate_manifest(self.root, manifest, "probe")
+        self.assertTrue(any("не найден" in p for p in problems), problems)
+
+    def test_manifest_rejects_unknown_kind_and_source(self) -> None:
+        self.make_artifact(kind="telepatiya", source_id="src-nope")
+        manifest = self.intake.read_manifest(self.root, "probe")
+        problems = self.intake.validate_manifest(self.root, manifest, "probe")
+        self.assertTrue(any("неизвестный вид" in p for p in problems), problems)
+        self.assertTrue(any("не зарегистрирован" in p for p in problems), problems)
+
+    def test_manifest_rejects_partial_requisites(self) -> None:
+        self.make_artifact(requisites={"fund": "354", "file": "10"})
+        manifest = self.intake.read_manifest(self.root, "probe")
+        problems = self.intake.validate_manifest(self.root, manifest, "probe")
+        self.assertTrue(any("частичные" in p for p in problems), problems)
+
+    def test_manifest_accepts_null_requisites(self) -> None:
+        self.make_artifact(requisites=None)
+        manifest = self.intake.read_manifest(self.root, "probe")
+        self.assertEqual(self.intake.validate_manifest(self.root, manifest, "probe"), [])
+
+    def test_states_follow_journal(self) -> None:
+        self.assertEqual(self.intake.state_of(self.root, "probe"), "new")
+        self.intake.journal_append(self.root, "probe", "scan", "ok")
+        self.assertEqual(self.intake.state_of(self.root, "probe"), "proposed")
+        self.intake.journal_append(self.root, "probe", "apply", "applied", document="doc-x")
+        self.assertEqual(self.intake.state_of(self.root, "probe"), "applied")
+
+    def test_reject_wins_over_scan(self) -> None:
+        self.intake.journal_append(self.root, "probe", "scan", "ok")
+        self.intake.journal_append(self.root, "probe", "reject", "rejected", reason="не тот лист")
+        self.assertEqual(self.intake.state_of(self.root, "probe"), "rejected")
+
+    def test_journal_reports_broken_line(self) -> None:
+        path = self.root / "data/intake/journal.jsonl"
+        path.write_text('{"slug": "ok"}\n{битый json}\n', encoding="utf-8")
+        with self.assertRaises(self.intake.IntakeError) as ctx:
+            self.intake.journal_read(self.root)
+        self.assertIn(":2", str(ctx.exception))
+
+    def test_document_id_from_requisites(self) -> None:
+        manifest = {"slug": "probe", "source_id": "src-pamyat-naroda",
+                    "requisites": {"fund": "354", "inventory": "5806", "file": "10", "sheet": "251"}}
+        self.assertEqual(self.intake.derive_document_id(manifest), "doc-pn-354-0005806-0010-p00000251")
+
+    def test_document_id_falls_back_to_slug(self) -> None:
+        manifest = {"slug": "book-p96", "source_id": "src-book-p96", "requisites": None}
+        self.assertEqual(self.intake.derive_document_id(manifest), "doc-book-p96")
+
+    def test_duplicate_by_hash(self) -> None:
+        documents = [d for d in self.intake.existing_documents(self.root) if (d.get("carrier") or {}).get("sha256")]
+        self.assertTrue(documents, "в фикстуре нет документов с хешем")
+        donor = documents[0]
+        files = [{"sha256": donor["carrier"]["sha256"], "name": "leaf.jpg"}]
+        manifest = {"slug": "probe", "source_id": "src-pamyat-naroda", "requisites": None}
+        found = self.intake.find_duplicates(self.root, manifest, files)
+        self.assertTrue(any(d["by"] == "sha256" and d["document"] == donor["id"] for d in found), found)
+
+    def test_suggested_document_fits_schema(self) -> None:
+        self.make_artifact()
+        manifest = self.intake.read_manifest(self.root, "probe")
+        files = [{"sha256": "a" * 64, "bytes": 12}]
+        record = self.intake.suggest_document(manifest, files)
+        self.assertEqual(record["id"], "doc-pn-354-0005806-0010-p00000777")
+        self.assertEqual(self.intake.validate_record(self.root, record), [])
+
+    def test_import_does_not_touch_network(self) -> None:
+        source = (pathlib.Path(__file__).resolve().parent.parent / "tools/intake.py").read_text(encoding="utf-8")
+        for forbidden in ("requests.", "urllib.request.urlopen(", "http.client."):
+            self.assertNotIn(forbidden, source, f"офлайн-шаг не должен ходить в сеть: {forbidden}")
 
 
 class TestCoreVersion(unittest.TestCase):
