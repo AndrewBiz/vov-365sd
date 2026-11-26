@@ -694,6 +694,77 @@ class TestPersonnel(DatasetCase):
         self.assert_error("флаг conflict без расхождений")
 
 
+class TestPersonalLetters(DatasetCase):
+    """Личные письма как вид источника и пункты переписки как ключ утверждений."""
+
+    def _sources(self) -> dict:
+        return self.load("data/sources.json")
+
+    def _add_letters(self, vault_path: str, sha: str | None = None) -> None:
+        payload = self._sources()
+        payload["sources"].append({
+            "id": "src-letters-test",
+            "kind": "personal-letters",
+            "title": "Письма с фронта (тест)",
+            "derivative_path": "docs/sources/недат_Письма — тест.md",
+            "vault_path": vault_path,
+            "sha256": sha or hashlib.sha256(b"letters").hexdigest(),
+            "received": "2026-11-26",
+        })
+        self.save("data/sources.json", payload)
+        with open(os.path.join(self.root, "docs/sources/недат_Письма — тест.md"), "w", encoding="utf-8") as fh:
+            fh.write("---\nисточник: тест\n---\n")
+
+    def test_personal_letters_source_accepted(self) -> None:
+        os.makedirs(os.path.join(self.vault, "письма"), exist_ok=True)
+        with open(os.path.join(self.vault, "письма/l.pdf"), "wb") as fh:
+            fh.write(b"letters")
+        self._add_letters("письма/l.pdf")
+        self.assertEqual(self.errors(), [])
+
+    def test_personal_letters_without_origin_file(self) -> None:
+        self._add_letters("письма/нет-такого.pdf")
+        self.assert_error("не найден в Obsidian")
+
+    def test_personal_letters_checksum_mismatch(self) -> None:
+        os.makedirs(os.path.join(self.vault, "письма"), exist_ok=True)
+        with open(os.path.join(self.vault, "письма/l2.pdf"), "wb") as fh:
+            fh.write(b"other")
+        self._add_letters("письма/l2.pdf", sha=hashlib.sha256(b"letters").hexdigest())
+        self.assert_error("sha256 исходника не совпадает")
+
+    def test_correspondence_is_not_a_conflict(self) -> None:
+        person = {
+            "id": "p-ivanov-ivan",
+            "name": "Иванов Иван Иванович",
+            "birth_year": "неизвестен",
+            "claims": {
+                "fate": [{**_fact("погиб"), "basis": "publication"}],
+                "correspondence": [
+                    {**_fact({"address": "Камышлов, п/я 44/7", "from": "1941-08-01",
+                              "to": "1941-08-31", "precision": "month"}), "basis": "oral-history"},
+                    {**_fact({"address": "Кинешма, п/я 74/29", "from": "1941-11-18",
+                              "to": "1941-12-21", "precision": "range"}), "basis": "personal-letter"},
+                ],
+            },
+        }
+        self.save("data/people.json", {"people": [person]})
+        self.assertEqual(self.errors(), [])
+
+    def test_unknown_correspondence_basis_rejected(self) -> None:
+        person = {
+            "id": "p-ivanov-ivan",
+            "name": "Иванов Иван Иванович",
+            "birth_year": "неизвестен",
+            "claims": {"correspondence": [
+                {**_fact({"address": "Камышлов", "from": "1941-08-01",
+                          "to": "1941-08-31", "precision": "month"}), "basis": "letter-ish"},
+            ]},
+        }
+        self.save("data/people.json", {"people": [person]})
+        self.assert_error("неизвестный вид свидетельства")
+
+
 class TestRosterParsing(DatasetCase):
     HTML = """<table>
       <tr><th>№ пп</th><th>Фамилия, имя, отчество</th><th>Партийность</th><th>Состав</th></tr>
