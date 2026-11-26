@@ -25,6 +25,7 @@
   const SERVER = 'http://127.0.0.1:8770';        // '' = склеить в браузере; 'http://127.0.0.1:8770' = отправить плитки приёмнику
   const ZMIN = 6;           // докуда подниматься по родителям (затравка обхода)
   const ZMAX = 17;          // докуда спускаться (реальный предел сервис найдёт сам)
+  const ZTARGET = 0;        // 0 = до предела или бюджета canvas; иначе остановиться на этом уровне
   const CONC = 2;           // одновременных запросов (больше — CDN начинает отвечать 403)
   const DELAY_MS = 180;     // пауза после каждой плитки, мс (вежливый режим)
   const MAX_TILES = 8000;   // предохранитель по числу плиток на уровень
@@ -276,7 +277,8 @@
   // 5. Спуск по детям до максимального уровня
   const history = [{z: levelZ, tiles: new Map(level)}];
   let best = {z: levelZ, tiles: level};
-  while (levelZ < ZMAX && level.size) {
+  const zStop = ZTARGET > 0 ? Math.min(ZTARGET, ZMAX) : ZMAX;
+  while (levelZ < zStop && level.size) {
     const children = [];
     for (const key of level.keys()) {
       const [x, y] = key.split(':').map(Number);
