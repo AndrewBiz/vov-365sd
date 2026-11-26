@@ -25,7 +25,8 @@
   const ZMIN = 6;           // докуда подниматься по родителям (затравка обхода)
   const ZMAX = 17;          // докуда спускаться (реальный предел сервис найдёт сам)
   const CONC = 6;           // одновременных запросов
-  const MAX_TILES = 8000;   // предохранитель
+  const MAX_TILES = 8000;   // предохранитель по числу плиток на уровень
+  const MAX_PIXELS = 100e6; // предохранитель по площади canvas (крупнее браузер не отдаст PNG)
   const TILE = 256;
   // ────────────────────────────────────────────────────────────────────────────
 
@@ -247,6 +248,7 @@
   log(`затравка: уровень ${levelZ}, плиток ${level.size}, способ загрузки: ${method}`);
 
   // 5. Спуск по детям до максимального уровня
+  const history = [{z: levelZ, tiles: new Map(level)}];
   let best = {z: levelZ, tiles: level};
   while (levelZ < ZMAX && level.size) {
     const children = [];
@@ -267,16 +269,39 @@
     levelZ += 1;
     level = next;
     best = {z: levelZ, tiles: level};
+    history.push({z: levelZ, tiles: new Map(level)});
     log(`уровень ${levelZ}: ${level.size} плиток`);
   }
 
-  // 6. Склейка
-  const keys = [...best.tiles.keys()].map(k => k.split(':').map(Number));
-  const xs = keys.map(([x]) => x), ys = keys.map(([, y]) => y);
-  const minX = Math.min(...xs), maxX = Math.max(...xs);
-  const minY = Math.min(...ys), maxY = Math.max(...ys);
-  const w = (maxX - minX + 1) * TILE, h = (maxY - minY + 1) * TILE;
-  log(`склейка: ${w}x${h} px, zoom ${best.z}, плиток ${best.tiles.size}`);
+  // 6. Склейка: выбрать самый глубокий уровень, который влезает в canvas
+  function extent(entry) {
+    const ks = [...entry.tiles.keys()].map(k => k.split(':').map(Number));
+    const xs = ks.map(([x]) => x), ys = ks.map(([, y]) => y);
+    const minX = Math.min(...xs), maxX = Math.max(...xs);
+    const minY = Math.min(...ys), maxY = Math.max(...ys);
+    return {minX, maxX, minY, maxY,
+            w: (maxX - minX + 1) * TILE, h: (maxY - minY + 1) * TILE};
+  }
+
+  let chosen = history[history.length - 1];
+  let box = extent(chosen);
+  while (history.length > 1 && box.w * box.h > MAX_PIXELS) {
+    history.pop();
+    chosen = history[history.length - 1];
+    box = extent(chosen);
+  }
+  if (box.w * box.h > MAX_PIXELS) {
+    log(`даже мелкий уровень ${chosen.z} даёт ${box.w}x${box.h} = ${(box.w * box.h / 1e6).toFixed(0)} Мпикс — браузер такой PNG не отдаст`);
+    log('выход: приёмник SERVER + сборка через GDAL, либо grab --curl');
+    return;
+  }
+  if (chosen.z !== best.z) {
+    log(`уровень ${best.z} (${best.tiles.size} плиток) слишком велик для canvas — беру ${chosen.z}`);
+    log('чтобы получить максимум: SERVER-режим + python3 tools/pn_tiles_stitch.py build');
+  }
+  const tiles = chosen.tiles;
+  const {minX, maxX, minY, maxY, w, h} = box;
+  log(`склейка: ${w}x${h} px, zoom ${chosen.z}, плиток ${tiles.size}`);
 
   const tileCanvas = document.createElement('canvas');
   tileCanvas.width = TILE; tileCanvas.height = TILE;
@@ -292,16 +317,16 @@
 
   if (SERVER) {
     let sent = 0;
-    await pool([...best.tiles.entries()], async ([key, tile]) => {
+    await pool([...tiles.entries()], async ([key, tile]) => {
       const [x, y] = key.split(':').map(Number);
       const blob = tile.blob || await imgToBlob(tile.img);
       if (!blob) return;
-      const r = await fetch(`${SERVER}/tile?z=${best.z}&x=${x}&y=${y}`, {
+      const r = await fetch(`${SERVER}/tile?z=${chosen.z}&x=${x}&y=${y}`, {
         method: 'POST', body: blob, headers: {'Content-Type': 'image/png'}
       });
       if (r.ok) sent++;
     });
-    log(`отправлено в приёмник: ${sent} из ${best.tiles.size}`);
+    log(`отправлено в приёмник: ${sent} из ${tiles.size}`);
     log('дальше: /usr/bin/python3 tools/pn_tiles_stitch.py build --out ~/карты/<имя>');
     return;
   }
@@ -311,7 +336,7 @@
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
   let drawn = 0;
-  for (const [key, tile] of best.tiles) {
+  for (const [key, tile] of tiles) {
     const [x, y] = key.split(':').map(Number);
     const dx = (x - minX) * TILE, dy = (maxY - y) * TILE;   // Y в схеме TMS
     if (tile.blob) {
@@ -325,18 +350,18 @@
     } else {
       ctx.drawImage(tile.img, dx, dy);
     }
-    if (++drawn % 200 === 0) log(`нарисовано ${drawn}/${best.tiles.size}`);
+    if (++drawn % 200 === 0) log(`нарисовано ${drawn}/${tiles.size}`);
   }
 
   // 7. Метаданные привязки
   const world = 2 * Math.PI * 6378137;
-  const span = world / (2 ** best.z);
+  const span = world / (2 ** chosen.z);
   const meta = {
-    deal, page, zoom: best.z, tiles: best.tiles.size, width: w, height: h,
+    deal, page, zoom: chosen.z, tiles: tiles.size, width: w, height: h,
     bbox_3857: [-world / 2 + minX * span,
-                world / 2 - (2 ** best.z - 1 - minY + 1) * span,
+                world / 2 - (2 ** chosen.z - 1 - minY + 1) * span,
                 -world / 2 + (maxX + 1) * span,
-                world / 2 - (2 ** best.z - 1 - maxY) * span],
+                world / 2 - (2 ** chosen.z - 1 - maxY) * span],
     scheme: 'XYZ/TMS, EPSG:3857, tile 256',
     fetch_method: method
   };
@@ -348,7 +373,7 @@
       if (!blob) { log('canvas не отдал PNG (слишком большой?) — включить SERVER-режим'); return; }
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `${deal}_${page}_z${best.z}.png`;
+      a.download = `${deal}_${page}_z${chosen.z}.png`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 60000);
       log('готово:', a.download, `${(blob.size / 1e6).toFixed(1)} МБ`);
