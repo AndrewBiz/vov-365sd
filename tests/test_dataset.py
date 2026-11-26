@@ -1572,6 +1572,24 @@ class TestIntake(unittest.TestCase):
         self.assertFalse((vault / rel).exists(), "файл должен уйти из входящих")
         self.assertEqual(self.intake.validate_source_record(self.root, created), [])
 
+    def test_scan_without_ocr_skips_readability(self) -> None:
+        vault = self.make_vault()
+        rel = self.put_in_vault(vault, "handwritten.tif", b"II*\x00 handwritten")
+        (self.root / "docs/sources").mkdir(parents=True, exist_ok=True)
+        (self.root / "docs/sources/недат_Проба.md").write_text("---\nисточник: проба\n---\n", encoding="utf-8")
+        adopt = type("A", (), {"root": str(self.root), "vault": str(vault), "file": rel,
+                               "slug": "hand", "kind": "personal-letters", "title": "Рукописные сканы",
+                               "source": None, "source_id_new": "src-hand", "role": "scans",
+                               "location": "Письма (проба)", "derivative": "docs/sources/недат_Проба.md",
+                               "comment": None, "path": None, "received": "2026-11-26", "force": False})()
+        self.intake.cmd_adopt(adopt)
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()):
+            code = self.intake.scan_one(self.root, "hand", ocr=False)
+        self.assertEqual(code, 0)
+        extraction = self.json.loads((self.root / "data/proposals/hand/extraction.json").read_text(encoding="utf-8"))
+        self.assertIn("skipped", extraction["files"][0]["ocr"])
+
     def test_source_apply_rolls_back_on_schema_error(self) -> None:
         vault = self.make_vault()
         rel = self.put_in_vault(vault, "bad.pdf", b"%PDF-1.4 bad")
