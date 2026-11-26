@@ -137,6 +137,20 @@ def tile_bounds_3857(z: int, x: int, y_tms: int) -> tuple[float, float, float, f
     return left, top - span, left + span, top
 
 
+_PAGE = """<!doctype html><html lang="ru"><meta charset="utf-8">
+<title>Приёмник плиток карт — работает</title>
+<style>body{{font:15px/1.5 system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 16px}}
+code,pre{{background:#f3f3f3;padding:2px 6px;border-radius:4px}}pre{{padding:12px;overflow:auto}}</style>
+<h1>Приёмник работает</h1>
+<p>Принято плиток: <b>{count}</b>. Каталог: <code>{root}</code></p>
+<p><b>Эту страницу в браузере открывать не нужно</b> — она лишь подтверждает, что приёмник слушает порт.
+Плитки присылает скрипт <code>pn_map_grab.js</code>, запущенный в консоли на странице карты,
+с настройкой <code>SERVER = 'http://127.0.0.1:8770'</code>.</p>
+<p>Когда скрипт закончит, соберите файл:</p>
+<pre>/usr/bin/python3 tools/pn_tiles_stitch.py build --out ~/карты/имя</pre>
+</body></html>"""
+
+
 class Collector:
     def __init__(self, root: pathlib.Path):
         self.root = root
@@ -268,6 +282,15 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
             return
+        if parsed.path in ("/", "/index.html"):
+            body = _PAGE.format(count=self.collector.count, root=self.collector.root).encode()
+            self.send_response(200)
+            self._cors()
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         self.send_response(404)
         self._cors()
         self.end_headers()
@@ -337,7 +360,8 @@ def main(argv: list[str] | None = None) -> int:
         Handler.collector = collector
         server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
         print(f"приёмник: http://127.0.0.1:{args.port}/  (плитки → {collector.root})")
-        print("в консоли браузера: tools/pn_map_grab.js с SERVER = http://127.0.0.1:%d" % args.port)
+        print("в консоли браузера (на странице карты!) tools/pn_map_grab.js с SERVER = http://127.0.0.1:%d" % args.port)
+        print("важно: этот адрес открывать в браузере не надо — он только принимает плитки")
         try:
             server.serve_forever()
         except KeyboardInterrupt:
