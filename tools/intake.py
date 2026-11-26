@@ -545,7 +545,7 @@ def cmd_scan(args) -> int:
     exit_code = 0
     for slug in slugs:
         try:
-            code = scan_one(root, slug)
+            code = scan_one(root, slug, ocr=not getattr(args, "no_ocr", False))
             exit_code = max(exit_code, code)
         except IntakeError as exc:
             print(f"ОШИБКА  {slug}: {exc}")
@@ -553,7 +553,7 @@ def cmd_scan(args) -> int:
     return exit_code
 
 
-def scan_one(root: pathlib.Path, slug: str) -> int:
+def scan_one(root: pathlib.Path, slug: str, ocr: bool = True) -> int:
     manifest = read_manifest(root, slug)
     problems = validate_manifest(root, manifest, slug)
     if problems:
@@ -588,7 +588,7 @@ def scan_one(root: pathlib.Path, slug: str) -> int:
     for dup in duplicates:
         warnings.append(f"дубликат по {dup['by']}: документ {dup['document']}")
 
-    if len(files) == 1:
+    if len(files) == 1 and ocr:
         reading = readability(resolve_file(root, manifest, slug, rels[0][0] or ""))
         if reading and reading.get("readability_pct") is not None:
             if reading["readability_pct"] < 85 or reading.get("words", 0) < 60:
@@ -596,6 +596,8 @@ def scan_one(root: pathlib.Path, slug: str) -> int:
                     f"низкая разборчивость OCR: {reading['readability_pct']}% "
                     f"({reading.get('words', 0)} слов) — текст не гарантирован")
             files[0]["ocr"] = reading
+    elif len(files) == 1 and not ocr:
+        files[0]["ocr"] = {"skipped": "по флагу --no-ocr: рукописный материал, расшифровка вне проекта"}
 
     if (manifest.get("date") or {}).get("from") in (None, "TODO"):
         warnings.append("дата документа не заполнена в манифесте")
@@ -884,6 +886,8 @@ def main(argv: list[str] | None = None) -> int:
 
     scan = sub.add_parser("scan", help="офлайн-разбор (без сети и моделей)")
     scan.add_argument("slug", nargs="*")
+    scan.add_argument("--no-ocr", action="store_true",
+                      help="не запускать OCR (рукописные сканы: расшифровка сделана человеком)")
     scan.set_defaults(func=cmd_scan)
 
     apply_cmd = sub.add_parser("apply", help="перенести файлы в Obsidian и внести документ")
