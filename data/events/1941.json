@@ -1150,6 +1150,162 @@
       "note": "Сводка штаба 365 сд, л. 251. Место события — район Высоковска и Петровского; в справочнике Высоковск заведён без координат, поэтому локализация приблизительная."
     },
     {
+      "id": "ev-1941-12-18-ai-67ca44",
+      "type": "combat",
+      "title": {
+        "value": "1215 сп к 17.00 18.12 овладел Спицево, Новиново и Алферово, передав преследование частям 29 бригады",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+            "quote": "3. 1215 СП к 17.00 &8.12 овладел населенными пунктами | БАГАЗИНО , СПИЦЕВО ‚НОВИНОВО , АЛФЕРОВО и изродал халь"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-18",
+          "to": "1941-12-18",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+            "quote": "3. 1215 СП к 17.00 &8.12 овладел населенными пунктами | БАГАЗИНО , СПИЦЕВО ‚НОВИНОВО , АЛФЕРОВО и изродал халь"
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": null,
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000295"
+      ],
+      "note": "предложение скила extract-facts, модель hermes-agent (ручной прогон), уверенность 0.75; проверено человеком"
+    },
+    {
+      "id": "ev-1941-12-18-ai-96aa98",
+      "type": "combat",
+      "title": {
+        "value": "1211 сп, преследуя противника, к 12.00 18.12 без боя овладел Дятлово и передал преследование частям 29 бригады",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+            "quote": "1211 СИ, иреоследуя противника по марируту - жестоки, Г ЭВЩНЕВКА ДАТЛОВО к 12.00 18%12.41г. 088 боя овладел ДЯТЛОВО и . передал дальнейшее преоледозан"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-18",
+          "to": "1941-12-18",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+            "quote": "1211 СИ, иреоследуя противника по марируту - жестоки, Г ЭВЩНЕВКА ДАТЛОВО к 12.00 18%12.41г. 088 боя овладел ДЯТЛОВО и . передал дальнейшее преоледозан"
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": null,
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000295"
+      ],
+      "note": "предложение скила extract-facts, модель hermes-agent (ручной прогон), уверенность 0.8; проверено человеком"
+    },
+    {
+      "id": "ev-1941-12-18-ai-b2a721",
+      "type": "movement",
+      "title": {
+        "value": "18.12 части дивизии закончили марш и к 18.00 19.12 сосредоточились в районе Воловниково, Чернятино, Семчино, Копылово во втором эшелоне армии за 371 сд",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+            "quote": "18.00 19.12.41г, части дививиы закончили ый и точение °в районе ВОлОВНИКОвО, ЧЕРНЯТИНО, СБМЧИНО ‚ КОПЫлОВО, в | готовнос"
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-18",
+          "to": "1941-12-19",
+          "precision": "range"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+            "quote": "18.00 19.12.41г, части дививиы закончили ый и точение °в районе ВОлОВНИКОвО, ЧЕРНЯТИНО, СБМЧИНО ‚ КОПЫлОВО, в | готовнос"
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": "pl-chernyatino",
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000295"
+      ],
+      "note": "предложение скила extract-facts, модель hermes-agent (ручной прогон), уверенность 0.85; проверено человеком"
+    },
+    {
+      "id": "ev-1941-12-19-ai-c599e5",
+      "type": "loss",
+      "title": {
+        "value": "за период марша 1211 сп потерял ранеными двух человек на минном поле",
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+            "quote": "Потери за нериох марша - 2 человека ранено на минном — поле."
+          }
+        },
+        "status": "черновик"
+      },
+      "units": [
+        "365sd"
+      ],
+      "period": {
+        "value": {
+          "from": "1941-12-19",
+          "to": "1941-12-19",
+          "precision": "day"
+        },
+        "provenance": {
+          "source_id": "src-pamyat-naroda",
+          "locator": {
+            "url": "https://pamyat-naroda.ru/documents/view/?id=document20219",
+            "quote": "Потери за нериох марша - 2 человека ранено на минном — поле."
+          }
+        },
+        "status": "черновик"
+      },
+      "localization": "approximate",
+      "place": null,
+      "documents": [
+        "doc-pn-354-0005806-0010-p00000295"
+      ],
+      "note": "предложение скила extract-facts, модель hermes-agent (ручной прогон), уверенность 0.7; проверено человеком"
+    },
+    {
       "id": "ev-1941-12-21-365sd-position",
       "type": "combat",
       "title": {

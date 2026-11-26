@@ -1,0 +1,5 @@
+{"ts": "2026-11-26T11:43:46+03:00", "slug": "pn-354-10-l295", "step": "drop", "state": "new", "core_version": "1.1.0", "files": ["files/p00000295.jpg"]}
+{"ts": "2026-11-26T11:43:53+03:00", "slug": "pn-354-10-l295", "step": "scan", "state": "duplicate", "core_version": "1.1.0", "digests": ["7318e3b1693584636163f9396e7608a90cc0e0e1ac226bc7eb51f8898463347f"], "warnings": ["дубликат по sha256: документ doc-pn-354-0005806-0010-p00000295"]}
+{"ts": "2026-11-26T11:44:14+03:00", "slug": "pn-354-10-l295", "step": "propose:extract-facts", "state": "request", "core_version": "1.1.0", "prompt_sha": "4882b5170a604ce7", "source": "кэш OCR doc-pn-354-0005806-0010-p00000295_psm6_x2.txt"}
+{"ts": "2026-11-26T11:44:20+03:00", "slug": "pn-354-10-l295", "step": "propose:extract-facts", "state": "proposed", "core_version": "1.1.0", "prompt_sha": "4882b5170a604ce7", "model": "hermes-agent (ручной прогон)", "items": 5}
+{"ts": "2026-11-26T11:44:35+03:00", "slug": "pn-354-10-l295", "step": "apply-proposal:extract-facts", "state": "applied", "core_version": "1.1.0", "events": ["ev-1941-12-18-ai-b2a721", "ev-1941-12-18-ai-96aa98", "ev-1941-12-18-ai-67ca44", "ev-1941-12-19-ai-c599e5"]}

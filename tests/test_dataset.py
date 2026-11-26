@@ -1044,6 +1044,180 @@ class TestFrontLines(DatasetCase):
         self.assertAlmostEqual(coords[1][0], 36.5, places=1)
 
 
+class TestAiSteps(unittest.TestCase):
+    """Шаги с моделью: скилы, разбор ответа, проверка цитат и мест, применение."""
+
+    def setUp(self) -> None:
+        import json
+        import pathlib
+        import shutil
+        import sys
+        import tempfile
+        import types
+
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = pathlib.Path(self.tmp.name)
+        real = pathlib.Path(__file__).resolve().parent.parent
+        (self.root / "data").mkdir()
+        shutil.copytree(real / "data/schemas", self.root / "data/schemas")
+        shutil.copytree(real / "data/events", self.root / "data/events")
+        shutil.copytree(real / "data/front_lines", self.root / "data/front_lines")
+        shutil.copytree(real / "tools/skills", self.root / "tools/skills")
+        shutil.copytree(real / "docs/sources", self.root / "docs/sources")
+        (self.root / "data/intake").mkdir()
+        for name in ("sources.json", "documents.json", "registry.json", "places.json",
+                     "units.json", "people.json", "rosters.json"):
+            shutil.copy2(real / "data" / name, self.root / "data" / name)
+        (self.root / "inbox" / "probe" / "files").mkdir(parents=True)
+        (self.root / "inbox" / "probe" / "files" / "leaf.jpg").write_bytes(b"\xff\xd8\xff\xe0x")
+        sys.path.insert(0, str(real / "tools"))
+        import ai_steps
+        import validate
+        self.ai = ai_steps
+        self.vov = validate
+        self.json = json
+        self.types = types
+        self._original_run = validate.run
+
+    def tearDown(self) -> None:
+        if getattr(self, "_original_run", None) is not None:
+            self.vov.run = self._original_run
+        self.tmp.cleanup()
+
+    def write_manifest(self, **overrides) -> None:
+        import yaml
+        manifest = {"slug": "probe", "kind": "archive-document", "title": "Проба",
+                    "source_id": "src-pamyat-naroda", "received": "2026-11-26",
+                    "requisites": {"fund": "354", "inventory": "5806", "file": "10", "sheet": "295"},
+                    "date": {"from": "1941-12-19", "to": "1941-12-19", "precision": "day"},
+                    "unit": "365 сд", "files": ["files/leaf.jpg"],
+                    "original_location": "Тест/конвейер", "document_type": "operational-summary"}
+        manifest.update(overrides)
+        (self.root / "inbox" / "probe" / "artifact.yaml").write_text(
+            yaml.safe_dump(manifest, allow_unicode=True), encoding="utf-8")
+
+    def test_unknown_skill_lists_known(self) -> None:
+        with self.assertRaises(self.ai.AiStepError) as ctx:
+            self.ai.load_skill(self.root, "classify-magic")
+        self.assertIn("extract-facts", str(ctx.exception))
+
+    def test_skill_requires_output_schema(self) -> None:
+        (self.root / "tools/skills/broken.yaml").write_text(
+            "name: broken\ninput: {kind: text}\nprompt: x\n", encoding="utf-8")
+        with self.assertRaises(self.ai.AiStepError) as ctx:
+            self.ai.load_skill(self.root, "broken")
+        self.assertIn("output", str(ctx.exception))
+
+    def test_skill_name_must_match_file(self) -> None:
+        (self.root / "tools/skills/mismatch.yaml").write_text(
+            "name: other\ninput: {kind: text}\noutput: {type: object}\nprompt: x\n", encoding="utf-8")
+        with self.assertRaises(self.ai.AiStepError):
+            self.ai.load_skill(self.root, "mismatch")
+
+    def test_response_schema_is_enforced(self) -> None:
+        skill = self.ai.load_skill(self.root, "extract-facts")
+        problems = self.ai.validate_output(self.root, skill, {"items": [{"kind": "combat"}]})
+        self.assertTrue(problems)
+
+    def test_json_in_fence_is_parsed(self) -> None:
+        payload = self.ai.load_json_loose('```json\n{"items": []}\n```')
+        self.assertEqual(payload, {"items": []})
+
+    def test_quote_must_exist_in_text(self) -> None:
+        self.write_manifest()
+        skill = self.ai.load_skill(self.root, "extract-facts")
+        text = "части дивизии сосредоточились в районе ВОЛОВНИКОВО"
+        payload = {"items": [{"kind": "movement", "summary": "сосредоточение в Воловниково",
+                              "quote": "выдуманная цитата", "confidence": 0.9,
+                              "date_from": "1941-12-19", "precision": "day"}]}
+        checked = self.ai.check_items(self.root, skill, payload, text)
+        self.assertFalse(checked[0]["acceptable"])
+        self.assertIn("цитата не найдена", " ".join(checked[0]["problems"]))
+
+    def test_unknown_place_is_rejected(self) -> None:
+        self.write_manifest()
+        skill = self.ai.load_skill(self.root, "extract-facts")
+        text = "сосредоточились в районе ВОЛОВНИКОВО"
+        payload = {"items": [{"kind": "movement", "summary": "сосредоточение",
+                              "quote": "сосредоточились в районе ВОЛОВНИКОВО",
+                              "confidence": 0.9, "date_from": "1941-12-19",
+                              "precision": "day", "place_name": "Атлантида"}]}
+        checked = self.ai.check_items(self.root, skill, payload, text)
+        self.assertFalse(checked[0]["acceptable"])
+        self.assertIn("нет в справочнике", " ".join(checked[0]["problems"]))
+
+    def test_low_confidence_is_flagged(self) -> None:
+        self.write_manifest()
+        skill = self.ai.load_skill(self.root, "extract-facts")
+        text = "противник отошёл"
+        payload = {"items": [{"kind": "combat", "summary": "противник отошёл",
+                              "quote": "противник отошёл", "confidence": 0.3,
+                              "date_from": "1941-12-19", "precision": "day"}]}
+        checked = self.ai.check_items(self.root, skill, payload, text)
+        self.assertIn("низкая уверенность", " ".join(checked[0]["problems"]))
+
+    def test_apply_proposal_is_idempotent(self) -> None:
+        self.write_manifest()
+        items = {"payload": {"items": []}, "checked": [], "skill": "extract-facts", "model": "test"}
+        text = "части дивизии овладели ДЯТЛОВО"
+        items["checked"] = [{"n": 1, "acceptable": True, "place_id": None, "problems": [],
+                             "item": {"kind": "combat", "event_type": "combat",
+                                      "date_from": "1941-12-18", "date_to": None, "precision": "day",
+                                      "units": ["365sd"], "place_name": None,
+                                      "summary": "полк овладел Дятлово",
+                                      "quote": text, "confidence": 0.9}}]
+        target = self.root / "data/proposals/probe"
+        target.mkdir(parents=True)
+        (target / "extract-facts.json").write_text(
+            self.json.dumps(items, ensure_ascii=False), encoding="utf-8")
+        args = self.types.SimpleNamespace(root=str(self.root), slug="probe", step="extract-facts",
+                                          min_confidence=0.7, dry_run=False)
+        self.vov.run = lambda root, vault: []   # проверяем логику применения, а не валидатор
+
+        def count() -> int:
+            return len(self.json.loads((self.root / "data/events/1941.json").read_text(encoding="utf-8"))["events"])
+
+        start = count()
+        self.assertEqual(self.ai.cmd_apply(args), 0)
+        self.assertEqual(count(), start + 1, "применение должно добавить ровно одно событие")
+        self.ai.cmd_apply(args)
+        self.assertEqual(count(), start + 1, "повторное применение не должно добавлять события")
+
+    def test_apply_proposal_rolls_back_on_validation_error(self) -> None:
+        self.write_manifest()
+        items = {"payload": {"items": []}, "skill": "extract-facts", "model": "test", "checked": [
+            {"n": 1, "acceptable": True, "place_id": None, "problems": [],
+             "item": {"kind": "combat", "event_type": "combat", "date_from": "1941-12-18",
+                      "date_to": None, "precision": "day", "units": ["365sd"], "place_name": None,
+                      "summary": "полк овладел Дятлово", "quote": "части дивизии овладели ДЯТЛОВО",
+                      "confidence": 0.9}}]}
+        target = self.root / "data/proposals/probe"
+        target.mkdir(parents=True)
+        (target / "extract-facts.json").write_text(self.json.dumps(items, ensure_ascii=False), encoding="utf-8")
+        before = (self.root / "data/events/1941.json").read_text(encoding="utf-8")
+        self.vov.run = lambda root, vault: ["сломанное правило"]
+        args = self.types.SimpleNamespace(root=str(self.root), slug="probe", step="extract-facts",
+                                          min_confidence=0.7, dry_run=False)
+        self.assertEqual(self.ai.cmd_apply(args), 1)
+        self.assertEqual(before, (self.root / "data/events/1941.json").read_text(encoding="utf-8"),
+                         "при ошибке валидатора файл событий должен вернуться как был")
+
+    def test_offline_propose_writes_request_bundle(self) -> None:
+        self.write_manifest()
+        cache = self.root / "data/cache/ocr"
+        cache.mkdir(parents=True)
+        (cache / "doc-pn-354-0005806-0010-p00000295_psm6_x2.txt").write_text(
+            "части дивизии сосредоточились в районе ВОЛОВНИКОВО", encoding="utf-8")
+        args = self.types.SimpleNamespace(root=str(self.root), slug="probe", step="extract-facts",
+                                          emit_request=True, ingest=None, model_name=None)
+        self.assertEqual(self.ai.cmd_propose(args), 0)
+        bundle = self.root / "data/proposals/probe/extract-facts-request.json"
+        self.assertTrue(bundle.exists())
+        data = self.json.loads(bundle.read_text(encoding="utf-8"))
+        self.assertEqual(data["skill"], "extract-facts")
+        self.assertIn("prompt_sha", data)
+
+
 class TestIntake(unittest.TestCase):
     """Входной конвейер: манифест, журнал, состояния, дедуп, dry-run применения."""
 
