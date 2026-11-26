@@ -14,10 +14,12 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import coremeta  # noqa: E402
 import validate as vov  # noqa: E402
 
 CHRONO_PATH = "docs/research/Боевой путь — хронология (сгенерировано).md"
@@ -163,7 +165,8 @@ def render_chronology(ds: vov.Dataset, events: list[dict], digest: str, places: 
         "# Боевой путь 365-й стрелковой дивизии — хронология (сгенерировано)",
         "",
         f"Событий: {len(events)}. Формирований: {len(ds.units['units'])}. "
-        f"Источников: {len(ds.sources['sources'])}. Хеш набора данных: `{digest}`",
+        f"Источников: {len(ds.sources['sources'])}. Хеш набора данных: `{digest}`. "
+        f"Ядро: `{coremeta.version_or_default()}`",
         "",
         "Ручной разбор и оценка противоречий — в файле "
         "`docs/research/Бизяев ЕМ — сводка и расхождения.md`.",
@@ -365,7 +368,7 @@ def render_people(ds: vov.Dataset, digest: str) -> str:
         "# Люди — что известно",
         "",
         "<!-- Сгенерировано tools/build.py из data/people.json, data/rosters.json, data/documents.json. "
-        "Ручная правка не имеет силы. -->",
+        f"Ручная правка не имеет силы. Ядро: {coremeta.version_or_default()}. -->",
         "",
         f"Набор данных: `{digest[:16]}…`",
         "",
@@ -461,7 +464,8 @@ def render_front_lines(ds: vov.Dataset) -> str:
                 "note": line.get("note"),
             },
         })
-    payload = {"type": "FeatureCollection", "features": features}
+    payload = {"type": "FeatureCollection", "features": features,
+               "properties": {"core_version": coremeta.version_or_default()}}
     return json.dumps(payload, ensure_ascii=False, indent=1) + "\n"
 
 
@@ -486,7 +490,8 @@ def render_frames(ds: vov.Dataset, events: list[dict]) -> str:
             "events": sorted(set(related)),
         }
     ordered = [frames[d] for d in sorted(frames)]
-    return json.dumps({"frames": ordered}, ensure_ascii=False, indent=1) + "\n"
+    return json.dumps({"frames": ordered, "core_version": coremeta.version_or_default()},
+                      ensure_ascii=False, indent=1) + "\n"
 
 
 def render_geojson(events: list[dict], places: dict[str, dict]) -> str:
@@ -512,7 +517,8 @@ def render_geojson(events: list[dict], places: dict[str, dict]) -> str:
                 },
             }
         )
-    payload = {"type": "FeatureCollection", "features": features}
+    payload = {"type": "FeatureCollection", "features": features,
+               "properties": {"core_version": coremeta.version_or_default()}}
     return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
 
 
@@ -541,14 +547,25 @@ def build(root: str, vault: str | None, check: bool = False) -> tuple[int, list[
 
     messages: list[str] = []
     if check:
+        current_core = coremeta.version_or_default()
         stale = [
             path
             for path, content in artifacts.items()
             if not os.path.exists(path) or _read_text(path) != content
         ]
         if stale:
-            return 1, [f"РАСХОЖДЕНИЕ  {os.path.relpath(p, root)}" for p in stale]
-        return 0, [f"Проверено: артефактов {len(artifacts)}, расхождений нет"]
+            out = []
+            for path in stale:
+                old = _read_text(path) if os.path.exists(path) else ""
+                found = (re.search(r"Ядро: `?([0-9]+\.[0-9]+\.[0-9]+)`?", old)
+                         or re.search(r'"core_version": "([0-9.]+)"', old))
+                if found and found.group(1) != current_core:
+                    out.append(f"РАСХОЖДЕНИЕ  {os.path.relpath(path, root)} — "
+                               f"собран ядром {found.group(1)}, текущее {current_core}")
+                else:
+                    out.append(f"РАСХОЖДЕНИЕ  {os.path.relpath(path, root)}")
+            return 1, out
+        return 0, [f"Проверено: артефактов {len(artifacts)}, расхождений нет (ядро {current_core})"]
 
     for path, content in artifacts.items():
         os.makedirs(os.path.dirname(path), exist_ok=True)

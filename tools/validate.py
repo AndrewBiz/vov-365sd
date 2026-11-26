@@ -23,6 +23,8 @@ from datetime import date
 import jsonschema
 from referencing import Registry, Resource
 
+import coremeta  # noqa: E402
+
 SCHEMA_FILES = {
     "fact": "data/schemas/fact.schema.json",
     "event": "data/schemas/event.schema.json",
@@ -915,6 +917,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--deep", action="store_true", help="сверять sha256 файлов листов с каталогом")
     args = parser.parse_args(argv)
 
+    try:
+        core = coremeta.version(os.path.join(args.root, "tools", "VERSION"))
+    except coremeta.CoreVersionError as exc:
+        print(f"ОШИБКА  {exc}")
+        return 1
+    if not args.quiet:
+        print(f"ядро {core}")
     errors = sorted(run(args.root, args.vault, deep=args.deep))
     if errors:
         if not args.quiet:
