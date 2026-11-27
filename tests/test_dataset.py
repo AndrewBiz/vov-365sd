@@ -854,6 +854,123 @@ class TestSourceFiles(DatasetCase):
         self.assert_error("'files' is a required property")
 
 
+class TestPositions(DatasetCase):
+    """Положения частей: время, геометрия, запрет расчётных точек в данных."""
+
+    def _pos(self, **overrides) -> dict:
+        base = {
+            "id": "pos-1941-12-15-2200-1211sp-test",
+            "unit": "test-div",
+            "as_of": {"date": "1941-12-15", "time": "22:00", "precision": "timestamp"},
+            "kind": "cp",
+            "place": "pl-test-place",
+            "label": "1/1211 сп — Тестовое место",
+            "sheet": {"source_id": "src-test", "locator": {"quote": "цитата"}, "colour": None},
+            "basis": "text",
+            "accuracy_m": 2000,
+            "status": "черновик",
+        }
+        base.update(overrides)
+        return base
+
+    def _save(self, positions: list[dict]) -> None:
+        self.save("data/positions/1941.json", {"year": 1941, "positions": positions})
+
+    def test_valid_position(self) -> None:
+        self._save([self._pos()])
+        self.assertEqual(self.errors(), [])
+
+    def test_timestamp_without_time(self) -> None:
+        self._save([self._pos(as_of={"date": "1941-12-15", "precision": "timestamp"})])
+        self.assert_error("требует время")
+
+    def test_sector_needs_two_points(self) -> None:
+        self._save([self._pos(kind="sector",
+                              geometry={"type": "LineString", "coordinates": [[36.5, 56.3]]},
+                              place=None)])
+        self.assert_error("минимум две точки")
+
+    def test_derived_position_forbidden(self) -> None:
+        self._save([{**self._pos(), "derived": True}])
+        self.assert_error("расчётное положение")
+
+    def test_unknown_unit(self) -> None:
+        self._save([self._pos(unit="ghost-div")])
+        self.assert_error("неизвестное формирование")
+
+    def test_geometry_outside_bbox(self) -> None:
+        self._save([self._pos(kind="cp", geometry={"type": "Point", "coordinates": [10.0, 10.0]},
+                              place=None)])
+        self.assert_error("вне front_bbox")
+
+    def test_neither_geometry_nor_place(self) -> None:
+        self._save([self._pos(place=None)])
+        self.assert_error("ни геометрии, ни пункта")
+
+
+class TestTrajectories(unittest.TestCase):
+    """Расчёт промежуточных положений: правдоподобие скорости и разрывы."""
+
+    def setUp(self) -> None:
+        import json, pathlib, tempfile
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = pathlib.Path(self.tmp.name)
+        (self.root / "data/positions").mkdir(parents=True)
+        self.json = json
+        (self.root / "data/registry.json").write_text(json.dumps({
+            "movement_rates": {"infantry": {"label": "Пехота", "km_per_day": 30}},
+            "movement_by_unit_kind": {"division": "infantry"},
+        }, ensure_ascii=False), encoding="utf-8")
+        (self.root / "data/units.json").write_text(json.dumps({
+            "units": [{"id": "test-div", "kind": "division", "name": "Тестовая дивизия"}]
+        }, ensure_ascii=False), encoding="utf-8")
+        (self.root / "data/places.json").write_text(json.dumps({"places": []}, ensure_ascii=False),
+                                                    encoding="utf-8")
+        sys.path.insert(0, os.path.join(REPO, "tools"))
+        import trajectories
+        self.traj = trajectories
+
+    def tearDown(self) -> None:
+        self.tmp.cleanup()
+
+    def _write(self, positions: list[dict]) -> None:
+        (self.root / "data/positions/1941.json").write_text(
+            self.json.dumps({"year": 1941, "positions": positions}, ensure_ascii=False), encoding="utf-8")
+
+    def _pos(self, pid: str, date: str, time: str, lon: float, lat: float) -> dict:
+        return {"id": pid, "unit": "test-div",
+                "as_of": {"date": date, "time": time, "precision": "timestamp"},
+                "kind": "cp", "label": "пункт",
+                "geometry": {"type": "Point", "coordinates": [lon, lat]},
+                "sheet": {"source_id": "src-x", "locator": {"quote": "ц"}},
+                "basis": "text", "accuracy_m": 2000, "status": "черновик"}
+
+    def test_plausible_transition_is_interpolated(self) -> None:
+        # ~22 км за 48 ч = 11 км/сут, пехота успевает
+        self._write([self._pos("pos-a", "1941-12-10", "09:00", 36.50, 56.30),
+                     self._pos("pos-b", "1941-12-12", "09:00", 36.50, 56.50)])
+        collection, warnings = self.traj.build(self.root, 6, 10, None)
+        derived = [f for f in collection["features"] if f["properties"].get("derived")]
+        self.assertTrue(derived, warnings)
+        self.assertTrue(all(f["properties"]["between"] == ["pos-a", "pos-b"] for f in derived))
+        self.assertFalse([w for w in warnings if "неправдоподобно" in w])
+
+    def test_fast_transition_is_refused(self) -> None:
+        # ~110 км за 8 ч — пехотой невозможно
+        self._write([self._pos("pos-a", "1941-12-10", "09:00", 36.50, 56.30),
+                     self._pos("pos-b", "1941-12-10", "17:00", 38.20, 56.30)])
+        collection, warnings = self.traj.build(self.root, 6, 10, None)
+        self.assertFalse([f for f in collection["features"] if f["properties"].get("derived")])
+        self.assertTrue(any("неправдоподобно" in w for w in warnings), warnings)
+
+    def test_long_gap_is_not_filled(self) -> None:
+        self._write([self._pos("pos-a", "1941-12-01", "09:00", 36.50, 56.30),
+                     self._pos("pos-b", "1941-12-21", "09:00", 36.60, 56.35)])
+        collection, warnings = self.traj.build(self.root, 6, 10, None)
+        self.assertFalse([f for f in collection["features"] if f["properties"].get("derived")])
+        self.assertTrue(any("разрыв" in w for w in warnings), warnings)
+
+
 class TestRosterParsing(DatasetCase):
     HTML = """<table>
       <tr><th>№ пп</th><th>Фамилия, имя, отчество</th><th>Партийность</th><th>Состав</th></tr>

@@ -1,0 +1,96 @@
+{
+  "place_id": "pl-borshchevo",
+  "queries": [
+    "Борщево, Клинский район, Московская область, Россия",
+    "Борщево, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Борщево, Клинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%91%D0%BE%D1%80%D1%89%D0%B5%D0%B2%D0%BE%2C+%D0%9A%D0%BB%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:18+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "56.4867269",
+            "56.5077220",
+            "36.8488501",
+            "36.8674116"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 196907214,
+          "display_name": "Борщево, городской округ Клин, Московская область, Центральный федеральный округ, Россия",
+          "osm_type": "way",
+          "lon": "36.8580000",
+          "lat": "56.4975000",
+          "category": "place",
+          "importance": 0.2507397701059262,
+          "osm_id": 124506858
+        }
+      ]
+    },
+    {
+      "query": "Борщево, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%91%D0%BE%D1%80%D1%89%D0%B5%D0%B2%D0%BE%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:20+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "59.6789637",
+            "59.7189637",
+            "39.8688108",
+            "39.9088108"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 198348269,
+          "display_name": "Борщево, Сокольский муниципальный округ, Вологодская область, Северо-Западный федеральный округ, Россия",
+          "osm_type": "node",
+          "lon": "39.8888108",
+          "lat": "59.6989637",
+          "category": "place",
+          "importance": 0.37694663196902717,
+          "osm_id": 1356894845
+        },
+        {
+          "boundingbox": [
+            "58.8357516",
+            "58.8437262",
+            "30.3572689",
+            "30.3722104"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 169423456,
+          "display_name": "Борщово, Оредежское сельское поселение, Лужский район, Ленинградская область, Северо-Западный федеральный округ, 188220, Россия",
+          "osm_type": "relation",
+          "lon": "30.3666670",
+          "lat": "58.8400000",
+          "category": "place",
+          "importance": 0.39319777097137304,
+          "osm_id": 19678106
+        },
+        {
+          "boundingbox": [
+            "58.4321523",
+            "58.4401003",
+            "37.2105776",
+            "37.2267536"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197908491,
+          "display_name": "Борщево, Весьегонский муниципальный округ, Тверская область, Центральный федеральный округ, Россия",
+          "osm_type": "way",
+          "lon": "37.2196960",
+          "lat": "58.4357110",
+          "category": "place",
+          "importance": 0.36736730413826313,
+          "osm_id": 954612074
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": null
+}

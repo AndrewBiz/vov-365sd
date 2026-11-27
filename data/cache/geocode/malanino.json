@@ -1,0 +1,77 @@
+{
+  "place_id": "pl-malanino",
+  "queries": [
+    "Маланино, Клинский район, Московская область, Россия",
+    "Маланино, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Маланино, Клинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9C%D0%B0%D0%BB%D0%B0%D0%BD%D0%B8%D0%BD%D0%BE%2C+%D0%9A%D0%BB%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:01+00:00",
+      "results": []
+    },
+    {
+      "query": "Маланино, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9C%D0%B0%D0%BB%D0%B0%D0%BD%D0%B8%D0%BD%D0%BE%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:02+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "56.8013446",
+            "56.8040729",
+            "41.7775546",
+            "41.7850198"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197799994,
+          "display_name": "Маланьино, Палехский муниципальный округ, Ивановская область, Центральный федеральный округ, Россия",
+          "osm_type": "way",
+          "lon": "41.7811276",
+          "lat": "56.8026553",
+          "category": "place",
+          "importance": 0.3626429788867404,
+          "osm_id": 159362792
+        },
+        {
+          "boundingbox": [
+            "55.1416638",
+            "55.1549783",
+            "36.6496686",
+            "36.6697108"
+          ],
+          "type": "village",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 195552248,
+          "display_name": "Маланьино, Боровский муниципальный округ, Калужская область, Центральный федеральный округ, Россия",
+          "osm_type": "relation",
+          "lon": "36.6545309",
+          "lat": "55.1511227",
+          "category": "place",
+          "importance": 0.354703308323595,
+          "osm_id": 19305941
+        },
+        {
+          "boundingbox": [
+            "57.4048292",
+            "57.4094106",
+            "39.4906263",
+            "39.4947965"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197713797,
+          "display_name": "Маланино, Гаврилов-Ямский муниципальный округ, Ярославская область, Центральный федеральный округ, Россия",
+          "osm_type": "way",
+          "lon": "39.4925820",
+          "lat": "57.4072620",
+          "category": "place",
+          "importance": 0.1333833348592355,
+          "osm_id": 176292260
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": null
+}

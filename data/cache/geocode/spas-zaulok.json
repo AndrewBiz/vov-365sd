@@ -1,0 +1,96 @@
+{
+  "place_id": "pl-spas-zaulok",
+  "queries": [
+    "Спас-Заулок, Клинский район, Московская область, Россия",
+    "Спас-Заулок, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Спас-Заулок, Клинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%A1%D0%BF%D0%B0%D1%81-%D0%97%D0%B0%D1%83%D0%BB%D0%BE%D0%BA%2C+%D0%9A%D0%BB%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:08+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "56.4617908",
+            "56.4899459",
+            "36.5590724",
+            "36.5883354"
+          ],
+          "type": "village",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197246388,
+          "display_name": "Спас-Заулок, городской округ Клин, Московская область, Центральный федеральный округ, 141667, Россия",
+          "osm_type": "way",
+          "lon": "36.5784668",
+          "lat": "56.4743017",
+          "category": "place",
+          "importance": 0.32173239253715025,
+          "osm_id": 319943498
+        },
+        {
+          "boundingbox": [
+            "56.4742905",
+            "56.4863800",
+            "36.5655690",
+            "36.5779086"
+          ],
+          "type": "trunk",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 195160028,
+          "display_name": "«Россия», Спас-Заулок, городской округ Клин, Московская область, Центральный федеральный округ, 141667, Россия",
+          "osm_type": "way",
+          "lon": "36.5717269",
+          "lat": "56.4803230",
+          "category": "highway",
+          "importance": 0.05337563973449298,
+          "osm_id": 740130818
+        }
+      ]
+    },
+    {
+      "query": "Спас-Заулок, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%A1%D0%BF%D0%B0%D1%81-%D0%97%D0%B0%D1%83%D0%BB%D0%BE%D0%BA%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:10+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "56.4617908",
+            "56.4899459",
+            "36.5590724",
+            "36.5883354"
+          ],
+          "type": "village",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197246388,
+          "display_name": "Спас-Заулок, городской округ Клин, Московская область, Центральный федеральный округ, 141667, Россия",
+          "osm_type": "way",
+          "lon": "36.5784668",
+          "lat": "56.4743017",
+          "category": "place",
+          "importance": 0.32173239253715025,
+          "osm_id": 319943498
+        },
+        {
+          "boundingbox": [
+            "56.4742905",
+            "56.4863800",
+            "36.5655690",
+            "36.5779086"
+          ],
+          "type": "trunk",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 195160028,
+          "display_name": "«Россия», Спас-Заулок, городской округ Клин, Московская область, Центральный федеральный округ, 141667, Россия",
+          "osm_type": "way",
+          "lon": "36.5717269",
+          "lat": "56.4803230",
+          "category": "highway",
+          "importance": 0.05337563973449298,
+          "osm_id": 740130818
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": null
+}

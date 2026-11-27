@@ -124,5 +124,55 @@
     "appendix": "Приложение",
     "other": "Прочее",
     "rescan": "Рескан листа для читаемости (ЧБ, цветокоррекция) — та же страница, другая копия"
+  },
+  "position_kinds": {
+    "sector": "Полоса (рубеж, линия соприкосновения) — LineString",
+    "line": "Линия без полосности (рубеж регулирования) — LineString",
+    "area": "Район (сосредоточение, оборонительный район) — Polygon",
+    "cp": "Командный пункт, штаб — Point",
+    "route": "Маршрут, направление удара — LineString"
+  },
+  "position_basis": {
+    "map": "Снято с карты",
+    "text": "Названо в тексте документа",
+    "map+text": "Совпадает в карте и тексте"
+  },
+  "position_time_precision": {
+    "timestamp": "Дата и время",
+    "day": "Только дата",
+    "range": "Интервал (например, в ночь на 12.12)"
+  },
+  "movement_rates": {
+    "infantry": {
+      "label": "Пехота пешим порядком",
+      "km_per_day": 30
+    },
+    "ski": {
+      "label": "Лыжники",
+      "km_per_day": 40
+    },
+    "cavalry": {
+      "label": "Конница",
+      "km_per_day": 60
+    },
+    "motorized": {
+      "label": "Автотранспорт",
+      "km_per_day": 120
+    },
+    "rail": {
+      "label": "Железная дорога",
+      "km_per_day": 300
+    }
+  },
+  "movement_by_unit_kind": {
+    "division": "infantry",
+    "regiment": "infantry",
+    "battalion": "infantry",
+    "artillery-regiment": "infantry",
+    "front": "motorized",
+    "army": "motorized",
+    "other": "infantry",
+    "cavalry-division": "cavalry",
+    "tank-brigade": "motorized"
   }
 }

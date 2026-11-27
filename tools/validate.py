@@ -36,6 +36,7 @@ SCHEMA_FILES = {
     "person": "data/schemas/person.schema.json",
     "roster": "data/schemas/roster.schema.json",
     "frontline": "data/schemas/frontline.schema.json",
+    "position": "data/schemas/position.schema.json",
 }
 
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -61,6 +62,13 @@ class Dataset:
             for path in sorted(
                 os.path.relpath(p, self.root)
                 for p in glob.glob(os.path.join(self.root, "data/events/*.json"))
+            )
+        ]
+        self.positions = [
+            (path, _load(os.path.join(self.root, path)))
+            for path in sorted(
+                os.path.relpath(p, self.root)
+                for p in glob.glob(os.path.join(self.root, "data/positions/*.json"))
             )
         ]
         self.schemas = {
@@ -278,6 +286,7 @@ def check_schemas(ds: Dataset, errors: list[str]) -> None:
         ("data/front_lines/1941.json", ds.front_lines, "frontline"),
     ]
     checks += [(path, payload, "event") for path, payload in ds.events]
+    checks += [(path, payload, "position") for path, payload in ds.positions]
     for path, payload, schema_name in checks:
         validator = jsonschema.Draft202012Validator(ds.schemas[schema_name], registry=reg)
         for err in sorted(validator.iter_errors(payload), key=lambda e: list(e.absolute_path)):
@@ -373,6 +382,101 @@ def check_sources(ds: Dataset, errors: list[str]) -> None:
                 f"файл {rel} указан в нескольких источниках ({', '.join(owners)}) — "
                 "проверить, не дубль ли это"
             )
+
+
+TIME_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
+
+
+def _iter_coords(geometry: dict) -> list[tuple[float, float]]:
+    kind = geometry.get("type")
+    coords = geometry.get("coordinates") or []
+    if kind == "Point":
+        return [tuple(coords)] if len(coords) >= 2 else []
+    if kind == "LineString":
+        return [tuple(c) for c in coords]
+    if kind == "Polygon":
+        return [tuple(c) for ring in coords for c in ring]
+    return []
+
+
+def check_positions(ds: Dataset, errors: list[str]) -> None:
+    """Положения частей: наблюдённые состояния, без расчётных точек."""
+    units = ds.unit_ids()
+    places = ds.place_ids()
+    sources = ds.source_ids()
+    kinds = ds.registry_types.get("position_kinds", {})
+    bases = ds.registry_types.get("position_basis", {})
+    precisions = ds.registry_types.get("position_time_precision", {})
+    bbox = ds.registry_types.get("front_bbox") or {}
+    seen: set[str] = set()
+
+    for path, payload in ds.positions:
+        for index, pos in enumerate(payload.get("positions") or []):
+            pid = pos.get("id", "?")
+            where = f"{path}:positions[{index}] ({pid})"
+            if pos.get("derived") is not None:
+                errors.append(f"{where}: расчётное положение в исходных данных — расчёт живёт только в data/dist")
+            if pid in seen:
+                errors.append(f"{where}: повторяющийся id положения")
+            seen.add(pid)
+
+            unit = pos.get("unit")
+            if unit not in units:
+                errors.append(f"{where}: неизвестное формирование '{unit}'")
+            if pos.get("kind") not in kinds:
+                errors.append(f"{where}: неизвестный вид геометрии '{pos.get('kind')}'")
+            if pos.get("basis") not in bases:
+                errors.append(f"{where}: неизвестный базис наблюдения '{pos.get('basis')}'")
+
+            as_of = pos.get("as_of") or {}
+            precision = as_of.get("precision")
+            if precision not in precisions:
+                errors.append(f"{where}.as_of: неизвестная точность '{precision}'")
+            date = as_of.get("date")
+            if not date or not ISO_DATE_RE.match(str(date)):
+                errors.append(f"{where}.as_of.date: нужна дата YYYY-MM-DD, получено '{date}'")
+            if precision == "timestamp":
+                if not as_of.get("time"):
+                    errors.append(f"{where}.as_of: точность timestamp требует время HH:MM")
+                elif not TIME_RE.match(str(as_of.get("time"))):
+                    errors.append(f"{where}.as_of.time: формат HH:MM, получено '{as_of.get('time')}'")
+            if precision == "range" and not as_of.get("to"):
+                errors.append(f"{where}.as_of: точность range требует поле to")
+            if as_of.get("to") and ISO_DATE_RE.match(str(as_of.get("to"))) and date \
+                    and str(as_of["to"]) < str(date):
+                errors.append(f"{where}.as_of: to раньше date")
+
+            geometry = pos.get("geometry")
+            place = pos.get("place")
+            if not geometry and not place:
+                errors.append(f"{where}: ни геометрии, ни пункта — положение ничего не говорит о месте")
+            if place and place not in places:
+                errors.append(f"{where}: неизвестный пункт '{place}'")
+            if geometry:
+                points = _iter_coords(geometry)
+                if not points:
+                    errors.append(f"{where}.geometry: пустая геометрия")
+                if pos.get("kind") in {"sector", "line", "route"}:
+                    if geometry.get("type") != "LineString":
+                        errors.append(f"{where}.geometry: вид '{pos.get('kind')}' требует LineString")
+                    elif len(points) < 2:
+                        errors.append(f"{where}.geometry: полосе нужно минимум две точки")
+                if pos.get("kind") == "area" and geometry.get("type") != "Polygon":
+                    errors.append(f"{where}.geometry: вид 'area' требует Polygon")
+                if pos.get("kind") == "cp" and geometry.get("type") != "Point":
+                    errors.append(f"{where}.geometry: вид 'cp' требует Point")
+                if bbox:
+                    for lon, lat in points:
+                        if not (bbox["west"] <= lon <= bbox["east"]
+                                and bbox["south"] <= lat <= bbox["north"]):
+                            errors.append(f"{where}.geometry: точка {lon},{lat} вне front_bbox")
+                            break
+
+            sheet = pos.get("sheet") or {}
+            if sheet.get("source_id") not in sources:
+                errors.append(f"{where}.sheet: источник '{sheet.get('source_id')}' не зарегистрирован")
+            if not (sheet.get("locator") or {}):
+                errors.append(f"{where}.sheet: нет локатора — откуда взято положение")
 
 
 def check_units(ds: Dataset, errors: list[str]) -> None:
@@ -939,6 +1043,7 @@ def run(root: str, vault: str | None = None, deep: bool = False) -> list[str]:
     check_rosters(ds, errors)
     check_events(ds, errors)
     check_front_lines(ds, errors)
+    check_positions(ds, errors)
     check_front_line_against_events(ds)
     return errors
 

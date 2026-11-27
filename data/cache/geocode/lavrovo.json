@@ -1,0 +1,35 @@
+{
+  "place_id": "pl-lavrovo",
+  "queries": [
+    "Лаврово, Московская область, Россия",
+    "Лаврово, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Лаврово, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9B%D0%B0%D0%B2%D1%80%D0%BE%D0%B2%D0%BE%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:35+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "56.3096852",
+            "56.3219942",
+            "36.6658920",
+            "36.6923644"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 195958975,
+          "display_name": "Лаврово, городской округ Клин, Московская область, Центральный федеральный округ, Россия",
+          "osm_type": "way",
+          "lon": "36.6829699",
+          "lat": "56.3154727",
+          "category": "place",
+          "importance": 0.31877743112977514,
+          "osm_id": 107681761
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": 0
+}
