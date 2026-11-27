@@ -185,6 +185,55 @@
         "type": "string",
         "minLength": 2
       }
+    },
+    "position_kinds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "position_basis": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "position_time_precision": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "movement_rates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "label",
+          "km_per_day"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 3
+          },
+          "km_per_day": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        }
+      }
+    },
+    "movement_by_unit_kind": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
     }
   },
   "additionalProperties": false

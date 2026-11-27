@@ -1,0 +1,96 @@
+{
+  "place_id": "pl-maydanovo",
+  "queries": [
+    "Майданово, Клинский район, Московская область, Россия",
+    "Майданово, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Майданово, Клинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9C%D0%B0%D0%B9%D0%B4%D0%B0%D0%BD%D0%BE%D0%B2%D0%BE%2C+%D0%9A%D0%BB%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:04+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "56.3494005",
+            "56.3495005",
+            "36.7216358",
+            "36.7217358"
+          ],
+          "type": "bus_stop",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197280029,
+          "display_name": "Майданово, Майдановская улица, СНТ «Химик», микрорайон Майданово, Клин, городской округ Клин, Московская область, Центральный федеральный округ, 141603, Россия",
+          "osm_type": "node",
+          "lon": "36.7216858",
+          "lat": "56.3494505",
+          "category": "highway",
+          "importance": 6.187762264434299e-05,
+          "osm_id": 1271965942
+        },
+        {
+          "boundingbox": [
+            "56.3283574",
+            "56.3683574",
+            "36.6995507",
+            "36.7395507"
+          ],
+          "type": "suburb",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197261735,
+          "display_name": "микрорайон Майданово, Клин, городской округ Клин, Московская область, Центральный федеральный округ, 141603, Россия",
+          "osm_type": "node",
+          "lon": "36.7195507",
+          "lat": "56.3483574",
+          "category": "place",
+          "importance": 0.146728544289311,
+          "osm_id": 4081402344
+        }
+      ]
+    },
+    {
+      "query": "Майданово, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%9C%D0%B0%D0%B9%D0%B4%D0%B0%D0%BD%D0%BE%D0%B2%D0%BE%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:05+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "56.3494005",
+            "56.3495005",
+            "36.7216358",
+            "36.7217358"
+          ],
+          "type": "bus_stop",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197280029,
+          "display_name": "Майданово, Майдановская улица, СНТ «Химик», микрорайон Майданово, Клин, городской округ Клин, Московская область, Центральный федеральный округ, 141603, Россия",
+          "osm_type": "node",
+          "lon": "36.7216858",
+          "lat": "56.3494505",
+          "category": "highway",
+          "importance": 6.187762264434299e-05,
+          "osm_id": 1271965942
+        },
+        {
+          "boundingbox": [
+            "56.3283574",
+            "56.3683574",
+            "36.6995507",
+            "36.7395507"
+          ],
+          "type": "suburb",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197261735,
+          "display_name": "микрорайон Майданово, Клин, городской округ Клин, Московская область, Центральный федеральный округ, 141603, Россия",
+          "osm_type": "node",
+          "lon": "36.7195507",
+          "lat": "56.3483574",
+          "category": "place",
+          "importance": 0.146728544289311,
+          "osm_id": 4081402344
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": null
+}

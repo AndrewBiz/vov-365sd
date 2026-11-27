@@ -1,0 +1,114 @@
+{
+  "place_id": "pl-zakharovo",
+  "queries": [
+    "Захарово, Клинский район, Московская область, Россия",
+    "Захарово, Россия"
+  ],
+  "attempts": [
+    {
+      "query": "Захарово, Клинский район, Московская область, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%97%D0%B0%D1%85%D0%B0%D1%80%D0%BE%D0%B2%D0%BE%2C+%D0%9A%D0%BB%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9+%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C+%D0%9C%D0%BE%D1%81%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:12+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "56.5167005",
+            "56.5271980",
+            "36.7240480",
+            "36.7424587"
+          ],
+          "type": "village",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 196111451,
+          "display_name": "Захарово, городской округ Клин, Московская область, Центральный федеральный округ, Россия",
+          "osm_type": "way",
+          "lon": "36.7320000",
+          "lat": "56.5220000",
+          "category": "place",
+          "importance": 0.31568281446101826,
+          "osm_id": 124506820
+        },
+        {
+          "boundingbox": [
+            "56.1920259",
+            "56.2001310",
+            "36.4422462",
+            "36.4604324"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 196052553,
+          "display_name": "Захарово, городской округ Клин, Московская область, Центральный федеральный округ, Россия",
+          "osm_type": "way",
+          "lon": "36.4543040",
+          "lat": "56.1966478",
+          "category": "place",
+          "importance": 0.23094323434513592,
+          "osm_id": 108787829
+        }
+      ]
+    },
+    {
+      "query": "Захарово, Россия",
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=%D0%97%D0%B0%D1%85%D0%B0%D1%80%D0%BE%D0%B2%D0%BE%2C+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F&accept-language=ru",
+      "fetched_at": "2026-11-27T08:24:13+00:00",
+      "results": [
+        {
+          "boundingbox": [
+            "57.8601120",
+            "57.8685840",
+            "36.6729965",
+            "36.6923655"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197842311,
+          "display_name": "Захарово, Бежецкий муниципальный округ, Тверская область, Центральный федеральный округ, Россия",
+          "osm_type": "relation",
+          "lon": "36.6815652",
+          "lat": "57.8642172",
+          "category": "place",
+          "importance": 0.4381868346284336,
+          "osm_id": 14738638
+        },
+        {
+          "boundingbox": [
+            "58.9365119",
+            "58.9405843",
+            "39.6899934",
+            "39.6965716"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 197744555,
+          "display_name": "Захарово, Грязовецкий муниципальный округ, Вологодская область, Северо-Западный федеральный округ, Россия",
+          "osm_type": "way",
+          "lon": "39.6938414",
+          "lat": "58.9385714",
+          "category": "place",
+          "importance": 0.43033063500823676,
+          "osm_id": 429060599
+        },
+        {
+          "boundingbox": [
+            "59.0976300",
+            "59.1376300",
+            "40.1970600",
+            "40.2370600"
+          ],
+          "type": "hamlet",
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "place_id": 198252623,
+          "display_name": "Захарово, Вологодский муниципальный округ, Вологодская область, Северо-Западный федеральный округ, 160544, Россия",
+          "osm_type": "node",
+          "lon": "40.2170600",
+          "lat": "59.1176300",
+          "category": "place",
+          "importance": 0.42674896514233895,
+          "osm_id": 1377910821
+        }
+      ]
+    }
+  ],
+  "accepted_attempt": null
+}

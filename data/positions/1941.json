@@ -1,0 +1,150 @@
+{
+  "year": 1941,
+  "positions": [
+    {
+      "id": "pos-1941-12-15-2200-1215sp-borisovo",
+      "unit": "1215sp",
+      "as_of": {
+        "date": "1941-12-15",
+        "time": "22:00",
+        "precision": "timestamp"
+      },
+      "kind": "cp",
+      "place": "pl-borisovo",
+      "label": "1/1215 сп — БОРИСОВО, выставив заслон в районе развилки дорог у высоты 114,6",
+      "sheet": {
+        "source_id": "src-pamyat-naroda",
+        "locator": {
+          "page": 1,
+          "quote": "1/1215 сп — БОРИСОВО, выставив заслон в районе развилки дорог у высоты 114,6"
+        },
+        "colour": null,
+        "legend": "оперсводка перечисляет пункты, рубежи не нанесены"
+      },
+      "basis": "text",
+      "accuracy_m": 2000,
+      "status": "черновик",
+      "note": "1-й батальон 1215 сп; в реестре формирований батальоны не расписаны, поэтому часть указана полком"
+    },
+    {
+      "id": "pos-1941-12-15-2200-1215sp-pershutino",
+      "unit": "1215sp",
+      "as_of": {
+        "date": "1941-12-15",
+        "time": "22:00",
+        "precision": "timestamp"
+      },
+      "kind": "cp",
+      "place": "pl-pershutino",
+      "label": "2/1215 сп — ПЕРШУТИНО",
+      "sheet": {
+        "source_id": "src-pamyat-naroda",
+        "locator": {
+          "page": 1,
+          "quote": "2/1215 сп — ПЕРШУТИНО"
+        },
+        "colour": null,
+        "legend": "оперсводка перечисляет пункты, рубежи не нанесены"
+      },
+      "basis": "text",
+      "accuracy_m": 2000,
+      "status": "черновик",
+      "note": "2-й батальон 1215 сп"
+    },
+    {
+      "id": "pos-1941-12-15-2200-1215sp-lavrovo",
+      "unit": "1215sp",
+      "as_of": {
+        "date": "1941-12-15",
+        "time": "22:00",
+        "precision": "timestamp"
+      },
+      "kind": "cp",
+      "place": "pl-lavrovo",
+      "label": "3/1215 сп — ЛАВРОВО, штаб полка — ЛАВРОВО",
+      "sheet": {
+        "source_id": "src-pamyat-naroda",
+        "locator": {
+          "page": 1,
+          "quote": "3/1215 сп — ЛАВРОВО, штаб полка — ЛАВРОВО"
+        },
+        "colour": null,
+        "legend": "оперсводка перечисляет пункты, рубежи не нанесены"
+      },
+      "basis": "text",
+      "accuracy_m": 2000,
+      "status": "черновик",
+      "note": "3-й батальон и штаб 1215 сп"
+    },
+    {
+      "id": "pos-1941-12-15-1213sp-selinskoe",
+      "unit": "1213sp",
+      "as_of": {
+        "date": "1941-12-15",
+        "precision": "day"
+      },
+      "kind": "cp",
+      "place": "pl-selinskoe",
+      "label": "1/1213 сп [овладел] СЕЛИНСКОЕ, выставил заслон на [стыке] дорог [у] Языково",
+      "sheet": {
+        "source_id": "src-pamyat-naroda",
+        "locator": {
+          "page": 1,
+          "quote": "1/1213 сп [овладел] СЕЛИНСКОЕ, выставил заслон на [стыке] дорог [у] Языково [?] и выс. [?]"
+        },
+        "colour": null,
+        "legend": "оперсводка перечисляет пункты, рубежи не нанесены"
+      },
+      "basis": "text",
+      "accuracy_m": 2000,
+      "status": "черновик",
+      "note": "1-й батальон 1213 сп; время не указано"
+    },
+    {
+      "id": "pos-1941-12-15-1211sp-reshetkino",
+      "unit": "1211sp",
+      "as_of": {
+        "date": "1941-12-15",
+        "precision": "day"
+      },
+      "kind": "cp",
+      "place": "pl-reshetkino",
+      "label": "1211 сп: два батальона занимают РЕШЕТКИНО",
+      "sheet": {
+        "source_id": "src-pamyat-naroda",
+        "locator": {
+          "page": 1,
+          "quote": "1211 сп [два] батальона занимают РЕШЕТКИНО, 1 батальон — КОНОПЛИНО"
+        },
+        "colour": null,
+        "legend": "оперсводка перечисляет пункты, рубежи не нанесены"
+      },
+      "basis": "text",
+      "accuracy_m": 2000,
+      "status": "черновик"
+    },
+    {
+      "id": "pos-1941-12-15-1211sp-konoplino",
+      "unit": "1211sp",
+      "as_of": {
+        "date": "1941-12-15",
+        "precision": "day"
+      },
+      "kind": "cp",
+      "place": "pl-konoplino",
+      "label": "1211 сп: один батальон — КОНОПЛИНО",
+      "sheet": {
+        "source_id": "src-pamyat-naroda",
+        "locator": {
+          "page": 1,
+          "quote": "1211 сп [два] батальона занимают РЕШЕТКИНО, 1 батальон — КОНОПЛИНО"
+        },
+        "colour": null,
+        "legend": "оперсводка перечисляет пункты, рубежи не нанесены"
+      },
+      "basis": "text",
+      "accuracy_m": 2000,
+      "status": "черновик"
+    }
+  ]
+}
