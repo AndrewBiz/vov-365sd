@@ -174,5 +174,21 @@
     "other": "infantry",
     "cavalry-division": "cavalry",
     "tank-brigade": "motorized"
+  },
+  "task_kinds": {
+    "georeference-sheet": "Привязать лист карты к координатам (GCP, QGIS Georeferencer)",
+    "digitize-places": "Снять координаты населённых пунктов с привязанного листа",
+    "trace-positions": "Обвести полосы частей по привязанному листу"
+  },
+  "task_status": {
+    "open": "Открыта",
+    "in-work": "В работе у исследователя",
+    "done": "Закрыта по принятому файлу",
+    "dropped": "Отклонена (не нужна или невозможна)"
+  },
+  "task_priorities": {
+    "high": "Блокирует другие задачи",
+    "normal": "Обычная",
+    "low": "Когда будет время"
   }
 }

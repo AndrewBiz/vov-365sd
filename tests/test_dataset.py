@@ -971,6 +971,98 @@ class TestTrajectories(unittest.TestCase):
         self.assertTrue(any("разрыв" in w for w in warnings), warnings)
 
 
+class TestResearcherTasks(unittest.TestCase):
+    """Обратный канал: задачи из пробелов данных, идемпотентность, закрытие по файлу."""
+
+    def setUp(self) -> None:
+        import json, pathlib, tempfile
+        self.json = json
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = pathlib.Path(self.tmp.name)
+        self.obsidian = self.root / "obsidian"
+        for sub in ("data/positions", "data/events", "data/calibration", "tasks"):
+            (self.root / sub).mkdir(parents=True)
+        (self.root / "data/sources.json").write_text(json.dumps({"sources": [{
+            "id": "src-maps", "kind": "map", "title": "Карты",
+            "files": [{"path": "Исходники/Russland_100K_O-37-XVI-Ost_Klin_VI.1942.jpg",
+                       "sha256": "0" * 64, "role": "original"}]}]}, ensure_ascii=False), encoding="utf-8")
+        (self.root / "data/places.json").write_text(json.dumps({"places": [{
+            "id": "pl-test", "type": "village", "names": {"modern": "Тестово"},
+            "state": "unfound", "accuracy": "approximate", "region": "Московская область",
+            "coords": None}]}, ensure_ascii=False), encoding="utf-8")
+        (self.root / "data/positions/1941.json").write_text(json.dumps({"year": 1941, "positions": [{
+            "id": "pos-test", "unit": "test-div",
+            "as_of": {"date": "1941-12-15", "precision": "day"},
+            "kind": "cp", "place": "pl-test", "label": "пункт",
+            "sheet": {"source_id": "src-maps", "locator": {"quote": "ц"}},
+            "basis": "text", "accuracy_m": 2000, "status": "черновик"}]}, ensure_ascii=False),
+            encoding="utf-8")
+        (self.root / "data/events/1941.json").write_text('{"year": 1941, "events": []}', encoding="utf-8")
+        (self.root / "data/calibration/index.json").write_text(
+            json.dumps({"sheets": [{"source_id": "src-maps",
+                                    "file": "Исходники/Russland_100K_O-37-XVI-Ost_Klin_VI.1942.jpg",
+                                    "status": "none"}]}), encoding="utf-8")
+        sys.path.insert(0, os.path.join(REPO, "tools"))
+        import tasks
+        self.tasks = tasks
+
+    def tearDown(self) -> None:
+        self.tmp.cleanup()
+
+    def _sync(self) -> int:
+        return self.tasks.sync(self.root, self.obsidian, "2026-11-27", False)
+
+    def test_generates_georef_and_places(self) -> None:
+        self._sync()
+        ids = {t["id"] for t in self.tasks.all_tasks(self.root).values()}
+        self.assertEqual(len(ids), 2, ids)
+        self.assertTrue(any("georef" in i for i in ids))
+        places_task = next(t for t in self.tasks.all_tasks(self.root).values()
+                           if t["kind"] == "digitize-places")
+        self.assertEqual(places_task["about"]["place_ids"], ["pl-test"])
+        self.assertTrue(places_task["depends_on"], "задача на пункты должна ждать привязку листа")
+
+    def test_second_run_does_not_duplicate(self) -> None:
+        self._sync()
+        before = len(list((self.root / "tasks").glob("task-*.md")))
+        self._sync()
+        self.assertEqual(before, len(list((self.root / "tasks").glob("task-*.md"))))
+
+    def test_in_work_not_overwritten(self) -> None:
+        self._sync()
+        task = next(iter(self.tasks.all_tasks(self.root).values()))
+        path = self.root / "tasks" / f"{task['id']}.md"
+        text = path.read_text(encoding="utf-8").replace("status: open", "status: in-work")
+        text += "\nзаметка человека\n"
+        path.write_text(text, encoding="utf-8")
+        self._sync()
+        self.assertIn("заметка человека", path.read_text(encoding="utf-8"))
+
+    def test_close_refused_without_files(self) -> None:
+        self._sync()
+        georef = next(iter(self.tasks.all_tasks(self.root).values()))
+        code = self.tasks.close(self.root, georef["id"])
+        self.assertEqual(code, 1)
+        self.assertEqual(self.tasks.all_tasks(self.root)[georef["id"]]["status"], "open")
+
+    def test_check_flags_missing_done_when(self) -> None:
+        self._sync()
+        task = next(iter(self.tasks.all_tasks(self.root).values()))
+        path = self.root / "tasks" / f"{task['id']}.md"
+        text = path.read_text(encoding="utf-8")
+        start = text.index("done_when:")
+        end = text.index("---", start)
+        path.write_text(text[:start] + "done_when: []\n" + text[end:], encoding="utf-8")
+        self.assertEqual(self.tasks.check(self.root), 1)
+
+    def test_mirror_pruned(self) -> None:
+        self._sync()
+        stale = self.obsidian / "task-stale-old.md"
+        stale.write_text("---\nid: task-stale-old\n---\n", encoding="utf-8")
+        self._sync()
+        self.assertFalse(stale.exists())
+
+
 class TestRosterParsing(DatasetCase):
     HTML = """<table>
       <tr><th>№ пп</th><th>Фамилия, имя, отчество</th><th>Партийность</th><th>Состав</th></tr>
