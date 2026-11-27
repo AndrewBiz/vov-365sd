@@ -36,7 +36,7 @@ PROPOSALS = "data/proposals"
 # Виды, которые вносятся как документ портала (data/documents.json).
 DOCUMENT_KINDS = ("archive-document", "map-sheet", "book-page", "presentation", "web-page", "scan-set")
 # Виды личного происхождения: вносятся как источник (data/sources.json).
-SOURCE_KINDS = ("personal-letters", "museum-photo", "archive-reply")
+SOURCE_KINDS = ("personal-letters", "museum-photo", "archive-reply", "map", "historical-map")
 KINDS = DOCUMENT_KINDS + SOURCE_KINDS
 # Папка-приёмник в хранилище: сюда кладут файлы, отсюда их забирает apply.
 VAULT_INBOX = "Хобби/365сд/Входящие для разбора"

@@ -1,0 +1,43 @@
+{
+ "slug": "map-klin-1942",
+ "core_version": "1.8.2",
+ "kind": "map",
+ "from_vault": true,
+ "digests": [
+  "c04df961c05affd80553cd401769442eb69d14545eee9a598536d76d96099dac"
+ ],
+ "files": [
+  {
+   "name": "Russland_100K_O-37-XVI-Ost_Klin_VI.1942.jpg",
+   "bytes": 15304440,
+   "sha256": "c04df961c05affd80553cd401769442eb69d14545eee9a598536d76d96099dac",
+   "format": "jpeg",
+   "width": 8476,
+   "height": 10820,
+   "path": "Хобби/365сд/Входящие для разбора/Карты 1к100 — немецкие 1942/Russland_100K_O-37-XVI-Ost_Klin_VI.1942.jpg",
+   "role": "original",
+   "ocr": {
+    "skipped": "по флагу --no-ocr: рукописный материал, расшифровка вне проекта"
+   }
+  }
+ ],
+ "duplicates": [],
+ "warnings": [],
+ "suggested_document": null,
+ "suggested_source": {
+  "id": "src-mapywig-100k",
+  "kind": "map",
+  "title": "Немецкая карта 1:100 000 O-37-XVI Ost «Klin-Ost», Truppenausgabe 25.VI.1942",
+  "derivative_path": "docs/sources/1942-06-25_Немецкие карты 1 к 100 000 — Клин и Ржев (WIG Archive).md",
+  "files": [
+   {
+    "path": "Хобби/365сд/Входящие для разбора/Карты 1к100 — немецкие 1942/Russland_100K_O-37-XVI-Ost_Klin_VI.1942.jpg",
+    "sha256": "c04df961c05affd80553cd401769442eb69d14545eee9a598536d76d96099dac",
+    "role": "original"
+   }
+  ],
+  "received": "2026-11-27",
+  "note": "Дата — 1. Ausgabe vom 25. VI. 42, не дата обстановки."
+ },
+ "ready": true
+}

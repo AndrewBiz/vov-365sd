@@ -1,0 +1,43 @@
+{
+ "slug": "map-rshew-1942",
+ "core_version": "1.8.2",
+ "kind": "map",
+ "from_vault": true,
+ "digests": [
+  "c9a80ba9d339e77a5814a111f973837a6873b33514e174258341590aa311cbf2"
+ ],
+ "files": [
+  {
+   "name": "Russland_100K_O-36-XVIII-Ost_Rshew_IX.1942.jpg",
+   "bytes": 14668446,
+   "sha256": "c9a80ba9d339e77a5814a111f973837a6873b33514e174258341590aa311cbf2",
+   "format": "jpeg",
+   "width": 8428,
+   "height": 10809,
+   "path": "Хобби/365сд/Входящие для разбора/Карты 1к100 — немецкие 1942/Russland_100K_O-36-XVIII-Ost_Rshew_IX.1942.jpg",
+   "role": "original",
+   "ocr": {
+    "skipped": "по флагу --no-ocr: рукописный материал, расшифровка вне проекта"
+   }
+  }
+ ],
+ "duplicates": [],
+ "warnings": [],
+ "suggested_document": null,
+ "suggested_source": {
+  "id": "src-mapywig-100k",
+  "kind": "map",
+  "title": "Немецкая карта 1:100 000 O-36-XVIII Ost «Rshew-Ost», Truppenausgabe IX.1942",
+  "derivative_path": "docs/sources/1942-06-25_Немецкие карты 1 к 100 000 — Клин и Ржев (WIG Archive).md",
+  "files": [
+   {
+    "path": "Хобби/365сд/Входящие для разбора/Карты 1к100 — немецкие 1942/Russland_100K_O-36-XVIII-Ost_Rshew_IX.1942.jpg",
+    "sha256": "c9a80ba9d339e77a5814a111f973837a6873b33514e174258341590aa311cbf2",
+    "role": "original"
+   }
+  ],
+  "received": "2026-11-27",
+  "note": "Дата — издание (2. Ausgabe vom IX. 42), не дата обстановки на карте."
+ },
+ "ready": true
+}

@@ -374,6 +374,26 @@
           "role": "other"
         }
       ]
+    },
+    {
+      "id": "src-mapywig-100k",
+      "kind": "map",
+      "title": "Немецкие карты 1:100 000 за 1942 год: Ржев (O-36-XVIII Ost) и Клин (O-37-XVI Ost)",
+      "derivative_path": "docs/sources/1942-06-25_Немецкие карты 1 к 100 000 — Клин и Ржев (WIG Archive).md",
+      "files": [
+        {
+          "path": "Хобби/365сд/Исходники/Карты 1:100 000 — немецкие 1942/Russland_100K_O-36-XVIII-Ost_Rshew_IX.1942.jpg",
+          "sha256": "c9a80ba9d339e77a5814a111f973837a6873b33514e174258341590aa311cbf2",
+          "role": "original"
+        },
+        {
+          "path": "Хобби/365сд/Исходники/Карты 1:100 000 — немецкие 1942/Russland_100K_O-37-XVI-Ost_Klin_VI.1942.jpg",
+          "sha256": "c04df961c05affd80553cd401769442eb69d14545eee9a598536d76d96099dac",
+          "role": "original"
+        }
+      ],
+      "received": "2026-11-27",
+      "note": "Скачано с открытого листинга WIG Map Archive (серия 100K_WWII_UdSSR_x4). Ржев: Truppenausgabe, 2. Ausgabe vom IX.1942, синий штамп «Achtung!», 8428×10809 px. Клин: Truppenausgabe, 1. Ausgabe vom 25.VI.1942, 8476×10820 px. Даты — даты издания, а не дата обстановки на карте. Геопривязки в файлах нет: нужны углы рамки и пересечения немецкой сетки 2 км."
     }
   ]
 }

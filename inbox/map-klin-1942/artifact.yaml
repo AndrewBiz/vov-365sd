@@ -1,0 +1,21 @@
+slug: map-klin-1942
+kind: map
+title: Немецкая карта 1:100 000 O-37-XVI Ost «Klin-Ost», Truppenausgabe 25.VI.1942
+source_id: src-mapywig-100k
+source_id_new: src-mapywig-100k
+received: '2026-11-27'
+from_vault: true
+vault: /home/anb/Documents/Obsidian Vault
+files:
+- path: Хобби/365сд/Входящие для разбора/Карты 1к100 — немецкие 1942/Russland_100K_O-37-XVI-Ost_Klin_VI.1942.jpg
+  sha256: c04df961c05affd80553cd401769442eb69d14545eee9a598536d76d96099dac
+  role: original
+original_location: Карты 1:100 000 — немецкие 1942
+derivative_path: docs/sources/1942-06-25_Немецкие карты 1 к 100 000 — Клин и Ржев
+  (WIG Archive).md
+expectations: ''
+date:
+  from: '1942-06-25'
+  to: '1942-06-25'
+  precision: day
+comment: Дата — 1. Ausgabe vom 25. VI. 42, не дата обстановки.
