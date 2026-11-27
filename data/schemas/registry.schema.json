@@ -234,6 +234,27 @@
         "type": "string",
         "minLength": 3
       }
+    },
+    "task_kinds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "task_status": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "task_priorities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 3
+      }
     }
   },
   "additionalProperties": false
